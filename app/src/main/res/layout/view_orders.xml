@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvService"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hair_cut"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/_12sdp"
+        android:layout_toLeftOf="@+id/llPrice"
+        android:layout_toStartOf="@+id/llPrice"
+        android:drawableLeft="@mipmap/ic_ticket_grey"
+        android:drawableStart="@mipmap/ic_ticket_grey"
+        android:drawablePadding="@dimen/_5sdp"
+        android:textAppearance="@style/TextAppearance.FontMedium"
+        android:gravity="center|start"/>
+
+    <LinearLayout
+        android:id="@+id/llPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+        <TextView
+            android:id="@+id/tvQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.FontMedium"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_12sdp"
+            android:text="2*80="/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/$"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            android:textAppearance="@style/TextAppearance.FontMedium"/>
+
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="160"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/black"
+            android:textAppearance="@style/TextAppearance.FontMedium"/>
+    </LinearLayout>
+
+</RelativeLayout>

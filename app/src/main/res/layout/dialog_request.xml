@@ -6,15 +6,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="bottom"
-    android:layout_marginBottom="@dimen/_10sdp"
+    android:gravity="center"
     android:layout_gravity="center"
-    android:visibility="gone"
-    tools:ignore="MissingPrefix"
-    android:background="#30FFFFFF"
-    tools:showIn="@layout/activity_main">
+    android:visibility="visible"
+    tools:ignore="MissingPrefix">
 
     <RelativeLayout
+        android:id="@+id/rlTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -51,7 +49,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/min"
+                    android:text="@string/minutes"
                     android:textSize="@dimen/_25sdp"
                     android:textColor="@color/colorBlack"
                     android:textAppearance="@style/TextAppearance.FontMedium"/>
@@ -86,7 +84,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/sec"
+                    android:text="@string/seconds"
                     android:textSize="@dimen/_25sdp"
                     android:textColor="@color/colorBlack"
                     android:textAppearance="@style/TextAppearance.FontMedium"/>
@@ -111,6 +109,7 @@
             android:padding="@dimen/_5sdp">
 
             <TextView
+                android:id="@+id/tvAccept"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/accept"
@@ -122,13 +121,15 @@
                 android:paddingBottom="@dimen/_5sdp"
                 android:textStyle="bold"
                 android:textAppearance="@style/TextAppearance.FontMedium"
-                android:background="@drawable/custom_accept_bg"/>
+                android:background="@drawable/custom_accept_bg"
+                android:foreground="?selectableItemBackground"/>
 
             <View
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="match_parent"/>
 
             <TextView
+                android:id="@+id/tvDecline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/decline"
@@ -139,7 +140,8 @@
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_5sdp"
                 android:textAppearance="@style/TextAppearance.FontMedium"
-                android:background="@drawable/custom_decline_bg"/>
+                android:background="@drawable/custom_decline_bg"
+                android:foreground="?selectableItemBackground"/>
 
         </LinearLayout>
 

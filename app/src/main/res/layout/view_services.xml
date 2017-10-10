@@ -7,7 +7,9 @@
         android:id="@+id/cbServices"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:button="@drawable/custom_checkbox"
         android:text=""
+        android:textAppearance="@style/TextAppearance.FontMedium"
         android:padding="@dimen/_5sdp"/>
 
 </LinearLayout>

@@ -10,12 +10,28 @@
 
     <style name="TextAppearance.FontMedium" parent="android:TextAppearance">
         <!-- Custom Attr-->
-        <item name="fontPath">fonts/AvenirLTStd-Medium.otf</item>
+        <item name="fontPath">fonts/AvenirLTStd-Medium.ttf</item>
     </style>
 
     <style name="TextAppearance.FontRegular" parent="android:TextAppearance">
         <!-- Custom Attr-->
         <item name="fontPath">fonts/AvenirLTStd-Book.otf</item>
+    </style>
+
+    <style name="TextAppearance.FontBold" parent="android:TextAppearance">
+        <!-- Custom Attr-->
+        <item name="fontPath">fonts/Bold.otf</item>
+    </style>
+
+    <style name="SCBSwitch" parent="Theme.AppCompat.Light">
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">@color/colorGreen</item>
+
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">@color/colorGrayDark</item>
+
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground">@color/colorGreen</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_margin="@dimen/_20sdp">
+    android:layout_margin="@dimen/_30sdp">
 
     <LinearLayout
         android:orientation="vertical"
@@ -24,6 +24,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/go_online_agreement"
                 android:textSize="@dimen/_18sdp"
+                android:textColor="@color/colorBlack"
                 android:textAppearance="@style/TextAppearance.FontMedium"/>
 
             <TextView
@@ -31,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:textAppearance="@style/TextAppearance.FontRegular"
+                android:textAppearance="@style/TextAppearance.FontMedium"
                 android:text="@string/terms_of_direct_service"/>
 
         </LinearLayout>

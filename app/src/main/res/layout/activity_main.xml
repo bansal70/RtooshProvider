@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
             android:text="@string/you_are_online_now"
-            android:textAppearance="@style/TextAppearance.FontMedium"
+            android:textAppearance="@style/TextAppearance.FontBold"
             android:textColor="@color/colorGreen"
             android:padding="@dimen/_5sdp"
             android:gravity="center|start"
@@ -69,8 +69,6 @@
 
         </LinearLayout>
 
-        <include layout="@layout/dialog_request"/>
-
         <RelativeLayout
             android:id="@+id/rlOffline"
             android:layout_width="match_parent"
@@ -104,6 +102,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -186,12 +185,14 @@
                     android:layout_toRightOf="@+id/ivApprovedRequest"
                     android:layout_toEndOf="@+id/ivApprovedRequest"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/tvApprovedRequests"
-                    android:layout_toStartOf="@+id/tvApprovedRequests"
+                    android:layout_toLeftOf="@+id/llTime"
+                    android:layout_toStartOf="@+id/llTime"
+                    android:maxLines="1"
                     android:textAppearance="@style/TextAppearance.FontRegular"
                     android:layout_margin="@dimen/_5sdp" />
 
                 <LinearLayout
+                    android:id="@+id/llTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -241,9 +242,9 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_5sdp"
-                android:background="@color/colorGray"/>
+                android:background="@color/colorGrayLight"/>
 
-            <Switch
+            <android.support.v7.widget.SwitchCompat
                 android:id="@+id/switchOnline"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -253,14 +254,17 @@
                 android:textColor="@color/colorBlack"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:switchMinWidth="@dimen/_40sdp"
-                android:switchTextAppearance="@style/TextAppearance.FontMedium"
+                app:switchMinWidth="@dimen/_40sdp"
+                app:theme="@style/SCBSwitch"
+                app:switchTextAppearance="@style/TextAppearance.FontMedium"
                 android:textAppearance="@style/TextAppearance.FontMedium"
-                android:switchPadding="@dimen/_10sdp"
+                app:switchPadding="@dimen/_15sdp"
                 android:padding="@dimen/_10sdp"/>
 
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
+
+    <!--<include layout="@layout/dialog_request"/>-->
 
 </RelativeLayout>

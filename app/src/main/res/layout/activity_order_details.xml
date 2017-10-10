@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.rtoosh.provider.views.activities.OrderDetailsActivity"
+    tools:ignore="MissingPrefix" >
+
+    <include layout="@layout/toolbar_order_details"
+        android:id="@id/toolbar"/>
+
+    <include layout="@layout/content_order_details_top"
+        android:id="@+id/cardUserDetails"/>
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cardUserDetails"
+        android:layout_above="@+id/cardArrivalTime"
+        android:layout_centerHorizontal="true" />
+
+
+    <include layout="@layout/content_order_details_bottom"
+        android:id="@+id/cardArrivalTime"/>
+
+    <TextView
+        android:id="@+id/tvStartService"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/start_the_service"
+        android:padding="@dimen/_5sdp"
+        android:gravity="center"
+        android:textSize="@dimen/_15sdp"
+        android:textColor="@color/white"
+        android:background="@drawable/custom_basic_gradient"
+        android:foreground="?selectableItemBackground"
+        android:textAppearance="@style/TextAppearance.FontMedium"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
