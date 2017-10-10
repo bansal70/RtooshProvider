@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "F:\\Rishav\\LairdBLE_v1.3\\RtooshProvider\\pageIndicatorLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\vpi__dark_theme.xml",
+        "source": "F:\\Rishav\\LairdBLE_v1.3\\RtooshProvider\\pageIndicatorLib\\build\\intermediates\\bundles\\debug\\res\\color\\vpi__dark_theme.xml"
+    },
+    {
+        "merged": "F:\\Rishav\\LairdBLE_v1.3\\RtooshProvider\\pageIndicatorLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\vpi__light_theme.xml",
+        "source": "F:\\Rishav\\LairdBLE_v1.3\\RtooshProvider\\pageIndicatorLib\\build\\intermediates\\bundles\\debug\\res\\color\\vpi__light_theme.xml"
+    },
+    {
+        "merged": "F:\\Rishav\\RtooshProvider\\pageIndicatorLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\vpi__dark_theme.xml",
+        "source": "F:\\Rishav\\RtooshProvider\\pageIndicatorLib\\build\\intermediates\\bundles\\debug\\res\\color\\vpi__dark_theme.xml"
+    },
+    {
+        "merged": "F:\\Rishav\\RtooshProvider\\pageIndicatorLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\vpi__light_theme.xml",
+        "source": "F:\\Rishav\\RtooshProvider\\pageIndicatorLib\\build\\intermediates\\bundles\\debug\\res\\color\\vpi__light_theme.xml"
+    }
+]

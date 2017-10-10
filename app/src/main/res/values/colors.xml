@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#F05F3E</color>
+    <color name="colorPrimaryDark">#F05F3E</color>
+    <color name="colorAccent">#ED3368</color>
+    <color name="colorAccentTransparent">#b9facabf</color>
+    <color name="colorBlack">#454546</color>
+    <color name="colorBlackTransparent">#ab454546</color>
+    <color name="colorLightTransparent">#30000000</color>
+    <color name="colorGrayDark">#706f6f</color>
+    <color name="colorGray">#d2d2d2</color>
+    <color name="colorGrayLight">#e4e3e3</color>
+    <color name="colorYellow">#FFD200</color>
+    <color name="ic_background">#555555</color>
+    <color name="colorWhite">#fff</color>
+    <color name="colorGreen">#72B301</color>
+    <color name="colorLightGreen">#F7FFE8</color>
+    <color name="colorTransparent">#70000000</color>
+</resources>

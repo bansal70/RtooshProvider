@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite">
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_above="@+id/cardLayout">
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/textOnline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:text="@string/you_are_online_now"
+            android:textAppearance="@style/TextAppearance.FontMedium"
+            android:textColor="@color/colorGreen"
+            android:padding="@dimen/_5sdp"
+            android:gravity="center|start"
+            android:visibility="gone"
+            android:drawableLeft="@mipmap/ic_online"
+            android:drawableStart="@mipmap/ic_online"
+            android:drawablePadding="@dimen/_10sdp"/>
+
+        <LinearLayout
+            android:id="@+id/llRequesting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_centerInParent="true">
+
+        <TextView
+            android:id="@+id/tvWaitingRequest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_basic_gradient_rounded"
+            android:text="@string/waiting_for_request"
+            android:textSize="@dimen/_25sdp"
+            android:textAppearance="@style/TextAppearance.FontMedium"
+            android:textColor="@color/colorLightGreen"
+            android:paddingLeft="@dimen/_20sdp"
+            android:paddingRight="@dimen/_20sdp"
+            android:drawablePadding="@dimen/_10sdp"/>
+
+        <com.github.silvestrpredko.dotprogressbar.DotProgressBar
+            android:id="@+id/dot_progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            app:amount="8"
+            app:duration="@android:integer/config_shortAnimTime"
+            app:endColor="@color/colorPrimary"
+            app:startColor="@color/colorAccent"
+            app:animationDirection="right"/>
+
+        </LinearLayout>
+
+        <include layout="@layout/dialog_request"/>
+
+        <RelativeLayout
+            android:id="@+id/rlOffline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@color/colorTransparent"
+                android:contentDescription="@null"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/you_are_offline"
+                android:textColor="@color/colorWhite"
+                android:layout_centerInParent="true"
+                android:textAppearance="@style/TextAppearance.FontMedium"
+                android:textSize="@dimen/_25sdp" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp">
+
+                <ImageView
+                    android:id="@+id/ivNewRequest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_5sdp"
+                    android:contentDescription="@null"
+                    android:src="@mipmap/ic_new_service_request"
+                    android:background="@color/colorAccent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentTop="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/new_service_request"
+                    android:layout_toRightOf="@+id/ivNewRequest"
+                    android:layout_toEndOf="@+id/ivNewRequest"
+                    android:gravity="start"
+                    android:layout_toLeftOf="@+id/tvNewRequest"
+                    android:layout_toStartOf="@+id/tvNewRequest"
+                    android:textAppearance="@style/TextAppearance.FontRegular"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:layout_centerInParent="true" />
+
+                <TextView
+                    android:id="@+id/tvNewRequest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_circular_pink_bg"
+                    android:text="3"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:textAppearance="@style/TextAppearance.FontMedium"
+                    android:textSize="@dimen/_15sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:textColor="@color/colorWhite"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/colorGray"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@color/colorLightGreen"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/ivApprovedRequest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_5sdp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentTop="true"
+                    android:contentDescription="@null"
+                    android:src="@mipmap/ic_approved_service"
+                    android:background="@color/colorGreen"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/approved_services"
+                    android:layout_toRightOf="@+id/ivApprovedRequest"
+                    android:layout_toEndOf="@+id/ivApprovedRequest"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/tvApprovedRequests"
+                    android:layout_toStartOf="@+id/tvApprovedRequests"
+                    android:textAppearance="@style/TextAppearance.FontRegular"
+                    android:layout_margin="@dimen/_5sdp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_toLeftOf="@+id/tvApprovedRequests"
+                    android:layout_toStartOf="@+id/tvApprovedRequests"
+                    android:layout_centerInParent="true"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10 Oct"
+                        android:gravity="center"
+                        android:drawableLeft="@mipmap/ic_calendar_unselected"
+                        android:drawableStart="@mipmap/ic_calendar_unselected"
+                        android:drawablePadding="@dimen/_2sdp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="6:30"
+                        android:gravity="center"
+                        android:padding="@dimen/_5sdp"
+                        android:drawableLeft="@mipmap/ic_clock_pink"
+                        android:drawableStart="@mipmap/ic_clock_pink"
+                        android:drawablePadding="@dimen/_2sdp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvApprovedRequests"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_circular_green_bg"
+                    android:text="5"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:textAppearance="@style/TextAppearance.FontMedium"
+                    android:textSize="@dimen/_15sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:textColor="@color/colorWhite"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_5sdp"
+                android:background="@color/colorGray"/>
+
+            <Switch
+                android:id="@+id/switchOnline"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/go_online"
+                android:textStyle="bold"
+                android:textSize="@dimen/_18sdp"
+                android:textColor="@color/colorBlack"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:switchMinWidth="@dimen/_40sdp"
+                android:switchTextAppearance="@style/TextAppearance.FontMedium"
+                android:textAppearance="@style/TextAppearance.FontMedium"
+                android:switchPadding="@dimen/_10sdp"
+                android:padding="@dimen/_10sdp"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

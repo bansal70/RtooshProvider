@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">RtooshProvider</string>
+    <string name="skip">Skip</string>
+    <string name="events_collection">EVENTS COLLECTION</string>
+    <string name="slider_one_des">Discover the best things to do this week in your city</string>
+    <string name="slider_two_des">Connect with your friends, follow tastemakers and people who share your interests.</string>
+    <string name="connect_follow"><![CDATA[CONNECT & FOLLOW]]></string>
+    <string name="book_share"><![CDATA[BOOK & SHARE]]></string>
+    <string name="slider_three_des">Book events so easy in two steps and share it with your friends.</string>
+    <string name="google_maps_key">AIzaSyD_yFbWsbyc_glqWxGYHgTmyaBVpcJNj8s</string>
+    <string name="approved_services">Approved Services</string>
+    <string name="new_service_request">New Services Request</string>
+    <string name="go_online">Go Online</string>
+    <string name="you_are_offline">You Are Offline</string>
+    <string name="home">Home</string>
+    <string name="next">Next</string>
+    <string name="check_services_you_will_provide">Check services you will provide:</string>
+    <string name="go_online_agreement">GO online agreement</string>
+    <string name="terms_of_direct_service">When you agree to provide direct services you can not cancel any order you received. Canceling orders displays your acccount for automatic shutdown. \n \n  Do you agree to the Terms of Direct Services?</string>
+    <string name="cancel">Cancel</string>
+    <string name="agree">Agree</string>
+    <string name="you_are_online_now">You Are Online Now</string>
+    <string name="waiting_for_request">Waiting for request</string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
+    <string name="min">Min</string>
+    <string name="sec">Sec</string>
+    <string name="colon">:</string>
+</resources>

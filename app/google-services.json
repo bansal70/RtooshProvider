@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "544391082269",
+    "firebase_url": "https://rtoosh-9a6e7.firebaseio.com",
+    "project_id": "rtoosh-9a6e7",
+    "storage_bucket": "rtoosh-9a6e7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:544391082269:android:17b836578bd834c6",
+        "android_client_info": {
+          "package_name": "com.rtoosh.provider"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "544391082269-jbacaup0tiu7h22lmmkko4p2a86fbqme.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjZUiJmVcPfW5DVijhvw_jDKRkCWeyKa8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
