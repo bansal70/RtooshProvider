@@ -11,8 +11,10 @@ import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -35,7 +37,7 @@ public class MainActivity extends AppBaseActivity implements CompoundButton.OnCh
     TextView tvNewRequests, tvApprovedRequests;
     SwitchCompat switchOnline;
     List<Services> listServices;
-    Dialog dialogServices, dialogTerms, dialogRequest;
+    Dialog dialogServices, dialogTerms, dialogRequest, dialogDecline;
     Handler handler;
     GoogleMap mGoogleMap;
 
@@ -52,6 +54,7 @@ public class MainActivity extends AppBaseActivity implements CompoundButton.OnCh
         initServiceDialog();
         initTermsDialog();
         initRequestDialog();
+        initDeclineDialog();
     }
 
     private void initViews() {
@@ -63,6 +66,17 @@ public class MainActivity extends AppBaseActivity implements CompoundButton.OnCh
         switchOnline = (SwitchCompat) findViewById(R.id.switchOnline);
         switchOnline.setOnCheckedChangeListener(this);
         handler = new Handler();
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+        if (isChecked) {
+            dialogServices.show();
+        } else {
+            findViewById(R.id.textOnline).setVisibility(View.GONE);
+            findViewById(R.id.llRequesting).setVisibility(View.GONE);
+            findViewById(R.id.rlOffline).setVisibility(View.VISIBLE);
+        }
     }
 
     private void initServiceDialog() {
@@ -88,7 +102,7 @@ public class MainActivity extends AppBaseActivity implements CompoundButton.OnCh
         });
     }
 
-    public void initTermsDialog() {
+    private void initTermsDialog() {
         dialogTerms = Utils.createDialog(this, R.layout.dialog_terms);
 
         dialogTerms.findViewById(R.id.tvAgree).setOnClickListener(new View.OnClickListener() {
@@ -120,21 +134,17 @@ public class MainActivity extends AppBaseActivity implements CompoundButton.OnCh
         });
     }
 
-    public void initRequestDialog() {
+    private void initRequestDialog() {
         dialogRequest = Utils.createDialog(this, R.layout.dialog_request);
-        //dialogRequest.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        dialogRequest.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         dialogRequest.findViewById(R.id.tvAccept).setOnClickListener(this);
+        dialogRequest.findViewById(R.id.tvDecline).setOnClickListener(this);
     }
 
-    @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-        if (isChecked) {
-            dialogServices.show();
-        } else {
-            findViewById(R.id.textOnline).setVisibility(View.GONE);
-            findViewById(R.id.llRequesting).setVisibility(View.GONE);
-            findViewById(R.id.rlOffline).setVisibility(View.VISIBLE);
-        }
+    private void initDeclineDialog() {
+        dialogDecline = Utils.createDialog(this, R.layout.dialog_decline_request);
+        dialogDecline.findViewById(R.id.tvDeclineRequest).setOnClickListener(this);
+        dialogDecline.findViewById(R.id.tvDeclineCancel).setOnClickListener(this);
     }
 
     @Override
@@ -144,6 +154,21 @@ public class MainActivity extends AppBaseActivity implements CompoundButton.OnCh
                 startActivity(new Intent(mContext, OrderDetailsActivity.class));
                 Utils.gotoNextActivityAnimation(mContext);
                 dialogRequest.dismiss();
+                break;
+
+            case R.id.tvDecline:
+                dialogRequest.dismiss();
+                dialogDecline.show();
+                break;
+
+            case R.id.tvDeclineRequest:
+                dialogDecline.dismiss();
+                Toast.makeText(mContext, R.string.request_declined, Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.tvDeclineCancel:
+                dialogRequest.show();
+                dialogDecline.dismiss();
                 break;
         }
     }
@@ -164,6 +189,6 @@ public class MainActivity extends AppBaseActivity implements CompoundButton.OnCh
         }
 
         LatLng mohali = new LatLng(30.706326, 76.704865);
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mohali, 15));
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mohali, 14));
     }
 }

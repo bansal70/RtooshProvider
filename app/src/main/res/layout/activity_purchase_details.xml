@@ -29,6 +29,7 @@
                 android:padding="@dimen/_10sdp">
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/cardPurchase"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardUseCompatPadding="true"
@@ -53,14 +54,14 @@
                             android:textSize="@dimen/_15sdp" />
 
                         <TextView
+                            android:id="@+id/textView3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:text="$305"
-                            android:textSize="@dimen/_20sdp"
-                            android:textColor="@color/colorAccent"
-                            android:layout_marginTop="@dimen/_5sdp"
                             android:textAppearance="@style/TextAppearance.FontBold"
-                            android:layout_gravity="center"/>
+                            android:textColor="@color/colorAccent"
+                            android:textSize="@dimen/_30sdp" />
 
                         <View
                             android:layout_width="match_parent"
@@ -72,6 +73,7 @@
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_5sdp"
                             android:paddingRight="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
                             android:textColor="@color/colorBlack"
                             android:textAppearance="@style/TextAppearance.FontBold"
                             android:text="@string/invoice_breakdown"/>
@@ -80,6 +82,7 @@
                             android:id="@+id/recyclerOrders"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
                             android:paddingLeft="@dimen/_5sdp"
                             android:paddingRight="@dimen/_5sdp" />
 
@@ -162,7 +165,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/total"
-                                android:textSize="@dimen/_15sdp"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/_20sdp"
                                 android:textAppearance="@style/TextAppearance.FontBold"/>
 
                             <TextView
@@ -170,9 +174,10 @@
                                 android:layout_height="wrap_content"
                                 android:text="$244"
                                 android:textColor="@color/colorAccent"
-                                android:textSize="@dimen/_15sdp"
+                                android:textSize="@dimen/_20sdp"
                                 android:layout_marginLeft="@dimen/_5sdp"
                                 android:layout_marginStart="@dimen/_5sdp"
+                                android:layout_marginBottom="@dimen/_10sdp"
                                 android:textAppearance="@style/TextAppearance.FontBold"/>
 
                         </LinearLayout>
@@ -229,19 +234,20 @@
                         app:cardElevation="@dimen/_4sdp">
 
                         <TextView
+                            android:id="@+id/tvYes"
                             android:layout_width="@dimen/_100sdp"
                             android:layout_height="wrap_content"
                             android:text="@string/yes"
-                            android:textColor="@color/colorWhite"
-                            android:drawableRight="@mipmap/ic_check_white"
-                            android:drawableEnd="@mipmap/ic_check_white"
+                            android:textColor="@color/colorPrimary"
+                            android:drawableRight="@mipmap/ic_check_pink"
+                            android:drawableEnd="@mipmap/ic_check_pink"
                             android:paddingRight="@dimen/_10sdp"
                             android:paddingLeft="@dimen/_10sdp"
                             android:gravity="center"
                             android:textAppearance="@style/TextAppearance.FontBold"
                             android:paddingTop="@dimen/_7sdp"
                             android:paddingBottom="@dimen/_7sdp"
-                            android:background="@drawable/custom_basic_gradient"/>
+                            android:background="@color/colorWhite"/>
 
                     </android.support.v7.widget.CardView>
 
@@ -257,19 +263,20 @@
                         app:cardElevation="@dimen/_4sdp">
 
                         <TextView
+                            android:id="@+id/tvNo"
                             android:layout_width="@dimen/_100sdp"
                             android:layout_height="wrap_content"
                             android:text="@string/no"
-                            android:textColor="@color/colorAccent"
-                            android:drawableRight="@mipmap/ic_check_pink"
-                            android:drawableEnd="@mipmap/ic_check_pink"
+                            android:textColor="@color/colorWhite"
+                            android:drawableRight="@mipmap/ic_check_white"
+                            android:drawableEnd="@mipmap/ic_check_white"
                             android:paddingRight="@dimen/_10sdp"
                             android:paddingLeft="@dimen/_10sdp"
                             android:gravity="center"
                             android:textAppearance="@style/TextAppearance.FontBold"
                             android:paddingTop="@dimen/_7sdp"
                             android:paddingBottom="@dimen/_7sdp"
-                            android:background="@color/white"/>
+                            android:background="@drawable/custom_basic_gradient"/>
 
                     </android.support.v7.widget.CardView>
 

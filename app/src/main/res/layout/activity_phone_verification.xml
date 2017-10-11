@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/custom_bg"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/_20sdp"
+    tools:context="com.rtoosh.provider.views.activities.PhoneVerificationActivity">
+
+    <ImageView
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:src="@mipmap/ic_launcher"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/app_name"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/verify_your_phone_number"
+        android:textColor="@color/colorAccent"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:textSize="@dimen/_15sdp"
+        android:textAppearance="@style/TextAppearance.FontMedium"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:textColor="@color/colorGrayDark"
+        android:textAppearance="@style/TextAppearance.FontMedium"
+        android:text="@string/enter_number_text"/>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        app:cardUseCompatPadding="false"
+        app:cardPreventCornerOverlap="false"
+        app:cardBackgroundColor="#F3ECEE"
+        app:cardCornerRadius="@dimen/_5sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/custom_basic_gradient"
+                android:contentDescription="@null"
+                android:padding="@dimen/_10sdp"
+                android:src="@mipmap/ic_register_phone" />
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/colorLightPink"
+                android:hint="@string/country_code"
+                android:maxLength="2"
+                android:padding="@dimen/_10sdp"
+                android:inputType="phone"
+                android:imeOptions="actionNext"
+                android:textAppearance="@style/TextAppearance.FontMedium"
+                android:textColorHint="@color/colorGrayDark" />
+
+            <View
+                android:layout_width="@dimen/_1sdp"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_2sdp"
+                android:background="@color/colorGray" />
+
+            <EditText
+                android:id="@+id/editPhone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@color/colorLightPink"
+                android:hint="@string/phone_number"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:imeOptions="actionDone"
+                android:padding="@dimen/_3sdp"
+                android:textAppearance="@style/TextAppearance.FontMedium"
+                android:textColorHint="@color/colorGrayDark" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:id="@+id/tvSendOtp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/send"
+        android:textAllCaps="true"
+        android:textColor="@color/colorWhite"
+        android:paddingLeft="@dimen/_50sdp"
+        android:paddingRight="@dimen/_50sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:onClick="sendOtp"
+        style="?borderlessButtonStyle"
+        android:foreground="?selectableItemBackground"
+        android:textAppearance="@style/TextAppearance.FontMedium"
+        android:background="@drawable/custom_basic_gradient_rounded"
+        android:layout_marginTop="@dimen/_30sdp"/>
+
+</LinearLayout>

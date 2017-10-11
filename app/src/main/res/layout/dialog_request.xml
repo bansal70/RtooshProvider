@@ -9,102 +9,88 @@
     android:gravity="center"
     android:layout_gravity="center"
     android:visibility="visible"
+    android:background="@mipmap/ic_background"
     tools:ignore="MissingPrefix">
 
-    <RelativeLayout
-        android:id="@+id/rlTime"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="bottom">
-
-    <ImageView
-        android:layout_width="@dimen/_170sdp"
-        android:layout_height="@dimen/_170sdp"
-        android:contentDescription="@null"
-        android:background="@drawable/custom_circular_ring_bg"/>
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_70sdp">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_centerInParent="true">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="05"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_40sdp"
-                    android:textAppearance="@style/TextAppearance.FontMedium"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/minutes"
-                    android:textSize="@dimen/_25sdp"
-                    android:textColor="@color/colorBlack"
-                    android:textAppearance="@style/TextAppearance.FontMedium"/>
-
-            </LinearLayout>
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/colon"
-                android:textSize="@dimen/_40sdp"
+                android:text="05"
                 android:textColor="@color/black"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:textSize="@dimen/_40sdp"
                 android:textAppearance="@style/TextAppearance.FontMedium"/>
 
-            <LinearLayout
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="59"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_40sdp"
-                    android:textAppearance="@style/TextAppearance.FontMedium"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/seconds"
-                    android:textSize="@dimen/_25sdp"
-                    android:textColor="@color/colorBlack"
-                    android:textAppearance="@style/TextAppearance.FontMedium"/>
-
-            </LinearLayout>
+                android:text="@string/minutes"
+                android:textSize="@dimen/_25sdp"
+                android:textColor="@color/colorBlack"
+                android:textAppearance="@style/TextAppearance.FontMedium"/>
 
         </LinearLayout>
 
-    </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/colon"
+            android:textSize="@dimen/_40sdp"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textAppearance="@style/TextAppearance.FontMedium"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="59"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_40sdp"
+                android:textAppearance="@style/TextAppearance.FontMedium"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/seconds"
+                android:textSize="@dimen/_25sdp"
+                android:textColor="@color/colorBlack"
+                android:textAppearance="@style/TextAppearance.FontMedium"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardUseCompatPadding="true"
-        android:layout_marginTop="@dimen/_20sdp">
+        android:layout_marginTop="@dimen/_80sdp"
+        app:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:gravity="center"
             android:padding="@dimen/_5sdp">
 
@@ -112,36 +98,36 @@
                 android:id="@+id/tvAccept"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/custom_accept_bg"
+                android:foreground="?selectableItemBackground"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingLeft="@dimen/_40sdp"
+                android:paddingRight="@dimen/_40sdp"
+                android:paddingTop="@dimen/_5sdp"
                 android:text="@string/accept"
+                android:textAppearance="@style/TextAppearance.FontMedium"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_15sdp"
-                android:paddingRight="@dimen/_40sdp"
-                android:paddingLeft="@dimen/_40sdp"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
-                android:textStyle="bold"
-                android:textAppearance="@style/TextAppearance.FontMedium"
-                android:background="@drawable/custom_accept_bg"
-                android:foreground="?selectableItemBackground"/>
+                android:textStyle="bold" />
 
             <View
-                android:layout_width="@dimen/_40sdp"
-                android:layout_height="match_parent"/>
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="match_parent" />
 
             <TextView
                 android:id="@+id/tvDecline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/decline"
-                android:textSize="@dimen/_15sdp"
-                android:textColor="@color/white"
-                android:paddingRight="@dimen/_30sdp"
-                android:paddingLeft="@dimen/_30sdp"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
-                android:textAppearance="@style/TextAppearance.FontMedium"
                 android:background="@drawable/custom_decline_bg"
-                android:foreground="?selectableItemBackground"/>
+                android:foreground="?selectableItemBackground"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingLeft="@dimen/_30sdp"
+                android:paddingRight="@dimen/_30sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:text="@string/decline"
+                android:textAppearance="@style/TextAppearance.FontMedium"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_15sdp" />
 
         </LinearLayout>
 

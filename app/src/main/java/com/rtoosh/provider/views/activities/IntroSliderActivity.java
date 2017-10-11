@@ -32,7 +32,7 @@ public class IntroSliderActivity extends AppBaseActivity {
     }
 
     public void skipClick(View v){
-        startActivity(new Intent(mContext, MainActivity.class));
+        startActivity(new Intent(mContext, PhoneVerificationActivity.class));
         Utils.gotoNextActivityAnimation(mContext);
     }
 }

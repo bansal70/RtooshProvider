@@ -32,7 +32,7 @@ public class ServiceActivity extends AppBaseActivity implements View.OnClickList
     private void initViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_cancel);
+        toolbar.setNavigationIcon(R.mipmap.ic_cancel);
 
         listOrders = new ArrayList<>();
         listOrders.add(new Order("2 Blowout", 2, 80));

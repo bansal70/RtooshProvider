@@ -3,7 +3,7 @@
     <color name="colorPrimary">#F05F3E</color>
     <color name="colorPrimaryDark">#F05F3E</color>
     <color name="colorAccent">#ED3368</color>
-    <color name="colorAccentTransparent">#b9facabf</color>
+    <color name="colorAccentTransparent">#FCF2F5</color>
     <color name="colorBlack">#454546</color>
     <color name="colorBlackTransparent">#ab454546</color>
     <color name="colorLightTransparent">#30000000</color>
@@ -17,4 +17,6 @@
     <color name="colorLightGreen">#F7FFE8</color>
     <color name="colorTransparent">#70000000</color>
     <color name="colorBlue">#4285F4</color>
+    <color name="colorLightWhite">#F7F7F7</color>
+    <color name="colorLightPink">#f3ecee</color>
 </resources>
