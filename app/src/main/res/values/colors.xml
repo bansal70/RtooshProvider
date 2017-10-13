@@ -19,4 +19,6 @@
     <color name="colorBlue">#4285F4</color>
     <color name="colorLightWhite">#F7F7F7</color>
     <color name="colorLightPink">#f3ecee</color>
+    <color name="colorLightYellow">#FFF1D0</color>
+    <color name="colorDarkYellow">#C46F01</color>
 </resources>

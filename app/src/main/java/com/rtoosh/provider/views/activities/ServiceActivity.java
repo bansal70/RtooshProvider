@@ -55,4 +55,9 @@ public class ServiceActivity extends AppBaseActivity implements View.OnClickList
                 break;
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

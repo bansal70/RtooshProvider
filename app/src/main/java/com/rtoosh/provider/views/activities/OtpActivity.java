@@ -35,4 +35,9 @@ public class OtpActivity extends AppBaseActivity {
         startActivity(new Intent(mContext, RegistrationActivity.class));
         Utils.gotoNextActivityAnimation(this);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

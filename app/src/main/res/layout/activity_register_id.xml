@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/custom_bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.rtoosh.provider.views.activities.RegisterIDActivity">
+
+    <include layout="@layout/toolbar_register"
+        android:id="@+id/toolbar"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/custom_basic_gradient"
+        android:gravity="center"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/complete_following"
+            android:textColor="@color/colorWhite"/>
+
+        <include layout="@layout/custom_one" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
+        android:layout_above="@+id/tvNextID"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="@dimen/_5sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_15sdp">
+
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/id_information"
+                        android:textSize="15sp"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:button="@drawable/custom_checkbox_normal"
+                        android:textAppearance="@style/TextAppearance.FontMedium"/>
+
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:text="@string/upload_copy_of_your_id"
+                        android:textSize="15sp"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:button="@drawable/custom_checkbox_normal"
+                        android:textAppearance="@style/TextAppearance.FontMedium"/>
+
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:text="@string/select_type_of_work"
+                        android:textSize="15sp"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:button="@drawable/custom_checkbox_normal"
+                        android:textAppearance="@style/TextAppearance.FontMedium"/>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:padding="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:hint="@string/id_number"
+                android:textAppearance="@style/TextAppearance.FontMedium"
+                android:background="@drawable/custom_edit_text_bg"
+                android:inputType="number"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:padding="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:hint="@string/id_type"
+                android:drawableRight="@mipmap/ic_register_dropdown"
+                android:drawableEnd="@mipmap/ic_register_dropdown"
+                android:textAppearance="@style/TextAppearance.FontMedium"
+                android:background="@drawable/custom_edit_text_bg"
+                android:inputType="number"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:padding="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:hint="@string/issue_date"
+                android:textAppearance="@style/TextAppearance.FontMedium"
+                android:background="@drawable/custom_edit_text_bg"
+                android:inputType="number"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/copy_of_your_id"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/_15sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/tvUploadID"
+                    android:layout_toStartOf="@+id/tvUploadID"
+                    android:textAppearance="@style/TextAppearance.FontMedium"/>
+
+                <TextView
+                    android:id="@+id/tvUploadID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/upload"
+                    android:textSize="@dimen/_10sdp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorWhite"
+                    android:paddingLeft="@dimen/_25sdp"
+                    android:paddingRight="@dimen/_25sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:foreground="?selectableItemBackground"
+                    android:textAppearance="@style/TextAppearance.FontMedium"
+                    android:background="@drawable/custom_basic_gradient_rounded"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/uploading"
+                android:textSize="@dimen/_10sdp"
+                android:textAppearance="@style/TextAppearance.FontRegular"
+                android:textColor="@color/colorBlack"
+                android:layout_gravity="end"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:padding="@dimen/_5sdp"/>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="@dimen/_5sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/_10sdp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/select_type_of_work"
+                            android:textColor="@color/colorAccent"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:textAppearance="@style/TextAppearance.FontMedium"/>
+
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/online"
+                            android:textSize="15sp"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:paddingRight="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:button="@drawable/custom_checkbox_normal"
+                            android:textAppearance="@style/TextAppearance.FontMedium"/>
+
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="@string/schedule"
+                            android:textSize="15sp"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:paddingRight="@dimen/_10sdp"
+                            android:button="@drawable/custom_checkbox_normal"
+                            android:textAppearance="@style/TextAppearance.FontMedium"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/note_work"
+                        android:textColor="@color/colorDarkYellow"
+                        android:padding="@dimen/_10sdp"
+                        android:textSize="@dimen/_10sdp"
+                        android:drawableLeft="@drawable/ic_flag"
+                        android:drawableStart="@drawable/ic_flag"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:textAppearance="@style/TextAppearance.FontMedium"
+                        android:background="@color/colorLightYellow"/>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:id="@+id/tvPickSchedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pick_your_schedule"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite"
+                android:paddingLeft="@dimen/_50sdp"
+                android:paddingRight="@dimen/_50sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                style="?borderlessButtonStyle"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:foreground="?selectableItemBackground"
+                android:textAppearance="@style/TextAppearance.FontMedium"
+                android:background="@drawable/custom_basic_gradient_rounded" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/tvNextID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/next"
+        android:textAllCaps="true"
+        android:textColor="@color/colorWhite"
+        android:foreground="?selectableItemBackground"
+        style="?borderlessButtonStyle"
+        android:paddingRight="@dimen/_20sdp"
+        android:paddingLeft="@dimen/_20sdp"
+        android:onClick="nextID"
+        android:textAppearance="@style/TextAppearance.FontMedium"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/custom_basic_gradient"/>
+
+</RelativeLayout>

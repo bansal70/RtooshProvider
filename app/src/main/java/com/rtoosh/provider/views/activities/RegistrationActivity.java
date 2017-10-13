@@ -16,8 +16,12 @@ public class RegistrationActivity extends AppBaseActivity {
     }
 
     public void registerDone(View v) {
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, RegisterIDActivity.class));
         Utils.gotoNextActivityAnimation(this);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

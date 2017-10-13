@@ -22,4 +22,9 @@ public class SplashActivity extends AppBaseActivity {
             }
         },2000);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

@@ -121,4 +121,9 @@ public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnC
         tvYes.setTextColor(ContextCompat.getColor(mContext, a));
         tvNo.setTextColor(ContextCompat.getColor(mContext, b));
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

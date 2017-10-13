@@ -19,4 +19,9 @@ public class PhoneVerificationActivity extends AppBaseActivity {
         startActivity(new Intent(this, OtpActivity.class));
         Utils.gotoNextActivityAnimation(this);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

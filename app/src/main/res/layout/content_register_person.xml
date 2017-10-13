@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView android:layout_width="match_parent"
+    android:layout_height="@dimen/_85sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardCornerRadius="@dimen/_5sdp"
+    app:cardUseCompatPadding="true"
+    android:padding="@dimen/_10sdp"
+    tools:showIn="@layout/activity_register_order"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/llPerson"
+            android:layout_width="@dimen/_57sdp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/_2sdp"
+            android:paddingRight="@dimen/_2sdp"
+            android:background="@drawable/custom_basic_gradient">
+
+            <TextView
+                android:id="@+id/tvPersons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/two"
+                android:layout_centerInParent="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_35sdp"
+                android:textAppearance="@style/TextAppearance.FontBold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/persons"
+                android:layout_centerInParent="true"
+                android:layout_alignParentBottom="true"
+                android:maxLines="1"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:textAppearance="@style/TextAppearance.FontMedium"
+                android:textColor="@color/colorWhite"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toRightOf="@id/llPerson"
+            android:layout_toEndOf="@+id/llPerson"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/llAdd"
+            android:layout_toStartOf="@+id/llAdd"
+            android:padding="@dimen/_10sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/maximum_persons_per_order"
+                android:textSize="@dimen/_12sdp"
+                android:textAppearance="@style/TextAppearance.FontBold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/person_serve"
+                android:textSize="@dimen/_10sdp"
+                android:textAppearance="@style/TextAppearance.FontMedium"
+                android:layout_marginTop="@dimen/_5sdp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="@dimen/_1sdp"
+            android:layout_height="match_parent"
+            android:background="@color/colorGray"
+            android:layout_toLeftOf="@+id/llAdd"
+            android:layout_toStartOf="@+id/llAdd"/>
+
+        <LinearLayout
+            android:id="@+id/llAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:src="@mipmap/ic_add_pink"
+                android:padding="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:contentDescription="@string/add"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/colorGray"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:src="@mipmap/ic_subtract_grey"
+                android:padding="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:contentDescription="@string/less"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

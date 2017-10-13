@@ -191,4 +191,9 @@ public class MainActivity extends AppBaseActivity implements CompoundButton.OnCh
         LatLng mohali = new LatLng(30.706326, 76.704865);
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mohali, 14));
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

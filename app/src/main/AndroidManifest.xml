@@ -18,6 +18,23 @@
         </activity>
         <activity android:name=".views.activities.IntroSliderActivity" />
         <activity android:name=".views.activities.MainActivity" />
+        <activity android:name=".views.activities.OrderDetailsActivity" />
+        <activity android:name=".views.activities.ServiceActivity" />
+        <activity android:name=".views.activities.PurchaseDetailsActivity" />
+        <activity android:name=".views.activities.PhoneVerificationActivity" />
+        <activity android:name=".views.activities.OtpActivity" />
+        <activity
+            android:name=".views.activities.RegistrationActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".views.activities.RegisterIDActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".views.activities.RegisterOrderActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".views.activities.RegisterServiceActivity"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".views.activities.RegisterInfoActivity"
+            android:windowSoftInputMode="stateHidden"/>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -26,14 +43,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".views.activities.OrderDetailsActivity" />
-        <activity android:name=".views.activities.ServiceActivity" />
-        <activity android:name=".views.activities.PurchaseDetailsActivity" />
-        <activity android:name=".views.activities.PhoneVerificationActivity" />
-        <activity android:name=".views.activities.OtpActivity" />
-        <activity
-            android:name=".views.activities.RegistrationActivity"
-            android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>

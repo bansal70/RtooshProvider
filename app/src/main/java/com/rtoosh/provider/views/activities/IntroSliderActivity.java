@@ -35,4 +35,9 @@ public class IntroSliderActivity extends AppBaseActivity {
         startActivity(new Intent(mContext, PhoneVerificationActivity.class));
         Utils.gotoNextActivityAnimation(mContext);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

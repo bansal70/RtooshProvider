@@ -10,7 +10,7 @@
 
     <!--top, dark, inner shadow-->
     <item
-        android:top="@dimen/_1sdp">
+        android:top="0.3dp">
         <shape android:shape="rectangle">
             <corners android:radius="@dimen/_4sdp" />
             <solid android:color="@color/colorGrayLight" />
@@ -29,12 +29,12 @@
 
     <!--your color-->
     <item
-        android:top="@dimen/_1sdp">
+        android:top="0.3dp">
         <shape android:shape="rectangle">
             <corners android:radius="@dimen/_4sdp" />
-            <stroke android:width="@dimen/_1sdp"
+            <stroke android:width="0.5dp"
                 android:color="@color/colorGray"/>
-            <solid android:color="@color/colorLightWhite" />
+            <solid android:color="@color/colorLightPink" />
         </shape>
     </item>
 </layer-list>

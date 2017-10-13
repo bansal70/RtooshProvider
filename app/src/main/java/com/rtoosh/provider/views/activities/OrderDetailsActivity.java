@@ -88,4 +88,9 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
         LatLng mohali = new LatLng(30.706326, 76.704865);
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mohali, 15));
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
