@@ -96,6 +96,7 @@
                 android:src="@mipmap/ic_add_pink"
                 android:padding="@dimen/_5sdp"
                 android:layout_weight="1"
+                android:foreground="?selectableItemBackground"
                 android:contentDescription="@string/add"/>
 
             <View
@@ -109,6 +110,7 @@
                 android:src="@mipmap/ic_subtract_grey"
                 android:padding="@dimen/_5sdp"
                 android:layout_weight="1"
+                android:foreground="?selectableItemBackground"
                 android:contentDescription="@string/less"/>
 
         </LinearLayout>

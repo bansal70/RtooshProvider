@@ -34,7 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/eta"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/colorAccent" />
 
                 <TextView
                     android:id="@+id/tvEstimatedTIme"
@@ -112,7 +112,8 @@
                         android:drawableStart="@mipmap/ic_prepair"
                         android:gravity="bottom|start"
                         android:text="@string/prepare"
-                        android:textAppearance="@style/TextAppearance.FontMedium"
+                        android:textColor="@color/colorBlack"
+                        android:textAppearance="@style/TextAppearance.FontBold"
                         android:textSize="@dimen/_14sdp" />
 
                     <LinearLayout
@@ -184,13 +185,14 @@
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/llExpectedTime"
                     android:layout_toStartOf="@id/llExpectedTime"
-                    android:drawableLeft="@mipmap/ic_order_details_time_black"
+                    android:drawableLeft="@drawable/ic_order_details_time_black"
                     android:drawablePadding="@dimen/_5sdp"
-                    android:drawableStart="@mipmap/ic_order_details_time_black"
+                    android:drawableStart="@drawable/ic_order_details_time_black"
                     android:gravity="center|start"
                     android:padding="@dimen/_5sdp"
+                    android:textColor="@color/colorBlack"
                     android:text="@string/expected_time_to_arrive"
-                    android:textAppearance="@style/TextAppearance.FontMedium"
+                    android:textAppearance="@style/TextAppearance.FontBold"
                     android:textSize="@dimen/_14sdp" />
 
                 <LinearLayout

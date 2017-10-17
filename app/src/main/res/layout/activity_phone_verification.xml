@@ -57,7 +57,7 @@
                 android:padding="@dimen/_10sdp"
                 android:src="@mipmap/ic_register_phone" />
 
-            <EditText
+            <TextView
                 android:id="@+id/editText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -66,8 +66,6 @@
                 android:hint="@string/country_code"
                 android:maxLength="2"
                 android:padding="@dimen/_10sdp"
-                android:inputType="phone"
-                android:imeOptions="actionNext"
                 android:textAppearance="@style/TextAppearance.FontMedium"
                 android:textColorHint="@color/colorGrayDark" />
 
@@ -107,7 +105,7 @@
         android:paddingBottom="@dimen/_10sdp"
         android:onClick="sendOtp"
         style="?borderlessButtonStyle"
-        android:foreground="?selectableItemBackground"
+        android:foreground="@drawable/ripple"
         android:textAppearance="@style/TextAppearance.FontMedium"
         android:background="@drawable/custom_basic_gradient_rounded"
         android:layout_marginTop="@dimen/_30sdp"/>

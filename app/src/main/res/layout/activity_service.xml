@@ -30,8 +30,8 @@
             android:id="@+id/recyclerOrders"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/_5sdp"
-            android:paddingRight="@dimen/_5sdp" />
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp" />
 
         <View
             android:layout_width="match_parent"
@@ -41,13 +41,15 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/_5sdp"
-            android:paddingRight="@dimen/_5sdp">
+            android:layout_marginTop="@dimen/_5sdp"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/total_price"
+                android:textColor="@color/colorBlack"
                 android:textAppearance="@style/TextAppearance.FontMedium"
                 android:textSize="@dimen/_14sdp" />
 
@@ -82,9 +84,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:drawableLeft="@mipmap/ic_order_details_name"
-                android:drawablePadding="@dimen/_5sdp"
-                android:drawableStart="@mipmap/ic_order_details_name"
+                android:drawableLeft="@drawable/ic_order_details_name"
+                android:drawablePadding="@dimen/_10sdp"
+                android:drawableStart="@drawable/ic_order_details_name"
                 android:gravity="center|start"
                 android:text="Sara karmen"
                 android:layout_toLeftOf="@+id/llInfo"
@@ -121,7 +123,7 @@
                         android:paddingTop="@dimen/_2sdp"
                         android:text="@string/call"
                         android:textAllCaps="false"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorAccent"
                         android:textAppearance="@style/TextAppearance.FontBold"
                         android:textSize="@dimen/_10sdp"
                         android:textStyle="bold" />
@@ -146,7 +148,7 @@
                         android:paddingRight="@dimen/_12sdp"
                         android:paddingTop="@dimen/_2sdp"
                         android:text="@string/sms"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorAccent"
                         android:textAppearance="@style/TextAppearance.FontBold"
                         android:textSize="@dimen/_10sdp" />
 
@@ -159,9 +161,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@mipmap/ic_order_persons"
-            android:drawablePadding="@dimen/_5sdp"
-            android:drawableStart="@mipmap/ic_order_persons"
+            android:drawableLeft="@drawable/ic_order_persons"
+            android:drawablePadding="@dimen/_10sdp"
+            android:drawableStart="@drawable/ic_order_persons"
             android:gravity="center"
             android:text="2 Persons"
             android:layout_marginLeft="@dimen/_10sdp"
@@ -182,9 +184,9 @@
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/llTime"
                 android:layout_toStartOf="@id/llTime"
-                android:drawableLeft="@mipmap/ic_order_details_time_black"
-                android:drawablePadding="@dimen/_5sdp"
-                android:drawableStart="@mipmap/ic_order_details_time_black"
+                android:drawableLeft="@drawable/ic_order_details_time_black"
+                android:drawablePadding="@dimen/_10sdp"
+                android:drawableStart="@drawable/ic_order_details_time_black"
                 android:gravity="center|start"
                 android:text="@string/order_total_time"
                 android:textAppearance="@style/TextAppearance.FontMedium"
@@ -261,10 +263,11 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@mipmap/ic_order_details_time_black"
-                        android:drawablePadding="@dimen/_5sdp"
-                        android:drawableStart="@mipmap/ic_order_details_time_black"
+                        android:drawableLeft="@drawable/ic_order_details_time_black"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:drawableStart="@drawable/ic_order_details_time_black"
                         android:gravity="center|start"
+                        android:textColor="@color/colorBlack"
                         android:text="@string/expected_time_to_finish"
                         android:textAppearance="@style/TextAppearance.FontBold"
                         android:textSize="@dimen/_12sdp" />
@@ -276,7 +279,7 @@
                         android:layout_marginLeft="@dimen/_25sdp"
                         android:layout_marginStart="@dimen/_25sdp"
                         android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/_11sdp"
+                        android:textSize="@dimen/_10sdp"
                         android:textAppearance="@style/TextAppearance.FontMedium"
                         android:text="@string/based_on_total_service" />
 
@@ -344,7 +347,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/service_completed"
-        android:padding="@dimen/_5sdp"
+        android:padding="@dimen/_7sdp"
         android:gravity="center"
         android:textSize="@dimen/_15sdp"
         android:textColor="@color/white"

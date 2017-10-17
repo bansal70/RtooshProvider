@@ -25,7 +25,7 @@
                 android:id="@+id/tvServiceName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hair"
+                android:text="@string/hair_cut"
                 android:textSize="@dimen/_15sdp"
                 android:layout_toLeftOf="@+id/tvServicePrice"
                 android:layout_toStartOf="@+id/tvServicePrice"
@@ -51,7 +51,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Provide you the best service"
-            android:layout_marginTop="@dimen/_5sdp"
             android:textColor="@color/colorGrayDark"/>
 
         <LinearLayout

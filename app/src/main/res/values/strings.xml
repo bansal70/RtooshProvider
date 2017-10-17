@@ -124,7 +124,7 @@
     <string name="set_your_minimum_order">Set your minimum order</string>
     <string name="add_service_for_customer">Please add at least one type of service to be available for customer service</string>
     <string name="your_service_list">Your Service list</string>
-    <string name="hair">Haircut</string>
+    <string name="hair">Hair</string>
     <string name="makeup">Makeup</string>
     <string name="nails">Nails</string>
     <string name="public_account_information">Public Account Information</string>
@@ -140,4 +140,10 @@
     <string name="service_duration">Service Duration</string>
     <string name="duration">Duration :&#160;</string>
     <string name="verify">Verify</string>
+    <string name="background_photo">Background photo</string>
+    <string name="toast_invalid_number">Please enter the valid mobile number</string>
+    <string name="toast_digits_access_code">Please enter the 4-digits access code</string>
+    <string name="toast_fill_data">Please fill all the data</string>
+    <string name="toast_invalid_email">Please enter the valid email address</string>
+    <string name="toast_invalid_password_length">Password must contains at least 6 letters</string>
 </resources>

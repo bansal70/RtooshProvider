@@ -141,7 +141,6 @@
                         android:inputType="textEmailAddress"
                         android:paddingLeft="@dimen/_10sdp"
                         android:paddingRight="@dimen/_10sdp"
-                        android:maxLength="10"
                         android:textAppearance="@style/TextAppearance.FontMedium"
                         android:hint="@string/email"/>
 
@@ -198,7 +197,7 @@
                 android:paddingRight="@dimen/_50sdp"
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_10sdp"
-                android:foreground="?selectableItemBackground"
+                android:foreground="@drawable/ripple"
                 style="?borderlessButtonStyle"
                 android:onClick="registerDone"
                 android:textAppearance="@style/TextAppearance.FontMedium"

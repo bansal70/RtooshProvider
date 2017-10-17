@@ -18,99 +18,101 @@
             android:id="@+id/llPerson"
             android:layout_width="@dimen/_57sdp"
             android:layout_height="match_parent"
+            android:background="@drawable/custom_basic_gradient"
             android:orientation="vertical"
             android:paddingLeft="@dimen/_2sdp"
-            android:paddingRight="@dimen/_2sdp"
-            android:background="@drawable/custom_basic_gradient">
+            android:paddingRight="@dimen/_2sdp">
 
             <TextView
                 android:id="@+id/tvPersons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/two"
                 android:layout_centerInParent="true"
+                android:text="@string/two"
+                android:textAppearance="@style/TextAppearance.FontBold"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/_35sdp"
-                android:textAppearance="@style/TextAppearance.FontBold"/>
+                android:textSize="@dimen/_35sdp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/persons"
-                android:layout_centerInParent="true"
                 android:layout_alignParentBottom="true"
-                android:maxLines="1"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_centerInParent="true"
                 android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:maxLines="1"
+                android:text="@string/persons"
                 android:textAppearance="@style/TextAppearance.FontMedium"
-                android:textColor="@color/colorWhite"/>
+                android:textColor="@color/colorWhite" />
 
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_toRightOf="@id/llPerson"
-            android:layout_toEndOf="@+id/llPerson"
             android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/llPerson"
             android:layout_toLeftOf="@+id/llAdd"
+            android:layout_toRightOf="@id/llPerson"
             android:layout_toStartOf="@+id/llAdd"
+            android:orientation="vertical"
             android:padding="@dimen/_10sdp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/maximum_persons_per_order"
-                android:textSize="@dimen/_12sdp"
-                android:textAppearance="@style/TextAppearance.FontBold"/>
+                android:textAppearance="@style/TextAppearance.FontBold"
+                android:textSize="@dimen/_12sdp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:text="@string/person_serve"
-                android:textSize="@dimen/_10sdp"
                 android:textAppearance="@style/TextAppearance.FontMedium"
-                android:layout_marginTop="@dimen/_5sdp"/>
+                android:textSize="@dimen/_10sdp" />
 
         </LinearLayout>
 
         <View
             android:layout_width="@dimen/_1sdp"
             android:layout_height="match_parent"
-            android:background="@color/colorGray"
             android:layout_toLeftOf="@+id/llAdd"
-            android:layout_toStartOf="@+id/llAdd"/>
+            android:layout_toStartOf="@+id/llAdd"
+            android:background="@color/colorGray" />
 
         <LinearLayout
             android:id="@+id/llAdd"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:src="@mipmap/ic_add_pink"
-                android:padding="@dimen/_5sdp"
                 android:layout_weight="1"
-                android:contentDescription="@string/add"/>
+                android:contentDescription="@string/add"
+                android:foreground="?selectableItemBackground"
+                android:padding="@dimen/_5sdp"
+                android:src="@mipmap/ic_add_pink" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
-                android:background="@color/colorGray"/>
+                android:background="@color/colorGray" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:src="@mipmap/ic_subtract_grey"
-                android:padding="@dimen/_5sdp"
                 android:layout_weight="1"
-                android:contentDescription="@string/less"/>
+                android:contentDescription="@string/less"
+                android:padding="@dimen/_5sdp"
+                android:foreground="?selectableItemBackground"
+                android:src="@mipmap/ic_subtract_grey" />
 
         </LinearLayout>
 

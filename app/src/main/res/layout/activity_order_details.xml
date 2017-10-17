@@ -3,35 +3,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.rtoosh.provider.views.activities.OrderDetailsActivity"
     tools:ignore="MissingPrefix" >
 
     <include layout="@layout/toolbar_order_details"
         android:id="@id/toolbar"/>
 
-    <include layout="@layout/content_order_details_top"
-        android:id="@+id/cardUserDetails"/>
-
-    <fragment
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/cardUserDetails"
-        android:layout_above="@+id/cardArrivalTime"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/toolbar"
+        android:layout_above="@+id/tvStartService">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <include layout="@layout/content_order_details_bottom"
-        android:id="@+id/cardArrivalTime"/>
+            <include layout="@layout/content_order_details_top"
+                android:id="@+id/cardUserDetails"/>
+
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100sdp" />
+
+            <include layout="@layout/content_order_details_bottom"
+                android:id="@+id/cardArrivalTime"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <TextView
         android:id="@+id/tvStartService"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/start_the_service"
-        android:padding="@dimen/_5sdp"
+        android:padding="@dimen/_7sdp"
         android:gravity="center"
         android:textSize="@dimen/_15sdp"
         android:textColor="@color/white"

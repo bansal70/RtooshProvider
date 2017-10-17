@@ -49,6 +49,7 @@
             android:orientation="vertical">
 
             <android.support.v7.widget.CardView
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardUseCompatPadding="true"
@@ -107,6 +108,7 @@
                 android:inputType="number"/>
 
             <Spinner
+                android:id="@+id/spinnerIDType"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:padding="@dimen/_10sdp"
@@ -118,15 +120,18 @@
                 android:background="@drawable/custom_edit_text_bg"
                 android:inputType="number"/>
 
-            <EditText
+            <TextView
+                android:id="@+id/tvIssueDate"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:padding="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:hint="@string/issue_date"
+                android:onClick="issueDate"
+                android:layout_gravity="center"
+                android:gravity="start|center"
                 android:textAppearance="@style/TextAppearance.FontMedium"
-                android:background="@drawable/custom_edit_text_bg"
-                android:inputType="number"/>
+                android:background="@drawable/custom_edit_text_bg" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -156,7 +161,7 @@
                     android:paddingRight="@dimen/_25sdp"
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
-                    android:foreground="?selectableItemBackground"
+                    android:foreground="@drawable/ripple"
                     android:textAppearance="@style/TextAppearance.FontMedium"
                     android:background="@drawable/custom_basic_gradient_rounded"
                     android:layout_alignParentTop="true"
@@ -258,7 +263,7 @@
                 style="?borderlessButtonStyle"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:foreground="?selectableItemBackground"
+                android:foreground="@drawable/ripple"
                 android:textAppearance="@style/TextAppearance.FontMedium"
                 android:background="@drawable/custom_basic_gradient_rounded" />
 
@@ -274,7 +279,7 @@
         android:text="@string/next"
         android:textAllCaps="true"
         android:textColor="@color/colorWhite"
-        android:foreground="?selectableItemBackground"
+        android:foreground="@drawable/ripple"
         style="?borderlessButtonStyle"
         android:paddingRight="@dimen/_20sdp"
         android:paddingLeft="@dimen/_20sdp"

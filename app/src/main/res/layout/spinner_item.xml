@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="start|center"
+    android:text=""
+    android:maxLines="1"
+    android:textSize="@dimen/_13sdp"
+    android:textColor="@color/colorGrayDark"
+    android:textAppearance="@style/TextAppearance.FontMedium"
+    android:foreground="?selectableItemBackground"
+    android:drawableRight="@mipmap/ic_register_dropdown"
+    android:drawableEnd="@mipmap/ic_register_dropdown"/>

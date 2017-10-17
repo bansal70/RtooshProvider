@@ -20,7 +20,8 @@
         <activity android:name=".views.activities.MainActivity" />
         <activity android:name=".views.activities.OrderDetailsActivity" />
         <activity android:name=".views.activities.ServiceActivity" />
-        <activity android:name=".views.activities.PurchaseDetailsActivity" />
+        <activity android:name=".views.activities.PurchaseDetailsActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".views.activities.PhoneVerificationActivity" />
         <activity android:name=".views.activities.OtpActivity" />
         <activity
@@ -30,9 +31,9 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".views.activities.RegisterOrderActivity"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".views.activities.RegisterServiceActivity"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".views.activities.RegisterInfoActivity"
             android:windowSoftInputMode="stateHidden"/>
 

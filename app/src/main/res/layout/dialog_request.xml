@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/llRequest"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:layout_gravity="center"
     android:visibility="visible"
-    android:background="@mipmap/ic_background"
     tools:ignore="MissingPrefix">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_background"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_gravity="center">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/_70sdp">
+        android:layout_marginTop="@dimen/_50sdp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -50,7 +59,7 @@
             android:text="@string/colon"
             android:textSize="@dimen/_40sdp"
             android:textColor="@color/black"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_13sdp"
             android:textAppearance="@style/TextAppearance.FontMedium"/>
 
         <LinearLayout
@@ -85,8 +94,7 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_80sdp"
-        app:cardUseCompatPadding="true">
+        android:layout_marginTop="@dimen/_80sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -133,4 +141,6 @@
 
     </android.support.v7.widget.CardView>
 
-</LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

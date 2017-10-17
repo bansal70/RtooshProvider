@@ -80,58 +80,59 @@
                         android:id="@+id/imgHair"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ic_profile_hair"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/custom_basic_gradient"
+                        android:contentDescription="@string/hair_cut"
+                        android:paddingBottom="@dimen/_5sdp"
                         android:paddingLeft="@dimen/_5sdp"
                         android:paddingRight="@dimen/_5sdp"
                         android:paddingTop="@dimen/_5sdp"
-                        android:paddingBottom="@dimen/_5sdp"
-                        android:layout_alignParentBottom="true"
-                        android:contentDescription="@string/hair_cut"
-                        android:background="@drawable/custom_basic_gradient"
-                        android:layout_alignParentTop="true" />
+                        android:src="@drawable/ic_profile_hair" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/hair"
-                        android:layout_toRightOf="@+id/imgHair"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignTop="@+id/imgHair"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
                         android:layout_toEndOf="@+id/imgHair"
                         android:layout_toLeftOf="@+id/llHair"
+                        android:layout_toRightOf="@+id/imgHair"
                         android:layout_toStartOf="@+id/llHair"
-                        android:textColor="@color/colorGrayDark"
-                        android:layout_gravity="center"
                         android:gravity="center|start"
-                        android:layout_centerVertical="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_alignParentBottom="true"
-                        android:textAppearance="@style/TextAppearance.FontBold"
                         android:padding="@dimen/_10sdp"
-                        android:layout_alignTop="@+id/imgHair" />
+                        android:text="@string/hair"
+                        android:textAppearance="@style/TextAppearance.FontBold"
+                        android:textColor="@color/colorGrayDark" />
 
                     <LinearLayout
                         android:id="@+id/llHair"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
                         android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_alignParentBottom="true">
+                        android:layout_centerVertical="true">
 
-                    <View
-                        android:layout_width="@dimen/_1sdp"
-                        android:layout_height="match_parent"
-                        android:background="@color/colorGray"/>
+                        <View
+                            android:layout_width="@dimen/_1sdp"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorGray" />
 
-                    <ImageView
-                        android:id="@+id/imgPlusHair"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_add_pink"
-                        android:layout_gravity="center"
-                        android:onClick="hairClick"
-                        android:contentDescription="@string/add"
-                        android:padding="@dimen/_7sdp"/>
+                        <ImageView
+                            android:id="@+id/imgPlusHair"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/add"
+                            android:foreground="?selectableItemBackground"
+                            android:onClick="hairClick"
+                            android:padding="@dimen/_7sdp"
+                            android:src="@mipmap/ic_add_pink" />
 
                     </LinearLayout>
 
@@ -206,6 +207,7 @@
                             android:src="@mipmap/ic_add_pink"
                             android:layout_gravity="center"
                             android:onClick="makeupClick"
+                            android:foreground="?selectableItemBackground"
                             android:contentDescription="@string/add"
                             android:padding="@dimen/_7sdp"/>
 
@@ -283,6 +285,7 @@
                             android:layout_gravity="center"
                             android:onClick="nailsClick"
                             android:contentDescription="@string/add"
+                            android:foreground="?selectableItemBackground"
                             android:padding="@dimen/_7sdp"/>
 
                     </LinearLayout>
@@ -305,7 +308,7 @@
         android:text="@string/next"
         android:textAllCaps="true"
         android:textColor="@color/colorWhite"
-        android:foreground="?selectableItemBackground"
+        android:foreground="@drawable/ripple"
         style="?borderlessButtonStyle"
         android:onClick="nextService"
         android:paddingRight="@dimen/_20sdp"

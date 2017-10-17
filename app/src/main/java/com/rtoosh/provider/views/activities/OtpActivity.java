@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.rtoosh.provider.R;
 import com.rtoosh.provider.model.custom.Utils;
@@ -32,8 +33,13 @@ public class OtpActivity extends AppBaseActivity {
     }
 
     public void otpDone(View v) {
-        startActivity(new Intent(mContext, RegistrationActivity.class));
-        Utils.gotoNextActivityAnimation(this);
+        if (edit1.getText().toString().isEmpty() || edit2.getText().toString().isEmpty() ||
+                edit3.getText().toString().isEmpty() || edit4.getText().toString().isEmpty()) {
+            Toast.makeText(mContext, R.string.toast_digits_access_code, Toast.LENGTH_SHORT).show();
+        } else {
+            startActivity(new Intent(mContext, RegistrationActivity.class));
+            Utils.gotoNextActivityAnimation(this);
+        }
     }
 
     @Override
