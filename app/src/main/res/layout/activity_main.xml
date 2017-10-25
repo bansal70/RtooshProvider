@@ -55,6 +55,8 @@
             android:textColor="@color/colorLightGreen"
             android:paddingLeft="@dimen/_20sdp"
             android:paddingRight="@dimen/_20sdp"
+            android:paddingStart="@dimen/_20sdp"
+            android:paddingEnd="@dimen/_20sdp"
             android:drawablePadding="@dimen/_10sdp"/>
 
         <com.github.silvestrpredko.dotprogressbar.DotProgressBar
@@ -117,6 +119,8 @@
                     android:paddingBottom="@dimen/_10sdp"
                     android:paddingLeft="@dimen/_5sdp"
                     android:paddingRight="@dimen/_5sdp"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
                     android:contentDescription="@null"
                     android:src="@mipmap/ic_new_service_request"
                     android:background="@color/colorAccent"
@@ -172,6 +176,8 @@
                     android:paddingBottom="@dimen/_10sdp"
                     android:paddingLeft="@dimen/_5sdp"
                     android:paddingRight="@dimen/_5sdp"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentTop="true"
                     android:contentDescription="@null"

@@ -101,6 +101,8 @@
         android:textColor="@color/colorWhite"
         android:paddingLeft="@dimen/_50sdp"
         android:paddingRight="@dimen/_50sdp"
+        android:paddingStart="@dimen/_50sdp"
+        android:paddingEnd="@dimen/_50sdp"
         android:paddingTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/_10sdp"
         android:onClick="sendOtp"

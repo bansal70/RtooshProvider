@@ -66,7 +66,6 @@
                         android:inputType="text"
                         android:paddingLeft="@dimen/_10sdp"
                         android:paddingRight="@dimen/_10sdp"
-                        android:maxLength="10"
                         android:textAppearance="@style/TextAppearance.FontMedium"
                         android:hint="@string/full_name"/>
 
@@ -103,7 +102,6 @@
                         android:inputType="text"
                         android:paddingLeft="@dimen/_10sdp"
                         android:paddingRight="@dimen/_10sdp"
-                        android:maxLength="10"
                         android:textAppearance="@style/TextAppearance.FontMedium"
                         android:hint="@string/select"/>
 
@@ -141,6 +139,8 @@
                         android:inputType="textEmailAddress"
                         android:paddingLeft="@dimen/_10sdp"
                         android:paddingRight="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
                         android:textAppearance="@style/TextAppearance.FontMedium"
                         android:hint="@string/email"/>
 
@@ -178,7 +178,8 @@
                         android:inputType="textPassword"
                         android:paddingLeft="@dimen/_10sdp"
                         android:paddingRight="@dimen/_10sdp"
-                        android:maxLength="10"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
                         android:imeOptions="actionDone"
                         android:textAppearance="@style/TextAppearance.FontMedium"
                         android:hint="@string/password"/>
@@ -195,6 +196,8 @@
                 android:textColor="@color/colorWhite"
                 android:paddingLeft="@dimen/_50sdp"
                 android:paddingRight="@dimen/_50sdp"
+                android:paddingStart="@dimen/_50sdp"
+                android:paddingEnd="@dimen/_50sdp"
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_10sdp"
                 android:foreground="@drawable/ripple"

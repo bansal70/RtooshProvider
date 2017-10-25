@@ -10,7 +10,7 @@ import com.rtoosh.provider.model.custom.Utils;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class AppBaseActivity extends AppCompatActivity {
+public abstract class AppBaseActivity extends AppCompatActivity {
 
     public Context mContext;
 

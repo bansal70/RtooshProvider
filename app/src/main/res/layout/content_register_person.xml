@@ -6,6 +6,7 @@
     app:cardCornerRadius="@dimen/_5sdp"
     app:cardUseCompatPadding="true"
     android:padding="@dimen/_10sdp"
+    app:cardElevation="@dimen/_2sdp"
     tools:showIn="@layout/activity_register_order"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -16,19 +17,21 @@
 
         <RelativeLayout
             android:id="@+id/llPerson"
-            android:layout_width="@dimen/_57sdp"
+            android:layout_width="@dimen/_42sdp"
             android:layout_height="match_parent"
             android:background="@drawable/custom_basic_gradient"
             android:orientation="vertical"
             android:paddingLeft="@dimen/_2sdp"
-            android:paddingRight="@dimen/_2sdp">
+            android:paddingRight="@dimen/_2sdp"
+            android:paddingStart="@dimen/_2sdp"
+            android:paddingEnd="@dimen/_2sdp">
 
             <TextView
                 android:id="@+id/tvPersons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="@string/two"
+                android:text="@string/one"
                 android:textAppearance="@style/TextAppearance.FontBold"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_35sdp" />
@@ -42,7 +45,9 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:maxLines="1"
                 android:text="@string/persons"
-                android:textAppearance="@style/TextAppearance.FontMedium"
+                android:textSize="@dimen/_10sdp"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
                 android:textColor="@color/colorWhite" />
 
         </RelativeLayout>
@@ -62,6 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/maximum_persons_per_order"
+                android:textColor="@color/colorBlack"
                 android:textAppearance="@style/TextAppearance.FontBold"
                 android:textSize="@dimen/_12sdp" />
 
@@ -69,6 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:textColor="@color/colorBlack"
                 android:text="@string/person_serve"
                 android:textAppearance="@style/TextAppearance.FontMedium"
                 android:textSize="@dimen/_10sdp" />
@@ -92,6 +99,7 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/ivAddPerson"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -106,6 +114,7 @@
                 android:background="@color/colorGray" />
 
             <ImageView
+                android:id="@+id/ivRemovePerson"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"

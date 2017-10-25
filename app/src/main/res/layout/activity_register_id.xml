@@ -68,6 +68,8 @@
                         android:textSize="15sp"
                         android:paddingLeft="@dimen/_10sdp"
                         android:paddingRight="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
                         android:button="@drawable/custom_checkbox_normal"
                         android:textAppearance="@style/TextAppearance.FontMedium"/>
 
@@ -79,6 +81,8 @@
                         android:textSize="15sp"
                         android:paddingLeft="@dimen/_10sdp"
                         android:paddingRight="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
                         android:button="@drawable/custom_checkbox_normal"
                         android:textAppearance="@style/TextAppearance.FontMedium"/>
 
@@ -90,6 +94,8 @@
                         android:textSize="15sp"
                         android:paddingLeft="@dimen/_10sdp"
                         android:paddingRight="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
                         android:button="@drawable/custom_checkbox_normal"
                         android:textAppearance="@style/TextAppearance.FontMedium"/>
 
@@ -98,6 +104,7 @@
             </android.support.v7.widget.CardView>
 
             <EditText
+                android:id="@+id/editID"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:padding="@dimen/_10sdp"
@@ -113,7 +120,7 @@
                 android:layout_height="@dimen/_40sdp"
                 android:padding="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:hint="@string/id_type"
+                android:prompt="@string/id_type"
                 android:drawableRight="@mipmap/ic_register_dropdown"
                 android:drawableEnd="@mipmap/ic_register_dropdown"
                 android:textAppearance="@style/TextAppearance.FontMedium"
@@ -159,6 +166,8 @@
                     android:textColor="@color/colorWhite"
                     android:paddingLeft="@dimen/_25sdp"
                     android:paddingRight="@dimen/_25sdp"
+                    android:paddingStart="@dimen/_25sdp"
+                    android:paddingEnd="@dimen/_25sdp"
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
                     android:foreground="@drawable/ripple"
@@ -208,17 +217,21 @@
                             android:textAppearance="@style/TextAppearance.FontMedium"/>
 
                         <CheckBox
+                            android:id="@+id/cbOnline"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/online"
                             android:textSize="15sp"
                             android:paddingLeft="@dimen/_10sdp"
                             android:paddingRight="@dimen/_10sdp"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:button="@drawable/custom_checkbox_normal"
                             android:textAppearance="@style/TextAppearance.FontMedium"/>
 
                         <CheckBox
+                            android:id="@+id/cbSchedule"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"
@@ -226,6 +239,8 @@
                             android:textSize="15sp"
                             android:paddingLeft="@dimen/_10sdp"
                             android:paddingRight="@dimen/_10sdp"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
                             android:button="@drawable/custom_checkbox_normal"
                             android:textAppearance="@style/TextAppearance.FontMedium"/>
 
@@ -257,11 +272,14 @@
                 android:textColor="@color/colorWhite"
                 android:paddingLeft="@dimen/_50sdp"
                 android:paddingRight="@dimen/_50sdp"
+                android:paddingStart="@dimen/_50sdp"
+                android:paddingEnd="@dimen/_50sdp"
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_15sdp"
                 style="?borderlessButtonStyle"
                 android:gravity="center"
+                android:onClick="nextID"
                 android:layout_gravity="center"
                 android:foreground="@drawable/ripple"
                 android:textAppearance="@style/TextAppearance.FontMedium"
@@ -283,6 +301,8 @@
         style="?borderlessButtonStyle"
         android:paddingRight="@dimen/_20sdp"
         android:paddingLeft="@dimen/_20sdp"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingEnd="@dimen/_20sdp"
         android:onClick="nextID"
         android:textAppearance="@style/TextAppearance.FontMedium"
         android:layout_alignParentBottom="true"

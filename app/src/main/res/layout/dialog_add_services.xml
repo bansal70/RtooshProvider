@@ -30,45 +30,49 @@
                 android:textAppearance="@style/TextAppearance.FontBold"/>
 
             <EditText
+                android:id="@+id/editServiceName"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:padding="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:hint="@string/service_name"
-                android:textColor="@color/colorGrayLight"
+                android:textColor="@color/colorBlack"
                 android:textAppearance="@style/TextAppearance.FontMedium"
                 android:background="@drawable/custom_edit_text_bg"
                 android:inputType="text"/>
 
             <EditText
+                android:id="@+id/editServiceContent"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:padding="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:hint="@string/description"
-                android:textColor="@color/colorGrayLight"
+                android:textColor="@color/colorBlack"
                 android:textAppearance="@style/TextAppearance.FontMedium"
                 android:background="@drawable/custom_edit_text_bg"
                 android:inputType="text"/>
 
             <EditText
+                android:id="@+id/editServicePrice"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:padding="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:hint="@string/price"
-                android:textColor="@color/colorGrayLight"
+                android:textColor="@color/colorBlack"
                 android:textAppearance="@style/TextAppearance.FontMedium"
                 android:background="@drawable/custom_edit_text_bg"
                 android:inputType="number"/>
 
             <EditText
+                android:id="@+id/editServiceDuration"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:padding="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:hint="@string/service_duration"
-                android:textColor="@color/colorGrayLight"
+                android:textColor="@color/colorBlack"
                 android:textAppearance="@style/TextAppearance.FontMedium"
                 android:background="@drawable/custom_edit_text_bg"
                 android:inputType="number"/>
@@ -89,6 +93,8 @@
             android:onClick="nextService"
             android:paddingRight="@dimen/_20sdp"
             android:paddingLeft="@dimen/_20sdp"
+            android:paddingStart="@dimen/_20sdp"
+            android:paddingEnd="@dimen/_20sdp"
             android:textAppearance="@style/TextAppearance.FontMedium"
             android:background="@drawable/custom_basic_gradient"/>
 

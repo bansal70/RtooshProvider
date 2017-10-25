@@ -16,6 +16,8 @@
         android:layout_below="@+id/toolbar"
         android:paddingLeft="@dimen/_5sdp"
         android:paddingRight="@dimen/_5sdp"
+        android:paddingStart="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_5sdp"
         android:paddingTop="@dimen/_10sdp">
 
         <TextView
@@ -31,7 +33,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/_10sdp"
-            android:paddingRight="@dimen/_10sdp" />
+            android:paddingRight="@dimen/_10sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"/>
 
         <View
             android:layout_width="match_parent"
@@ -43,7 +47,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
             android:paddingLeft="@dimen/_10sdp"
-            android:paddingRight="@dimen/_10sdp">
+            android:paddingRight="@dimen/_10sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -78,7 +84,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp">
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -120,6 +128,8 @@
                         android:paddingBottom="@dimen/_2sdp"
                         android:paddingLeft="@dimen/_12sdp"
                         android:paddingRight="@dimen/_12sdp"
+                        android:paddingStart="@dimen/_12sdp"
+                        android:paddingEnd="@dimen/_12sdp"
                         android:paddingTop="@dimen/_2sdp"
                         android:text="@string/call"
                         android:textAllCaps="false"
@@ -146,6 +156,8 @@
                         android:paddingBottom="@dimen/_2sdp"
                         android:paddingLeft="@dimen/_12sdp"
                         android:paddingRight="@dimen/_12sdp"
+                        android:paddingStart="@dimen/_12sdp"
+                        android:paddingEnd="@dimen/_12sdp"
                         android:paddingTop="@dimen/_2sdp"
                         android:text="@string/sms"
                         android:textColor="@color/colorAccent"
@@ -168,6 +180,8 @@
             android:text="2 Persons"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:textAppearance="@style/TextAppearance.FontMedium"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/_12sdp" />
@@ -176,7 +190,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp">
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -294,6 +310,8 @@
                     android:layout_centerVertical="true"
                     android:paddingLeft="@dimen/_5sdp"
                     android:paddingRight="@dimen/_5sdp"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
                     android:background="@drawable/custom_basic_gradient"
                     android:gravity="center"
                     android:orientation="horizontal">

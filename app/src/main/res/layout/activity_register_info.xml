@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/custom_bg"
-    tools:context="com.rtoosh.provider.views.activities.RegisterIDActivity">
+    android:background="@drawable/custom_bg">
 
     <include layout="@layout/toolbar_register"
         android:id="@+id/toolbar"/>
@@ -64,6 +62,7 @@
                     android:textAppearance="@style/TextAppearance.FontMedium"/>
 
                 <EditText
+                    android:id="@+id/editSurname"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
                     android:padding="@dimen/_10sdp"
@@ -75,6 +74,7 @@
                     android:inputType="number"/>
 
                 <EditText
+                    android:id="@+id/editBio"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_80sdp"
                     android:padding="@dimen/_10sdp"
@@ -94,86 +94,95 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:textAppearance="@style/TextAppearance.FontMedium"/>
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_90sdp"
                     android:orientation="horizontal"
                     android:layout_marginTop="@dimen/_5sdp">
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_90sdp"
+                        android:layout_height="match_parent"
                         app:cardCornerRadius="@dimen/_5sdp">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/imgWork1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:src="@mipmap/ic_upload_image"
-                            android:padding="@dimen/_10sdp"
+                            android:scaleType="centerInside"
                             android:foreground="@drawable/ripple"
                             android:contentDescription="@string/upload"
                             android:background="@drawable/custom_basic_gradient"/>
 
                     </android.support.v7.widget.CardView>
 
+                    <View
+                        android:layout_width="@dimen/_1sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
+                        android:layout_width="@dimen/_90sdp"
+                        android:layout_height="match_parent"
                         app:cardCornerRadius="@dimen/_5sdp">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/imgWork2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:src="@mipmap/ic_upload_image"
-                            android:padding="@dimen/_10sdp"
+                            android:scaleType="centerInside"
                             android:contentDescription="@string/upload"
                             android:foreground="@drawable/ripple"
                             android:background="@drawable/custom_basic_gradient"/>
 
                     </android.support.v7.widget.CardView>
+
+                    <View
+                        android:layout_width="@dimen/_1sdp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="@dimen/_5sdp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true">
+                        android:layout_width="@dimen/_90sdp"
+                        android:layout_height="match_parent"
+                        app:cardCornerRadius="@dimen/_5sdp">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/imgWork3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:src="@mipmap/ic_upload_image"
-                            android:padding="@dimen/_10sdp"
                             android:contentDescription="@string/upload"
+                            android:scaleType="centerInside"
                             android:foreground="@drawable/ripple"
                             android:background="@drawable/custom_basic_gradient"/>
 
                     </android.support.v7.widget.CardView>
 
-                </RelativeLayout>
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/background_photo"
                     android:textColor="@color/colorAccent"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
                     android:textAppearance="@style/TextAppearance.FontMedium"/>
 
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_110sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <ImageView
+                        android:id="@+id/imgBg"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:src="@mipmap/ic_upload_image"
-                        android:paddingTop="@dimen/_20sdp"
-                        android:paddingBottom="@dimen/_20sdp"
+                        android:scaleType="fitCenter"
                         android:contentDescription="@string/upload"
                         android:foreground="@drawable/ripple"
                         android:background="@drawable/custom_basic_gradient"/>

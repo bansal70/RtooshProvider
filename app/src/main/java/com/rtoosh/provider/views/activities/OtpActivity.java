@@ -22,10 +22,10 @@ public class OtpActivity extends AppBaseActivity {
     }
 
     private void initViews() {
-        edit1 = (EditText) findViewById(R.id.edit1);
-        edit2 = (EditText) findViewById(R.id.edit2);
-        edit3 = (EditText) findViewById(R.id.edit3);
-        edit4 = (EditText) findViewById(R.id.edit4);
+        edit1 = findViewById(R.id.edit1);
+        edit2 = findViewById(R.id.edit2);
+        edit3 = findViewById(R.id.edit3);
+        edit4 = findViewById(R.id.edit4);
 
         Utils.setTextWatcherMoveFocus(edit1, edit2);
         Utils.setTextWatcherMoveFocus(edit2, edit3);

@@ -45,14 +45,14 @@
     <string name="expected_time_to_arrive">Expected time to arrive</string>
     <string name="start_the_service">Start the service</string>
     <string name="hair_cut">Hair cut</string>
-    <string name="$">$</string>
+
     <string name="expected_time_to_finish">Expected time to finish</string>
     <string name="based_on_total_service">Based on total hours of service in customer order</string>
     <string name="service_completed">Service completed</string>
     <string name="total_amount">Total Amount</string>
     <string name="invoice_breakdown">Invoice Breakdown</string>
     <string name="service_commission">Service commission</string>
-    <string name="_$">-$</string>
+
     <string name="total">Total:</string>
     <string name="purchase_detail">Purchase Detail</string>
     <string name="yes">YES</string>
@@ -146,4 +146,7 @@
     <string name="toast_fill_data">Please fill all the data</string>
     <string name="toast_invalid_email">Please enter the valid email address</string>
     <string name="toast_invalid_password_length">Password must contains at least 6 letters</string>
+    <string name="pick_image_intent_text">Select Image</string>
+    <string name="grant_permissions">Please grant all the permissions</string>
+    <string name="set_minimum_order">Please set your minimum price for your order</string>
 </resources>

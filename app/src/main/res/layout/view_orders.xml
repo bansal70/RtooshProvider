@@ -14,7 +14,7 @@
         android:layout_toStartOf="@+id/llPrice"
         android:drawableLeft="@mipmap/ic_ticket_grey"
         android:drawableStart="@mipmap/ic_ticket_grey"
-        android:drawablePadding="@dimen/_5sdp"
+        android:drawablePadding="@dimen/_10sdp"
         android:textAppearance="@style/TextAppearance.FontMedium"
         android:gravity="center|start"/>
 
@@ -39,7 +39,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/$"
+            android:text="$"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginStart="@dimen/_10sdp"
             android:textColor="@color/black"

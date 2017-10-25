@@ -2,14 +2,12 @@ package com.rtoosh.provider.views.activities;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
@@ -21,7 +19,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MapStyleOptions;
 import com.rtoosh.provider.R;
 import com.rtoosh.provider.model.POJO.Services;
 import com.rtoosh.provider.model.custom.Utils;
@@ -134,6 +131,7 @@ public class MainActivity extends AppBaseActivity implements CompoundButton.OnCh
         });
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void initRequestDialog() {
         dialogRequest = Utils.createDialog(this, R.layout.dialog_request);
         dialogRequest.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
@@ -176,7 +174,7 @@ public class MainActivity extends AppBaseActivity implements CompoundButton.OnCh
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
-        try {
+        /*try {
 
             boolean success = mGoogleMap.setMapStyle(
                     MapStyleOptions.loadRawResourceStyle(
@@ -186,10 +184,10 @@ public class MainActivity extends AppBaseActivity implements CompoundButton.OnCh
             }
         }catch (Resources.NotFoundException e){
             e.printStackTrace();
-        }
+        }*/
 
         LatLng mohali = new LatLng(30.706326, 76.704865);
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mohali, 14));
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mohali, 15));
     }
 
     @Override

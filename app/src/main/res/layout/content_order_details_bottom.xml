@@ -143,6 +143,8 @@
                             android:paddingBottom="@dimen/_5sdp"
                             android:paddingLeft="@dimen/_10sdp"
                             android:paddingRight="@dimen/_10sdp"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
                             android:paddingTop="@dimen/_5sdp"
                             android:text="@string/i_m_ready"
                             android:textSize="@dimen/_10sdp"
@@ -173,6 +175,8 @@
             android:layout_marginBottom="@dimen/_10sdp"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
             app:cardCornerRadius="@dimen/_5sdp">
 
             <RelativeLayout

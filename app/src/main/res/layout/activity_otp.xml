@@ -38,6 +38,8 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginLeft="@dimen/_30sdp"
             android:layout_marginRight="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_30sdp"
             android:textColor="@color/colorGrayDark"
             android:textAppearance="@style/TextAppearance.FontMedium"
             android:text="@string/access_code_verification_text"/>
@@ -120,6 +122,8 @@
             android:textColor="@color/colorWhite"
             android:paddingLeft="@dimen/_50sdp"
             android:paddingRight="@dimen/_50sdp"
+            android:paddingStart="@dimen/_50sdp"
+            android:paddingEnd="@dimen/_50sdp"
             android:paddingTop="@dimen/_10sdp"
             android:paddingBottom="@dimen/_10sdp"
             android:foreground="@drawable/ripple"
@@ -143,6 +147,8 @@
         android:drawableEnd="@drawable/ic_resend_code"
         android:paddingRight="@dimen/_20sdp"
         android:paddingLeft="@dimen/_20sdp"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingEnd="@dimen/_20sdp"
         android:textAppearance="@style/TextAppearance.FontMedium"
         android:layout_alignParentBottom="true"
         android:background="@drawable/custom_basic_gradient"/>

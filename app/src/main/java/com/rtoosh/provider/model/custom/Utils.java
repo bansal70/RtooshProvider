@@ -75,8 +75,8 @@ public class Utils {
             public void onDateSet(DatePicker view, int year,
                                   int monthOfYear, int dayOfMonth) {
                 // set day of month , month and year value in the edit text
-                textView.setText(dayOfMonth + "/"
-                        + (monthOfYear + 1) + "/" + year);
+                String date = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                textView.setText(date);
 
             }};
 
@@ -121,6 +121,7 @@ public class Utils {
     public static void hideKeyboard(Context mContext, View view) {
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null)
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
