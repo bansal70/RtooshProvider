@@ -40,35 +40,32 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHold
             holder.cbServices.setChecked(false);
         }
 
-        holder.cbServices.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (holder.getAdapterPosition() == listServices.size() - 1) {
-                    if (services.isSelected()) {
-                        for (int i=0; i<listServices.size(); i++) {
-                            listServices.get(i).setSelected(false);
-                        }
+        holder.cbServices.setOnClickListener(view -> {
+            if (holder.getAdapterPosition() == listServices.size() - 1) {
+                if (services.isSelected()) {
+                    for (int i=0; i<listServices.size(); i++) {
+                        listServices.get(i).setSelected(false);
                     }
-                    else {
-                        for (int i=0; i<listServices.size(); i++) {
-                            listServices.get(i).setSelected(true);
-                        }
-                    }
-                    Toast.makeText(mContext, "" + services.getName(), Toast.LENGTH_SHORT).show();
-                    notifyDataSetChanged();
-
-                } else {
-                    if (services.isSelected()) {
-                        listServices.get(listServices.size()-1).setSelected(false);
-                        services.setSelected(false);
-                    }
-                    else {
-                        services.setSelected(true);
-                    }
-                    notifyDataSetChanged();
                 }
+                else {
+                    for (int i=0; i<listServices.size(); i++) {
+                        listServices.get(i).setSelected(true);
+                    }
+                }
+                Toast.makeText(mContext, "" + services.getName(), Toast.LENGTH_SHORT).show();
+                notifyDataSetChanged();
 
+            } else {
+                if (services.isSelected()) {
+                    listServices.get(listServices.size()-1).setSelected(false);
+                    services.setSelected(false);
+                }
+                else {
+                    services.setSelected(true);
+                }
+                notifyDataSetChanged();
             }
+
         });
 
     }

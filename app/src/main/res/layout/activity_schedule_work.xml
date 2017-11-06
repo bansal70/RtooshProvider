@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.rtoosh.provider.views.ScheduleWorkActivity">
+
+    <include layout="@layout/toolbar_schedule_hours"
+        android:id="@+id/toolbar"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerSchedule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_below="@+id/toolbar"
+        android:layout_above="@+id/tvAddSchedule"/>
+
+    <TextView
+        android:id="@+id/tvAddSchedule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/save"
+        android:textAllCaps="true"
+        android:textColor="@color/colorWhite"
+        android:foreground="@drawable/ripple"
+        style="?borderlessButtonStyle"
+        android:textAppearance="@style/TextAppearance.FontMedium"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/custom_basic_gradient"/>
+
+</RelativeLayout>

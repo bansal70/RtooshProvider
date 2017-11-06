@@ -3,15 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite">
+    xmlns:tools="http://schemas.android.com/tools"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:background="@color/colorWhite"
+    tools:showIn="@layout/app_bar_home">
 
-    <include layout="@layout/toolbar"
-        android:id="@+id/toolbar"/>
+    <!--<include layout="@layout/toolbar"
+        android:id="@+id/toolbar"/>-->
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
         android:layout_above="@+id/cardLayout">
 
         <fragment
@@ -109,7 +111,9 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_35sdp">
+                android:layout_height="@dimen/_35sdp"
+                android:onClick="requestsClick"
+                android:foreground="?selectableItemBackground">
 
                 <ImageView
                     android:id="@+id/ivNewRequest"
@@ -145,7 +149,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/custom_circular_pink_bg"
-                    android:text="3"
+                    android:text="@string/three"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
@@ -163,9 +167,12 @@
                 android:background="@color/colorGray"/>
 
             <RelativeLayout
+                android:id="@+id/layoutApprovedRequests"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
+                android:foreground="?selectableItemBackground"
                 android:background="@color/colorLightGreen"
+                android:onClick="requestsClick"
                 android:orientation="horizontal">
 
                 <ImageView

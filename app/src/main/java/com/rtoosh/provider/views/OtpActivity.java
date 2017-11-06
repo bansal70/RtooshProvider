@@ -1,0 +1,138 @@
+package com.rtoosh.provider.views;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.rtoosh.provider.R;
+import com.rtoosh.provider.controller.ModelManager;
+import com.rtoosh.provider.model.Constants;
+import com.rtoosh.provider.model.POJO.OtpResponse;
+import com.rtoosh.provider.model.RPPreferences;
+import com.rtoosh.provider.model.custom.Utils;
+import com.rtoosh.provider.model.event.ApiErrorEvent;
+import com.rtoosh.provider.model.event.ApiErrorWithMessageEvent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class OtpActivity extends AppBaseActivity {
+
+    private final String OTP_TAG = "OtpActivity";
+
+    @BindView(R.id.edit1) EditText edit1;
+    @BindView(R.id.edit2) EditText edit2;
+    @BindView(R.id.edit3) EditText edit3;
+    @BindView(R.id.edit4) EditText edit4;
+
+    String otp = "";
+    String deviceToken, lang, phone;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_otp);
+        ButterKnife.bind(this);
+
+        initViews();
+    }
+
+    private void initViews() {
+        deviceToken = FirebaseInstanceId.getInstance().getToken();
+        lang = RPPreferences.readString(mContext, "lang");
+        phone = RPPreferences.readString(mContext, "phone");
+
+        otp = getIntent().getStringExtra("otp");
+
+        Utils.setTextWatcherMoveFocus(edit1, edit2);
+        Utils.setTextWatcherMoveFocus(edit2, edit3);
+        Utils.setTextWatcherMoveFocus(edit3, edit4);
+        edit1.setText(String.valueOf(otp.charAt(0)));
+        edit2.setText(String.valueOf(otp.charAt(1)));
+        edit3.setText(String.valueOf(otp.charAt(2)));
+        edit4.setText(String.valueOf(otp.charAt(3)));
+        Toast.makeText(mContext, "Please enter "+otp+" for testing.", Toast.LENGTH_SHORT).show();
+    }
+
+    public void otpDone(View v) {
+        String resultedOTP = edit1.getText().toString() + edit2.getText().toString()
+                + edit3.getText().toString() + edit4.getText().toString();
+        if (edit1.getText().toString().isEmpty() || edit2.getText().toString().isEmpty() ||
+                edit3.getText().toString().isEmpty() || edit4.getText().toString().isEmpty()) {
+            Toast.makeText(mContext, R.string.toast_digits_access_code, Toast.LENGTH_SHORT).show();
+        } else if (!otp.equals(resultedOTP)) {
+            Toast.makeText(mContext, R.string.incorrect_otp, Toast.LENGTH_SHORT).show();
+        }
+        else {
+            showDialog();
+            ModelManager.getInstance().getOtpManager().otpTask(this, OTP_TAG, phone, otp, lang);
+        }
+    }
+
+    @Subscribe(sticky = true)
+    public void onEventMainThread(OtpResponse otpResponse) {
+        EventBus.getDefault().removeAllStickyEvents();
+        switch (otpResponse.getRequestTag()) {
+            case OTP_TAG:
+                dismissDialog();
+                showToast(otpResponse.getMessage());
+                String id_number = RPPreferences.readString(mContext, "id_number");
+                if (!id_number.equals("0") && !id_number.isEmpty()) {
+                    startActivity(new Intent(mContext, MainActivity.class));
+                    Utils.gotoNextActivityAnimation(this);
+                    return;
+                }
+
+                if (otpResponse.register.equals("1"))
+                    startActivity(new Intent(mContext, RegisterIDActivity.class));
+                else
+                    startActivity(new Intent(mContext, RegistrationActivity.class));
+
+                Utils.gotoNextActivityAnimation(this);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    @Subscribe(sticky = true)
+    public void onEventMainThread(ApiErrorWithMessageEvent event) {
+        EventBus.getDefault().removeAllStickyEvents();
+        switch (event.getRequestTag()) {
+            case OTP_TAG:
+                dismissDialog();
+                showToast(event.getResultMsgUser());
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+    @Subscribe(sticky = true)
+    public void onEventMainThread(ApiErrorEvent event) {
+        EventBus.getDefault().removeAllStickyEvents();
+        switch (event.getRequestTag()) {
+            case OTP_TAG:
+                dismissDialog();
+                showToast(Constants.SERVER_ERROR);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+}

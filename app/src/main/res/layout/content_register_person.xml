@@ -26,12 +26,15 @@
             android:paddingStart="@dimen/_2sdp"
             android:paddingEnd="@dimen/_2sdp">
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tvPersons"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="@string/one"
+                android:gravity="center"
+                android:maxLines="1"
+                app:autoSizeTextType="uniform"
                 android:textAppearance="@style/TextAppearance.FontBold"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_35sdp" />

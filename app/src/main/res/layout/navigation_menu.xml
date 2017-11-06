@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="@dimen/_200sdp"
+    android:layout_height="match_parent"
+    android:background="@drawable/custom_basic_gradient"
+    android:paddingTop="@dimen/_10sdp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgProfilePic"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_gravity="center"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:src="@mipmap/ic_uncheck_service" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/full_name"
+        android:layout_gravity="center"
+        android:textAllCaps="true"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:textAppearance="@style/TextAppearance.FontBold"
+        android:textColor="@color/white"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:background="#fff"
+        android:layout_marginTop="@dimen/_20sdp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/custom_bg"
+        android:clickable="false"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvBookmarks"
+            android:layout_width="248dp"
+            android:layout_height="wrap_content"
+            android:text="Wallet"
+            android:drawableLeft="@drawable/ic_wallet"
+            android:drawableStart="@drawable/ic_wallet"
+            android:gravity="center|start"
+            android:drawablePadding="@dimen/_20sdp"
+            android:padding="@dimen/_10sdp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="History"
+            android:drawableLeft="@drawable/ic_history"
+            android:drawableStart="@drawable/ic_history"
+            android:gravity="center|start"
+            android:drawablePadding="@dimen/_20sdp"
+            android:padding="@dimen/_10sdp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Profile"
+            android:drawableLeft="@drawable/ic_profile"
+            android:drawableStart="@drawable/ic_profile"
+            android:gravity="center|start"
+            android:drawablePadding="@dimen/_20sdp"
+            android:padding="@dimen/_10sdp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:drawableLeft="@drawable/ic_settings"
+            android:drawableStart="@drawable/ic_settings"
+            android:gravity="center|start"
+            android:drawablePadding="@dimen/_20sdp"
+            android:padding="@dimen/_10sdp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Report"
+            android:drawableLeft="@drawable/ic_report"
+            android:drawableStart="@drawable/ic_report"
+            android:gravity="center|start"
+            android:drawablePadding="@dimen/_20sdp"
+            android:padding="@dimen/_10sdp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Contact us"
+            android:drawableLeft="@drawable/ic_contact_us"
+            android:drawableStart="@drawable/ic_contact_us"
+            android:gravity="center|start"
+            android:drawablePadding="@dimen/_20sdp"
+            android:padding="@dimen/_10sdp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:drawableLeft="@drawable/ic_logout"
+            android:drawableStart="@drawable/ic_logout"
+            android:gravity="center|start"
+            android:drawablePadding="@dimen/_20sdp"
+            android:padding="@dimen/_10sdp"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+</LinearLayout>

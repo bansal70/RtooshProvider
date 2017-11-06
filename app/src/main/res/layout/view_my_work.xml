@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView android:layout_width="@dimen/_90sdp"
+    android:layout_height="@dimen/_90sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/_5sdp"
+    android:layout_marginRight="@dimen/_20sdp"
+    android:layout_marginEnd="@dimen/_20sdp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/imgWork"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/ic_upload_image"
+        android:scaleType="centerInside"
+        android:foreground="@drawable/ripple"
+        android:contentDescription="@string/upload"
+        android:background="@drawable/custom_basic_gradient"/>
+
+</android.support.v7.widget.CardView>

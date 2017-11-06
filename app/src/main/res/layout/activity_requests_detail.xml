@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.rtoosh.provider.views.RequestsDetailActivity">
+
+    <include layout="@layout/toolbar_order_details"
+        android:id="@+id/toolbar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_5sdp"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/_10sdp">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/_5sdp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/order_details"
+                        android:textSize="@dimen/_14sdp"
+                        android:textColor="@color/colorRed"
+                        android:textAppearance="@style/TextAppearance.FontBold"
+                        android:padding="@dimen/_8sdp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/colorGray"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/_5sdp"
+                        android:background="@color/colorGrayTransparent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/time_date"
+                            android:textColor="@color/colorRed"
+                            android:drawableStart="@drawable/ic_order_clock"
+                            android:drawableLeft="@drawable/ic_order_clock"
+                            android:drawablePadding="@dimen/_5sdp"
+                            android:textAppearance="@style/TextAppearance.FontRegular" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:text="5:30 PM Friday 27 Oct"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:textSize="@dimen/_12sdp"
+                            android:textColor="@color/colorBlack"
+                            android:textAppearance="@style/TextAppearance.FontRegular"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/_5sdp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/number_of_persons"
+                            android:textColor="@color/colorRed"
+                            android:drawableStart="@drawable/ic_order_persons_small"
+                            android:drawableLeft="@drawable/ic_order_persons_small"
+                            android:drawablePadding="@dimen/_5sdp"
+                            android:textAppearance="@style/TextAppearance.FontRegular"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:text="@string/two"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:textSize="@dimen/_12sdp"
+                            android:textColor="@color/colorBlack"
+                            android:textAppearance="@style/TextAppearance.FontRegular"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/_5sdp"
+                        android:background="@color/colorGrayTransparent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/time_left"
+                            android:textColor="@color/colorRed"
+                            android:drawableStart="@drawable/ic_order_time_left"
+                            android:drawableLeft="@drawable/ic_order_time_left"
+                            android:drawablePadding="@dimen/_5sdp"
+                            android:textAppearance="@style/TextAppearance.FontRegular"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:text="1 Day 5 Hours 45 Minutes"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:textSize="@dimen/_12sdp"
+                            android:textColor="@color/colorBlack"
+                            android:textAppearance="@style/TextAppearance.FontRegular"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/_5sdp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/order_number"
+                            android:textColor="@color/colorRed"
+                            android:drawableStart="@drawable/ic_order_number"
+                            android:drawableLeft="@drawable/ic_order_number"
+                            android:drawablePadding="@dimen/_5sdp"
+                            android:textAppearance="@style/TextAppearance.FontRegular"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:text="40240240"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:textSize="@dimen/_12sdp"
+                            android:textColor="@color/colorBlack"
+                            android:textAppearance="@style/TextAppearance.FontRegular"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <include layout="@layout/content_customer_info"/>
+
+            </LinearLayout>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cardServiceDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:cardCornerRadius="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/service_details"
+                            android:textSize="@dimen/_14sdp"
+                            android:textColor="@color/colorRed"
+                            android:textAppearance="@style/TextAppearance.FontBold"
+                            android:padding="@dimen/_8sdp"
+                            android:gravity="center"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:background="@color/colorGray"/>
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recyclerOrders"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_10sdp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:background="@color/colorGray"/>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_10sdp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/total_price"
+                                android:textColor="@color/colorBlack"
+                                android:textAppearance="@style/TextAppearance.FontMedium"
+                                android:textSize="@dimen/_14sdp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:text="$305"
+                                android:textAppearance="@style/TextAppearance.FontBold"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/_15sdp" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

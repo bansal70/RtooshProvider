@@ -73,9 +73,11 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:hint="@string/service_duration"
                 android:textColor="@color/colorBlack"
+                android:inputType="number"
+                android:digits="0123456789:"
+                android:maxLength="5"
                 android:textAppearance="@style/TextAppearance.FontMedium"
-                android:background="@drawable/custom_edit_text_bg"
-                android:inputType="number"/>
+                android:background="@drawable/custom_edit_text_bg" />
 
         </LinearLayout>
 

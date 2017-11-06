@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvService"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hair_cut"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/_10sdp"
+        android:drawableLeft="@drawable/ic_ticket_grey"
+        android:drawableStart="@drawable/ic_ticket_grey"
+        android:drawablePadding="@dimen/_10sdp"
+        android:textAppearance="@style/TextAppearance.FontMedium"
+        android:gravity="center|start"/>
+
+</RelativeLayout>

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/custom_bg"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.rtoosh.provider.views.activities.RegisterIDActivity">
+    tools:context="com.rtoosh.provider.views.RegisterIDActivity">
 
     <include layout="@layout/toolbar_register"
         android:id="@+id/toolbar"/>
@@ -180,9 +180,11 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/textUpload"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/uploading"
+                android:visibility="gone"
                 android:textSize="@dimen/_10sdp"
                 android:textAppearance="@style/TextAppearance.FontRegular"
                 android:textColor="@color/colorBlack"
@@ -216,6 +218,12 @@
                             android:layout_marginTop="@dimen/_5sdp"
                             android:textAppearance="@style/TextAppearance.FontMedium"/>
 
+                        <LinearLayout
+                            android:id="@+id/radioGroup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
                         <CheckBox
                             android:id="@+id/cbOnline"
                             android:layout_width="match_parent"
@@ -243,6 +251,8 @@
                             android:paddingEnd="@dimen/_10sdp"
                             android:button="@drawable/custom_checkbox_normal"
                             android:textAppearance="@style/TextAppearance.FontMedium"/>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 

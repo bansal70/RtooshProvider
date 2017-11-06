@@ -71,7 +71,7 @@
                     android:textColor="@color/black"
                     android:textAppearance="@style/TextAppearance.FontMedium"
                     android:background="@drawable/custom_edit_text_bg"
-                    android:inputType="number"/>
+                    android:inputType="text"/>
 
                 <EditText
                     android:id="@+id/editBio"
@@ -84,7 +84,7 @@
                     android:textColor="@color/black"
                     android:textAppearance="@style/TextAppearance.FontMedium"
                     android:background="@drawable/custom_edit_text_bg"
-                    android:inputType="number"/>
+                    android:inputType="text"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -94,7 +94,44 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:textAppearance="@style/TextAppearance.FontMedium"/>
 
+                <HorizontalScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    android:layout_marginTop="@dimen/_10sdp">
+
                 <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_90sdp"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerWork"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="match_parent"
+                    app:cardCornerRadius="@dimen/_5sdp">
+
+                    <ImageView
+                        android:id="@+id/imgSelect"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/plus"
+                        android:scaleType="centerInside"
+                        android:foreground="@drawable/ripple"
+                        android:contentDescription="@string/upload"
+                        android:background="@drawable/custom_basic_gradient"/>
+
+                </android.support.v7.widget.CardView>
+
+                </LinearLayout>
+
+                </HorizontalScrollView>
+
+                <!--<LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_90sdp"
                     android:orientation="horizontal"
@@ -161,7 +198,7 @@
 
                     </android.support.v7.widget.CardView>
 
-                </LinearLayout>
+                </LinearLayout>-->
 
                 <TextView
                     android:layout_width="wrap_content"

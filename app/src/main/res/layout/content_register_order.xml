@@ -26,11 +26,14 @@
             android:paddingEnd="@dimen/_2sdp"
             android:background="@drawable/custom_basic_gradient">
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tvServices"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/one"
+                android:maxLines="1"
+                android:gravity="center"
+                app:autoSizeTextType="uniform"
                 android:layout_centerInParent="true"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_35sdp"

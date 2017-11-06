@@ -1,27 +1,64 @@
 {
   "project_info": {
-    "project_number": "544391082269",
-    "firebase_url": "https://rtoosh-9a6e7.firebaseio.com",
-    "project_id": "rtoosh-9a6e7",
-    "storage_bucket": "rtoosh-9a6e7.appspot.com"
+    "project_number": "799389204351",
+    "firebase_url": "https://rtoosh-be-beautiful.firebaseio.com",
+    "project_id": "rtoosh-be-beautiful",
+    "storage_bucket": "rtoosh-be-beautiful.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:544391082269:android:17b836578bd834c6",
+        "mobilesdk_app_id": "1:799389204351:android:e3b4a56a6663b753",
+        "android_client_info": {
+          "package_name": "orem.rtooshbebeautiful"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799389204351-o5t68r02ei6f0r2483033jnasf0spjgc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7cEUu0jAfa1uGO_GOQ9ZYvEkXKXTW2nY"
+        },
+        {
+          "current_key": "AIzaSyAMWe17K8IjfdRbZ5qrI537SmUgpDm5PF4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799389204351:android:17b836578bd834c6",
         "android_client_info": {
           "package_name": "com.rtoosh.provider"
         }
       },
       "oauth_client": [
         {
-          "client_id": "544391082269-jbacaup0tiu7h22lmmkko4p2a86fbqme.apps.googleusercontent.com",
+          "client_id": "799389204351-o5t68r02ei6f0r2483033jnasf0spjgc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDjZUiJmVcPfW5DVijhvw_jDKRkCWeyKa8"
+          "current_key": "AIzaSyD7cEUu0jAfa1uGO_GOQ9ZYvEkXKXTW2nY"
+        },
+        {
+          "current_key": "AIzaSyAMWe17K8IjfdRbZ5qrI537SmUgpDm5PF4"
         }
       ],
       "services": {

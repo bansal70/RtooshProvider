@@ -11,4 +11,11 @@
                 android:startColor="@color/colorAccent" />
         </shape>
     </item>
+    <item>
+    <ripple android:color="@color/white">
+        <item android:id="@android:id/mask"
+            android:drawable="@color/white"/>
+    </ripple>
+
+    </item>
 </layer-list>

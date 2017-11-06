@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="MissingPrefix">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@drawable/custom_basic_gradient"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/report"
+                android:textAppearance="@style/TextAppearance.FontMedium"
+                android:textColor="@color/colorWhite"
+                android:layout_marginRight="?attr/actionBarSize"
+                android:layout_marginEnd="?attr/actionBarSize"
+                android:gravity="center"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:src="@drawable/ic_report_screen"
+            android:contentDescription="@null"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/report_a_problem"
+            android:textAllCaps="true"
+            android:textAppearance="@style/TextAppearance.FontBold"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/_16sdp" />
+
+        <EditText
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_25sdp"
+            android:layout_marginRight="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:background="@drawable/custom_edit_text_bg"
+            android:hint="@string/issue_related_to"
+            android:inputType="text"
+            android:maxLines="1"
+            android:padding="@dimen/_8sdp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/colorGrayDark"
+            android:textSize="@dimen/_13sdp" />
+
+
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_marginLeft="@dimen/_25sdp"
+            android:layout_marginRight="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@drawable/custom_edit_text_bg"
+            android:gravity="top"
+            android:hint="@string/write_problem"
+            android:padding="@dimen/_5sdp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/colorGrayDark"
+            android:textSize="@dimen/_12sdp" />
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:background="@drawable/custom_basic_gradient_rounded"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:paddingBottom="@dimen/_7sdp"
+            android:paddingLeft="@dimen/_45sdp"
+            android:paddingRight="@dimen/_45sdp"
+            android:paddingTop="@dimen/_7sdp"
+            android:text="@string/submit"
+            android:textAppearance="@style/TextAppearance.FontMedium"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp" />
+
+    </LinearLayout>
+
+</LinearLayout>

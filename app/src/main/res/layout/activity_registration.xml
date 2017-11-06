@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/custom_bg"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.rtoosh.provider.views.activities.RegistrationActivity">
+    tools:context="com.rtoosh.provider.views.RegistrationActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -12,14 +13,15 @@
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/llAccount"
-        android:padding="@dimen/_20sdp">
+        android:scrollbars="none"
+        android:layout_above="@+id/llAccount">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:padding="@dimen/_20sdp">
 
             <ImageView
                 android:layout_width="@dimen/_100sdp"
@@ -37,17 +39,18 @@
                 android:textSize="@dimen/_15sdp"
                 android:textAppearance="@style/TextAppearance.FontMedium"/>
 
-            <android.support.v7.widget.CardView
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginBottom="@dimen/_10sdp">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
-                android:layout_marginTop="@dimen/_30sdp"
-                app:cardCornerRadius="@dimen/_5sdp"
-                app:cardBackgroundColor="#F3ECEE">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:background="@drawable/custom_edit_text_bg">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -61,7 +64,7 @@
                         android:id="@+id/editName"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
-                        android:background="@color/colorLightPink"
+                        android:background="@null"
                         android:textColorHint="@color/colorGrayDark"
                         android:inputType="text"
                         android:paddingLeft="@dimen/_10sdp"
@@ -69,21 +72,14 @@
                         android:textAppearance="@style/TextAppearance.FontMedium"
                         android:hint="@string/full_name"/>
 
-                </LinearLayout>
+            </LinearLayout>
 
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                app:cardCornerRadius="@dimen/_5sdp"
-                app:cardBackgroundColor="#F3ECEE">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:background="@drawable/custom_edit_text_bg">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -93,33 +89,25 @@
                         android:contentDescription="@null"
                         android:padding="@dimen/_10sdp"/>
 
-                    <EditText
-                        android:id="@+id/editSelect"
+                    <Spinner
+                        android:id="@+id/spinnerSelect"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
-                        android:background="@color/colorLightPink"
+                        android:background="@null"
                         android:textColorHint="@color/colorGrayDark"
-                        android:inputType="text"
                         android:paddingLeft="@dimen/_10sdp"
                         android:paddingRight="@dimen/_10sdp"
                         android:textAppearance="@style/TextAppearance.FontMedium"
-                        android:hint="@string/select"/>
+                        android:prompt="@string/select"/>
 
-                </LinearLayout>
+            </LinearLayout>
 
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                app:cardCornerRadius="@dimen/_5sdp"
-                app:cardBackgroundColor="#F3ECEE">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:background="@drawable/custom_edit_text_bg">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -129,12 +117,11 @@
                         android:contentDescription="@null"
                         android:padding="@dimen/_10sdp"/>
 
-
                     <EditText
                         android:id="@+id/editEmail"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
-                        android:background="@color/colorLightPink"
+                        android:background="@null"
                         android:textColorHint="@color/colorGrayDark"
                         android:inputType="textEmailAddress"
                         android:paddingLeft="@dimen/_10sdp"
@@ -144,21 +131,14 @@
                         android:textAppearance="@style/TextAppearance.FontMedium"
                         android:hint="@string/email"/>
 
-                </LinearLayout>
+            </LinearLayout>
 
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                app:cardCornerRadius="@dimen/_5sdp"
-                app:cardBackgroundColor="#F3ECEE">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:background="@drawable/custom_edit_text_bg">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -168,12 +148,11 @@
                         android:contentDescription="@null"
                         android:padding="@dimen/_10sdp"/>
 
-
                     <EditText
                         android:id="@+id/editPassword"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
-                        android:background="@color/colorLightPink"
+                        android:background="@null"
                         android:textColorHint="@color/colorGrayDark"
                         android:inputType="textPassword"
                         android:paddingLeft="@dimen/_10sdp"
@@ -184,9 +163,9 @@
                         android:textAppearance="@style/TextAppearance.FontMedium"
                         android:hint="@string/password"/>
 
-                </LinearLayout>
+            </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -198,14 +177,13 @@
                 android:paddingRight="@dimen/_50sdp"
                 android:paddingStart="@dimen/_50sdp"
                 android:paddingEnd="@dimen/_50sdp"
-                android:paddingTop="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
                 android:foreground="@drawable/ripple"
-                style="?borderlessButtonStyle"
                 android:onClick="registerDone"
                 android:textAppearance="@style/TextAppearance.FontMedium"
                 android:background="@drawable/custom_basic_gradient_rounded"
-                android:layout_marginTop="@dimen/_30sdp"/>
+                android:layout_marginTop="@dimen/_20sdp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -246,7 +224,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Log In"
+            android:text="@string/log_in"
             android:layout_marginLeft="@dimen/_5sdp"
             android:layout_marginStart="@dimen/_5sdp"
             android:textColor="@color/colorAccent"

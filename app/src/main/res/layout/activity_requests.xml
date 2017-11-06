@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.rtoosh.provider.views.RequestsActivity">
+
+    <include layout="@layout/toolbar_requests"
+        android:id="@id/toolbar"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/_10sdp">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardPreventCornerOverlap="false"
+        app:cardElevation="@dimen/_5sdp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorGray"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_5sdp">
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/new_requests"
+                android:textSize="@dimen/_14sdp"
+                android:textAppearance="@style/TextAppearance.FontBold"
+                android:gravity="start|center"
+                android:textColor="@color/colorBlack"
+                android:layout_centerVertical="true"
+                android:drawablePadding="@dimen/_10sdp"
+                android:layout_toLeftOf="@+id/tvNewRequest"
+                android:layout_toStartOf="@+id/tvNewRequest"
+                android:drawableLeft="@drawable/ic_new_requests"
+                android:drawableStart="@drawable/ic_new_requests"/>
+
+            <TextView
+                android:id="@+id/tvNewRequest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_circular_pink_bg"
+                android:text="@string/two"
+                android:layout_toLeftOf="@+id/imgDropDown"
+                android:layout_toStartOf="@+id/imgDropDown"
+                android:layout_centerVertical="true"
+                android:textAppearance="@style/TextAppearance.FontMedium"
+                android:textSize="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:gravity="center"
+                android:textColor="@color/colorWhite"/>
+
+            <ImageView
+                android:id="@+id/imgDropDown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_dropdown"
+                android:contentDescription="@null"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerNewRequests"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:padding="@dimen/_8sdp"/>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardPreventCornerOverlap="false"
+            app:cardElevation="@dimen/_5sdp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorGray"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/approved_requests"
+                    android:textSize="@dimen/_14sdp"
+                    android:textColor="@color/colorBlack"
+                    android:textAppearance="@style/TextAppearance.FontBold"
+                    android:gravity="start|center"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:layout_toLeftOf="@+id/tvApprovedRequests"
+                    android:layout_toStartOf="@+id/tvApprovedRequests"
+                    android:drawableLeft="@drawable/ic_approved_requests"
+                    android:drawableStart="@drawable/ic_approved_requests"/>
+
+                <TextView
+                    android:id="@+id/tvApprovedRequests"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_circular_gray_bg"
+                    android:text="@string/three"
+                    android:layout_toLeftOf="@+id/imgDropDown2"
+                    android:layout_toStartOf="@+id/imgDropDown2"
+                    android:layout_centerVertical="true"
+                    android:textAppearance="@style/TextAppearance.FontMedium"
+                    android:textSize="@dimen/_15sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:textColor="@color/colorWhite"/>
+
+                <ImageView
+                    android:id="@+id/imgDropDown2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_dropdown"
+                    android:contentDescription="@null"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerApprovedRequests"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:padding="@dimen/_8sdp"/>
+
+    </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</RelativeLayout>

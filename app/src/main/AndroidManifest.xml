@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.rtoosh.provider">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -15,38 +19,44 @@
 
     <application
         android:name=".model.custom.Application"
-        android:allowBackup="true"
+        android:allowBackup="false"
+        android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".views.activities.SplashActivity">
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon,android:allowBackup">
+        <activity android:name=".views.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.activities.IntroSliderActivity" />
-        <activity android:name=".views.activities.MainActivity" />
-        <activity android:name=".views.activities.OrderDetailsActivity" />
-        <activity android:name=".views.activities.ServiceActivity" />
-        <activity android:name=".views.activities.PurchaseDetailsActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name=".views.activities.PhoneVerificationActivity" />
-        <activity android:name=".views.activities.OtpActivity" />
+        <activity android:name=".views.IntroSliderActivity" />
+        <activity android:name=".views.MainActivity" />
+        <activity android:name=".views.OrderDetailsActivity" />
+        <activity android:name=".views.ServiceActivity" />
         <activity
-            android:name=".views.activities.RegistrationActivity"
-            android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".views.activities.RegisterIDActivity"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".views.activities.RegisterOrderActivity"
+            android:name=".views.PurchaseDetailsActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".views.activities.RegisterServiceActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name=".views.activities.RegisterInfoActivity"
-            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".views.PhoneVerificationActivity" />
+        <activity android:name=".views.OtpActivity" />
+        <activity
+            android:name=".views.RegistrationActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".views.RegisterIDActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".views.RegisterOrderActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".views.RegisterServiceActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".views.RegisterInfoActivity"
+            android:windowSoftInputMode="stateHidden" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -55,6 +65,24 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <activity android:name=".views.RequestsActivity" />
+        <activity android:name=".views.RequestsDetailActivity" />
+        <activity android:name=".views.ScheduleWorkActivity" />
+
+        <service android:name=".controller.NotificationManager" />
+
+        <activity android:name=".views.ReportActivity" />
+        <activity android:name=".views.ContactActivity"></activity>
     </application>
 
 </manifest>

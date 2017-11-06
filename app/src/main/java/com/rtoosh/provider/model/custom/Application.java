@@ -1,9 +1,12 @@
 package com.rtoosh.provider.model.custom;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.rtoosh.provider.BuildConfig;
 import com.rtoosh.provider.R;
 
+import timber.log.Timber;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public final class Application extends android.app.Application {
@@ -13,6 +16,11 @@ public final class Application extends android.app.Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        } else {
+            Timber.plant(new CrashReportingTree());
+        }
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath(Font_Text)
@@ -23,5 +31,27 @@ public final class Application extends android.app.Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
+    }
+
+    /**
+     * A tree which logs important information for crash reporting.
+     */
+    private static class CrashReportingTree extends Timber.Tree {
+        @Override
+        protected void log(int priority, String tag, String message, Throwable t) {
+            if (priority == Log.VERBOSE || priority == Log.DEBUG) {
+                return;
+            }
+
+            FakeCrashLibrary.log(priority, tag, message);
+
+            if (t != null) {
+                if (priority == Log.ERROR) {
+                    FakeCrashLibrary.logError(t);
+                } else if (priority == Log.WARN) {
+                    FakeCrashLibrary.logWarning(t);
+                }
+            }
+        }
     }
 }

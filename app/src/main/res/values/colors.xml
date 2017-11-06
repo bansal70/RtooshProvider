@@ -21,4 +21,9 @@
     <color name="colorLightPink">#f3ecee</color>
     <color name="colorLightYellow">#FFF1D0</color>
     <color name="colorDarkYellow">#C46F01</color>
+    <color name="colorLightRed">#FFEEEE</color>
+    <color name="colorRed">#DC3636</color>
+    <color name="colorGreenDark">#395703</color>
+    <color name="colorGrayTransparent">#F5F5F5</color>
+    <color name="colorWhiteTransparent">#10FFFFFF</color>
 </resources>

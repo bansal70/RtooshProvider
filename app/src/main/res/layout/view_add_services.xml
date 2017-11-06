@@ -28,16 +28,16 @@
                 android:layout_toStartOf="@+id/tvServicePrice"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
-                android:textAppearance="@style/TextAppearance.FontBold"/>
+                android:textAppearance="@style/TextAppearance.FontMedium"/>
 
             <TextView
                 android:id="@+id/tvServicePrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="$70"
+                android:text=""
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/_15sdp"
-                android:textAppearance="@style/TextAppearance.FontBold"
+                android:textAppearance="@style/TextAppearance.FontMedium"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"/>
 
@@ -47,7 +47,7 @@
             android:id="@+id/tvServiceContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Provide you the best service"
+            android:text="@string/service"
             android:textColor="@color/colorGrayDark"/>
 
         <LinearLayout
@@ -72,7 +72,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textAppearance="@style/TextAppearance.FontRegular"
-                android:text="30 min"/>
+                android:text="@string/service_duration"/>
 
         </LinearLayout>
 

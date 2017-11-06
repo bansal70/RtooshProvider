@@ -19,7 +19,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/account_status"
-            android:textSize="@dimen/_14sdp"
             android:textAppearance="@style/TextAppearance.FontMedium"
             android:textColor="@color/colorWhite" />
 
@@ -27,8 +26,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/not_active"
-            android:layout_gravity="center"
-            android:gravity="center"
+            android:textSize="@dimen/_10sdp"
+            android:gravity="bottom"
+            android:layout_marginTop="@dimen/_1sdp"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.FontMedium"
             android:textColor="@color/colorWhite" />
