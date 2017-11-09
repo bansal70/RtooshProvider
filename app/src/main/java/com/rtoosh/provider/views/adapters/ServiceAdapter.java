@@ -8,10 +8,13 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
-import com.rtoosh.provider.model.POJO.Services;
 import com.rtoosh.provider.R;
+import com.rtoosh.provider.model.POJO.Services;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHolder>{
     private Context mContext;
@@ -76,12 +79,12 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHold
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private CheckBox cbServices;
+        @BindView(R.id.cbServices) CheckBox cbServices;
 
         private ViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
 
-            cbServices = itemView.findViewById(R.id.cbServices);
         }
     }
 }

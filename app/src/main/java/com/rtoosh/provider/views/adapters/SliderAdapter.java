@@ -3,7 +3,6 @@ package com.rtoosh.provider.views.adapters;
 import android.content.Context;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,13 +46,13 @@ public class SliderAdapter extends PagerAdapter {
             tvDes.setText(R.string.slider_three_des);
         }
 
-        ((ViewPager) collection).addView(view, 0);
+        collection.addView(view, 0);
         return view;
     }
 
     @Override
     public void destroyItem(ViewGroup arg0, int arg1, Object arg2) {
-        ((ViewPager) arg0).removeView((View) arg2);
+        arg0.removeView((View) arg2);
     }
 
     @Override

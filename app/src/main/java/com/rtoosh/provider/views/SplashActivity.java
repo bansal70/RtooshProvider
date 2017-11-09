@@ -26,7 +26,7 @@ public class SplashActivity extends AppBaseActivity {
 
         handler = new Handler();
         runnable = () -> {
-            Intent intent = new Intent(mContext, IntroSliderActivity.class);
+            Intent intent = new Intent(mContext, MainActivity.class);
             startActivity(intent);
             finish();
         };

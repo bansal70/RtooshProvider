@@ -53,7 +53,7 @@
     <string name="invoice_breakdown">Invoice Breakdown</string>
     <string name="service_commission">Service commission</string>
 
-    <string name="total">Total:</string>
+    <string name="total">Total</string>
     <string name="purchase_detail">Purchase Detail</string>
     <string name="yes">YES</string>
     <string name="no">NO</string>
@@ -186,8 +186,30 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="submit">Submit</string>
     <string name="write_problem">Write problem</string>
-    <string name="issue_related_to">Issue related to...</string>
+    <string name="issue_related_to">Issue related to…</string>
     <string name="report_a_problem">Report a problem</string>
-    <string name="write_comment">Write a comment...</string>
+    <string name="write_comment">Write a comment…</string>
     <string name="get_in_touch">Get in touch</string>
+    <string name="change_password">Change Password</string>
+    <string name="name">Name</string>
+    <string name="documents">Documents</string>
+    <string name="change_profile_photo">Click on it to change it</string>
+    <string name="profile_photo">Profile Photo</string>
+    <string name="text_surname">Surname</string>
+    <string name="public_info">Public Info</string>
+    <string name="private_info">Private Info</string>
+    <string name="portfolio">Portfolio</string>
+    <string name="this_year">This Year</string>
+    <string name="this_month">This Month</string>
+    <string name="this_week">This Week</string>
+    <string name="bank_account_details">Bank Account Details</string>
+    <string name="status">Status</string>
+    <string name="text_correct_name">Please enter correct name to prevent delay on transfer</string>
+    <string name="iban_account_number">IBAN Account Number</string>
+    <string name="text_correct_iban_number">Please enter correct IBAN number to prevent delay on transfer</string>
+    <string name="remove">Remove</string>
+    <string name="edit">Edit</string>
+    <string name="account_name">Account name</string>
+    <string name="string_weekly_balance">The weekly profit will be transferred to your bank account after two weeks</string>
+    <string name="string_facing_any_problem">If you are facing any problem</string>
 </resources>

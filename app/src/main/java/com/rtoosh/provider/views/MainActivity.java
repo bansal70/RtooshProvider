@@ -16,7 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,29 +27,44 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.rtoosh.provider.R;
+import com.rtoosh.provider.controller.ModelManager;
+import com.rtoosh.provider.model.Constants;
 import com.rtoosh.provider.model.POJO.Services;
+import com.rtoosh.provider.model.RPPreferences;
 import com.rtoosh.provider.model.custom.Utils;
+import com.rtoosh.provider.model.event.ApiErrorEvent;
+import com.rtoosh.provider.model.event.ApiErrorWithMessageEvent;
+import com.rtoosh.provider.model.network.AbstractApiResponse;
 import com.rtoosh.provider.views.adapters.ServiceAdapter;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnTouch;
 
-public class MainActivity extends AppBaseActivity implements CompoundButton.OnCheckedChangeListener,
-        OnMapReadyCallback, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppBaseActivity implements OnMapReadyCallback, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+
+    private final String TAG = "MainActivity";
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
     @BindView(R.id.nav_view) NavigationView navigationView;
     @BindView(R.id.switchOnline) SwitchCompat switchOnline;
+    @BindView(R.id.textOnline) TextView textOnline;
+    @BindView(R.id.llRequesting) LinearLayout linearRequest;
+    @BindView(R.id.rlOffline) RelativeLayout relativeOffline;
 
-    TextView tvNewRequests, tvApprovedRequests;
     List<Services> listServices;
     Dialog dialogServices, dialogTerms, dialogRequest, dialogDecline;
     Handler handler;
     GoogleMap mGoogleMap;
+    String lang, user_id;
+    boolean online = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +88,10 @@ public class MainActivity extends AppBaseActivity implements CompoundButton.OnCh
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        switchOnline.setOnCheckedChangeListener(this);
+        lang = RPPreferences.readString(mContext, "lang");
+        user_id = RPPreferences.readString(mContext, "user_id");
+
+     //   switchOnline.setOnCheckedChangeListener(this);
         handler = new Handler();
 
         final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,
@@ -92,19 +111,22 @@ public class MainActivity extends AppBaseActivity implements CompoundButton.OnCh
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-        if (isChecked) {
+    @OnTouch(R.id.switchOnline)
+    boolean changeStatus() {
+        if (!switchOnline.isChecked()) {
             dialogServices.show();
+            online = true;
         } else {
-            findViewById(R.id.textOnline).setVisibility(View.GONE);
-            findViewById(R.id.llRequesting).setVisibility(View.GONE);
-            findViewById(R.id.rlOffline).setVisibility(View.VISIBLE);
+            online = false;
+            showDialog();
+            ModelManager.getInstance().getStatusManager().statusTask(mContext, TAG, user_id,
+                    switchOnline.isChecked(), lang);
         }
+        return false;
     }
 
     private void initServiceDialog() {
-        dialogServices = Utils.createDialog(this, R.layout.dialog_services);
+        dialogServices = Utils.createDialog(mContext, R.layout.dialog_services);
 
         listServices = new ArrayList<>();
         listServices.add(new Services("Make Up", false));
@@ -118,44 +140,41 @@ public class MainActivity extends AppBaseActivity implements CompoundButton.OnCh
         recyclerView.setAdapter(serviceAdapter);
 
         dialogServices.findViewById(R.id.tvNext).setOnClickListener(view -> {
-            dialogTerms.show();
             dialogServices.dismiss();
+            if (RPPreferences.readBoolean(mContext, "terms_accepted")) {
+                showDialog();
+                ModelManager.getInstance().getStatusManager().statusTask(mContext, TAG, user_id,
+                        switchOnline.isChecked(), lang);
+                return;
+            }
+            dialogTerms.show();
         });
     }
 
     private void initTermsDialog() {
-        dialogTerms = Utils.createDialog(this, R.layout.dialog_terms);
+        dialogTerms = Utils.createDialog(mContext, R.layout.dialog_terms);
 
         dialogTerms.findViewById(R.id.tvAgree).setOnClickListener(view -> {
-            dialogTerms.dismiss();
-            findViewById(R.id.textOnline).setVisibility(View.VISIBLE);
-            findViewById(R.id.llRequesting).setVisibility(View.VISIBLE);
-            findViewById(R.id.rlOffline).setVisibility(View.GONE);
-
-            handler.postDelayed(() -> {
-                //findViewById(R.id.llRequest).setVisibility(View.VISIBLE);
-                findViewById(R.id.llRequesting).setVisibility(View.GONE);
-                dialogRequest.show();
-            }, 2000);
-
+            showDialog();
+            ModelManager.getInstance().getStatusManager().statusTask(mContext, TAG, user_id,
+                    switchOnline.isChecked(), lang);
         });
 
         dialogTerms.findViewById(R.id.tvCancel).setOnClickListener(view -> {
             dialogTerms.dismiss();
-            switchOnline.setChecked(false);
         });
     }
 
     @SuppressWarnings("ConstantConditions")
     private void initRequestDialog() {
-        dialogRequest = Utils.createDialog(this, R.layout.dialog_request);
+        dialogRequest = Utils.createDialog(mContext, R.layout.dialog_request);
         dialogRequest.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         dialogRequest.findViewById(R.id.tvAccept).setOnClickListener(this);
         dialogRequest.findViewById(R.id.tvDecline).setOnClickListener(this);
     }
 
     private void initDeclineDialog() {
-        dialogDecline = Utils.createDialog(this, R.layout.dialog_decline_request);
+        dialogDecline = Utils.createDialog(mContext, R.layout.dialog_decline_request);
         dialogDecline.findViewById(R.id.tvDeclineRequest).setOnClickListener(this);
         dialogDecline.findViewById(R.id.tvDeclineCancel).setOnClickListener(this);
     }
@@ -215,23 +234,22 @@ public class MainActivity extends AppBaseActivity implements CompoundButton.OnCh
         int id = item.getItemId();
         switch (id) {
             case R.id.nav_profile:
-
+                startActivity(new Intent(mContext, ProfileActivity.class));
                 break;
             case R.id.nav_wallet:
-
+                startActivity(new Intent(mContext, WalletActivity.class));
                 break;
             case R.id.nav_history:
                 startActivity(new Intent(mContext, RequestsActivity.class));
-                Utils.gotoNextActivityAnimation(mContext);
                 break;
             case R.id.nav_report:
-
+                startActivity(new Intent(mContext, ReportActivity.class));
                 break;
             case R.id.nav_setting:
 
                 break;
             case R.id.nav_contact:
-
+                startActivity(new Intent(mContext, ContactActivity.class));
                 break;
             case R.id.nav_logout:
 
@@ -239,7 +257,58 @@ public class MainActivity extends AppBaseActivity implements CompoundButton.OnCh
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
+        Utils.gotoNextActivityAnimation(mContext);
         return true;
+    }
+
+    @Subscribe(sticky = true)
+    public void onEvent(AbstractApiResponse apiResponse) {
+        EventBus.getDefault().removeAllStickyEvents();
+        dismissDialog();
+        switch (apiResponse.getRequestTag()) {
+            case TAG:
+                if (online) {
+                    showToast("You are now online. You will now receive online request");
+                    switchOnline.setChecked(true);
+                    dialogTerms.dismiss();
+                    textOnline.setVisibility(View.VISIBLE);
+                    linearRequest.setVisibility(View.VISIBLE);
+                    relativeOffline.setVisibility(View.GONE);
+
+                    handler.postDelayed(() -> {
+                        //findViewById(R.id.llRequest).setVisibility(View.VISIBLE);
+                        if (!isFinishing()) {
+                            linearRequest.setVisibility(View.GONE);
+                            dialogRequest.show();
+                            RPPreferences.putBoolean(mContext, "terms_accepted", true);
+                        }
+                    }, 2000);
+                } else {
+                    showToast("You are offline. You will not get any online request");
+                    switchOnline.setChecked(false);
+                    textOnline.setVisibility(View.GONE);
+                    linearRequest.setVisibility(View.GONE);
+                    relativeOffline.setVisibility(View.VISIBLE);
+                }
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    @Subscribe(sticky = true)
+    public void onEventMainThread(ApiErrorWithMessageEvent event) {
+        EventBus.getDefault().removeAllStickyEvents();
+        dismissDialog();
+        showToast(event.getResultMsgUser());
+    }
+
+    @Subscribe(sticky = true)
+    public void onEventMainThread(ApiErrorEvent event) {
+        EventBus.getDefault().removeAllStickyEvents();
+        dismissDialog();
+        showToast(Constants.SERVER_ERROR);
     }
 
     @Override

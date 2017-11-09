@@ -35,14 +35,17 @@ import com.rtoosh.provider.views.adapters.OrdersAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 import static com.rtoosh.provider.R.id.map;
 
-public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyCallback,
-        View.OnClickListener, RoutingListener {
+public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyCallback, RoutingListener {
 
-    Toolbar toolbar;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.recyclerOrders) RecyclerView recyclerOrders;
     GoogleMap mGoogleMap;
-    RecyclerView recyclerOrders;
     ArrayList<Order> listOrders;
     OrdersAdapter ordersAdapter;
     private static final int[] COLORS = new int[]{R.color.colorPrimaryDark,R.color.colorPrimary,
@@ -55,6 +58,7 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_details);
+        ButterKnife.bind(this);
 
         SupportMapFragment mapFragment = (SupportMapFragment)getSupportFragmentManager()
                 .findFragmentById(map);
@@ -64,7 +68,6 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
     }
 
     private void initViews() {
-        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.mipmap.ic_cancel);
 
@@ -72,25 +75,18 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
         listOrders.add(new Order("2 Blowout", 2, 80));
         listOrders.add(new Order("1 Hair cut", 1, 90));
         listOrders.add(new Order("1 Nail polish", 1, 55));
-        recyclerOrders = findViewById(R.id.recyclerOrders);
         recyclerOrders.setLayoutManager(new LinearLayoutManager(mContext));
         ordersAdapter = new OrdersAdapter(mContext, listOrders);
         recyclerOrders.setAdapter(ordersAdapter);
 
-        findViewById(R.id.tvStartService).setOnClickListener(this);
-
-
         polylines = new ArrayList<>();
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tvStartService:
-                startActivity(new Intent(mContext, ServiceActivity.class));
-                Utils.gotoNextActivityAnimation(mContext);
-                break;
-        }
+
+    @OnClick(R.id.tvStartService)
+    public void startService(View view) {
+        startActivity(new Intent(mContext, ServiceActivity.class));
+        Utils.gotoNextActivityAnimation(mContext);
     }
 
     @Override
@@ -119,11 +115,6 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
                 .waypoints(start, end)
                 .build();
         routing.execute();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 
     @Override

@@ -41,6 +41,7 @@ public abstract class AppBaseActivity extends AppCompatActivity {
         }
 
         dialog = Utils.showDialog(mContext);
+        dialog.setCancelable(false);
     }
 
     @Override

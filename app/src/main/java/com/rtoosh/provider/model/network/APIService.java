@@ -77,4 +77,21 @@ public interface APIService {
                                                    @Query("deviceToken") String deviceToken,
                                                    @Query("deviceType") String deviceType,
                                                    @Query("lang") String lang);
+
+    @POST("apis/changeStatus")
+    Call<AbstractApiResponse> statusResponse(@Query("user_id") String user_id,
+                                    @Query("status") String status,
+                                    @Query("lang") String lang);
+
+    @POST("apis/addProblem")
+    Call<AbstractApiResponse> reportResponse(@Query("user_id") String user_id,
+                                             @Query("name") String title,
+                                             @Query("description") String description,
+                                             @Query("lang") String lang);
+
+    @POST("apis/contactUs")
+    Call<AbstractApiResponse> contactResponse(@Query("user_id") String user_id,
+                                             @Query("description") String description,
+                                             @Query("lang") String lang);
+
 }

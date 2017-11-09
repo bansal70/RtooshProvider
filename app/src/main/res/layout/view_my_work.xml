@@ -7,14 +7,37 @@
     android:layout_marginEnd="@dimen/_20sdp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <ImageView
         android:id="@+id/imgWork"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@mipmap/ic_upload_image"
-        android:scaleType="centerInside"
+        android:scaleType="centerCrop"
         android:foreground="@drawable/ripple"
         android:contentDescription="@string/upload"
         android:background="@drawable/custom_basic_gradient"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:visibility="gone"
+            android:background="@color/colorBlackTransparent"/>
+
+        <ImageView
+            android:id="@+id/ivRemovePhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:background="#fff"
+            android:contentDescription="@string/remove"
+            android:src="@drawable/ic_delete_service"/>
+
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>

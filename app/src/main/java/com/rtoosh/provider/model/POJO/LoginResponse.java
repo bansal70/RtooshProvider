@@ -20,5 +20,9 @@ public class LoginResponse extends AbstractApiResponse{
         public String accountStatus;
         @SerializedName("id_number")
         public String idNumber;
+        @SerializedName("email")
+        public String email;
+        @SerializedName("full_name")
+        public String fullName;
     }
 }

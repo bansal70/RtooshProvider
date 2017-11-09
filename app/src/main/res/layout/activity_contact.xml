@@ -22,7 +22,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/report"
+                android:text="@string/contact_us"
                 android:textAppearance="@style/TextAppearance.FontMedium"
                 android:textColor="@color/colorWhite"
                 android:layout_marginRight="?attr/actionBarSize"
@@ -33,54 +33,54 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="@dimen/_30sdp">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_120sdp"
-            android:contentDescription="@string/contact_us"
-            android:src="@drawable/ic_contact_us_screen" />
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:gravity="center"
-            android:text="@string/get_in_touch"
-            android:textAppearance="@style/TextAppearance.FontBold"
-            android:textAllCaps="true"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/_16sdp" />
+            android:padding="@dimen/_30sdp">
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
-            app:cardCornerRadius="@dimen/_5sdp"
-            app:cardElevation="0.5dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_120sdp"
+                android:contentDescription="@string/contact_us"
+                android:src="@drawable/ic_contact_us_screen" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/get_in_touch"
+                android:textAppearance="@style/TextAppearance.FontBold"
+                android:textAllCaps="true"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/_16sdp" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:background="@drawable/custom_edit_text_bg"
+                android:layout_marginTop="@dimen/_20sdp"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
-                    android:background="@drawable/custom_basic_gradient"
+                    android:background="@drawable/custom_left_rounded_gradient"
                     android:padding="@dimen/_8sdp"
                     android:src="@mipmap/ic_full_name"
                     android:contentDescription="@null" />
 
                 <TextView
-                    android:id="@+id/full_name"
+                    android:id="@+id/tvName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/colorGrayLight"
                     android:gravity="center_vertical"
                     android:hint="@string/full_name"
                     android:paddingLeft="@dimen/_10sdp"
@@ -91,95 +91,86 @@
                     app:paddingStart="@dimen/_10sdp" />
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:cardCornerRadius="@dimen/_5sdp"
-            app:cardElevation="0.5dp">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal"
+                android:background="@drawable/custom_edit_text_bg"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
-                    android:background="@drawable/custom_basic_gradient"
+                    android:background="@drawable/custom_left_rounded_gradient"
                     android:padding="@dimen/_8sdp"
                     android:contentDescription="@null"
                     android:src="@mipmap/ic_email" />
 
                 <TextView
-                    android:id="@+id/email"
+                    android:id="@+id/tvEmail"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/colorGrayLight"
                     android:gravity="center_vertical"
                     android:hint="@string/email"
-                    android:inputType="textEmailAddress"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingRight="@dimen/_10sdp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/colorGrayDark"
                     android:textSize="@dimen/_12sdp"
                     app:paddingStart="@dimen/_10sdp" />
+
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:cardCornerRadius="@dimen/_5sdp"
-            app:cardElevation="0.5dp">
-
-            <LinearLayout
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginTop="@dimen/_10sdp"
+                app:cardCornerRadius="@dimen/_5sdp"
+                app:cardElevation="0.5dp">
 
-                <EditText
-                    android:id="@+id/comment"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_100sdp"
-                    android:background="@color/colorGrayLight"
-                    android:gravity="top"
-                    android:hint="@string/write_comment"
-                    android:inputType="text"
-                    android:padding="@dimen/_10sdp"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:paddingRight="@dimen/_10sdp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/colorGrayDark"
-                    android:textSize="@dimen/_12sdp"
-                    app:paddingStart="@dimen/_10sdp" />
-            </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-        </android.support.v7.widget.CardView>
+                    <EditText
+                        android:id="@+id/editComment"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_100sdp"
+                        android:background="@drawable/custom_edit_text_bg"
+                        android:gravity="top"
+                        android:hint="@string/write_comment"
+                        android:inputType="text"
+                        android:padding="@dimen/_10sdp"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/colorGrayDark"
+                        android:textSize="@dimen/_12sdp"
+                        app:paddingStart="@dimen/_10sdp" />
+                </LinearLayout>
 
-        <Button
-            android:id="@+id/send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/_25sdp"
-            android:background="@drawable/custom_basic_gradient_rounded"
-            android:minHeight="0dp"
-            android:minWidth="0dp"
-            android:paddingBottom="@dimen/_7sdp"
-            android:paddingLeft="@dimen/_45sdp"
-            android:paddingRight="@dimen/_45sdp"
-            android:paddingTop="@dimen/_7sdp"
-            android:text="@string/send"
-            android:textAppearance="@style/TextAppearance.FontMedium"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/_12sdp" />
+            </android.support.v7.widget.CardView>
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btSend"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:background="@drawable/custom_basic_gradient_rounded"
+                android:paddingBottom="@dimen/_7sdp"
+                android:paddingLeft="@dimen/_45sdp"
+                android:paddingRight="@dimen/_45sdp"
+                android:paddingTop="@dimen/_7sdp"
+                android:text="@string/send"
+                android:textAppearance="@style/TextAppearance.FontMedium"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_12sdp" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

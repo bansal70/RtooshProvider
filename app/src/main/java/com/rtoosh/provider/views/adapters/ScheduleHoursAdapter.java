@@ -37,12 +37,6 @@ public class ScheduleHoursAdapter extends RecyclerView.Adapter<ScheduleHoursAdap
         ButterKnife.bind(this, timeDialog);
     }
 
-
-  /*  private void initDialog() {
-        timeDialog = Utils.createDialog(context, R.layout.dialog_opening_hours);
-        ButterKnife.bind(this, timeDialog);
-    }*/
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.view_schedule_hours, parent, false);

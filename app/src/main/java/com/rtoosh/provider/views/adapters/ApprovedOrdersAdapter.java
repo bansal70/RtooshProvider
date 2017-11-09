@@ -12,12 +12,15 @@ import com.rtoosh.provider.model.POJO.Order;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class ApprovedOrdersAdapter extends RecyclerView.Adapter<ApprovedOrdersAdapter.ViewHolder>{
     private Context mContext;
     private ArrayList<Order> listOrders;
 
-    public ApprovedOrdersAdapter(Context mContext, ArrayList<Order> listOrders) {
+    ApprovedOrdersAdapter(Context mContext, ArrayList<Order> listOrders) {
         this.mContext = mContext;
         this.listOrders = listOrders;
     }
@@ -40,12 +43,11 @@ public class ApprovedOrdersAdapter extends RecyclerView.Adapter<ApprovedOrdersAd
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView tvService;
+        @BindView(R.id.tvService) TextView tvService;
 
         private ViewHolder(View itemView) {
             super(itemView);
-
-            tvService = itemView.findViewById(R.id.tvService);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

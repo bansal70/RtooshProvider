@@ -5,17 +5,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rtoosh.provider.R;
 import com.rtoosh.provider.model.Constants;
 import com.rtoosh.provider.model.POJO.AddService;
+import com.rtoosh.provider.model.custom.ItemClickListener;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class RegisterServiceDetailsAdapter extends RecyclerView.Adapter<RegisterServiceDetailsAdapter.ViewHolder> {
     private Context context;
     private List<AddService> listServices;
+    private ItemClickListener clickListener;
 
     public RegisterServiceDetailsAdapter(Context context, List<AddService> listServices) {
         this.context = context;
@@ -42,16 +48,44 @@ public class RegisterServiceDetailsAdapter extends RecyclerView.Adapter<Register
         return listServices.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView tvServiceName, tvServiceContent, tvServicePrice, tvServiceDuration;
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        @BindView(R.id.tvServiceName) TextView tvServiceName;
+        @BindView(R.id.tvServiceContent) TextView tvServiceContent;
+        @BindView(R.id.tvServicePrice) TextView tvServicePrice;
+        @BindView(R.id.tvServiceDuration) TextView tvServiceDuration;
+        @BindView(R.id.ivEditService) ImageView ivEditService;
+        @BindView(R.id.ivRemoveService) ImageView ivRemoveService;
 
         private ViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
 
-            tvServiceName = itemView.findViewById(R.id.tvServiceName);
-            tvServiceContent = itemView.findViewById(R.id.tvServiceContent);
-            tvServicePrice = itemView.findViewById(R.id.tvServicePrice);
-            tvServiceDuration = itemView.findViewById(R.id.tvServiceDuration);
+            ivEditService.setOnClickListener(this);
+            ivRemoveService.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.ivEditService:
+                    if (clickListener != null)
+                        clickListener.onClick(ivEditService, getAdapterPosition());
+                    break;
+
+                case R.id.ivRemoveService:
+                    if (clickListener != null)
+                        clickListener.onClick(ivRemoveService, getAdapterPosition());
+
+                    /*listServices.remove(getAdapterPosition());
+                    notifyItemRemoved(getAdapterPosition());
+                    notifyItemRangeChanged(getAdapterPosition(), listServices.size());*/
+                    break;
+            }
+
+        }
+    }
+
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
     }
 }

@@ -62,8 +62,11 @@ public class RegisterServiceAdapter extends RecyclerView.Adapter<RegisterService
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         listAddServices = data.getListAddServices();
-        RegisterServiceDetailsAdapter registerServiceDetailsAdapter = new RegisterServiceDetailsAdapter(context, data.getListAddServices());
+        RegisterServiceDetailsAdapter registerServiceDetailsAdapter = new RegisterServiceDetailsAdapter(
+                context, data.getListAddServices());
         holder.recyclerView.setAdapter(registerServiceDetailsAdapter);
+
+        //registerServiceDetailsAdapter.setClickListener(this);
     }
 
     @Override
@@ -72,16 +75,14 @@ public class RegisterServiceAdapter extends RecyclerView.Adapter<RegisterService
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tvService)
-        TextView tvService;
-        @BindView(R.id.imgCategory)
-        ImageView imgCategory;
-        @BindView(R.id.recyclerServices)
-        RecyclerView recyclerView;
+        @BindView(R.id.tvService) TextView tvService;
+        @BindView(R.id.imgCategory) ImageView imgCategory;
+        @BindView(R.id.recyclerServices) RecyclerView recyclerView;
 
         private ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
         }
 
         @OnClick(R.id.imgAddService)
@@ -95,6 +96,37 @@ public class RegisterServiceAdapter extends RecyclerView.Adapter<RegisterService
             dialogSelection.show();
         }
     }
+
+   /* @Override
+    public void onClick(View view, int pos) {
+        switch (view.getId()) {
+            case R.id.ivEditService:
+                Toast.makeText(context, "Edit " + pos, Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.ivRemoveService:
+                RegisterServiceData data = listData.get(position);
+                id = data.getId();
+                name = data.getName();
+                image = data.getImage();
+                listAddServices = data.getListAddServices();
+
+AddService addService = new AddService(listAddServices.get(pos).getName(),
+                        listAddServices.get(pos).getDescription(),
+                        listAddServices.get(pos).getPrice(),
+                        listAddServices.get(pos).getDuration());
+                listAddServices.remove(addService);
+                RegisterServiceData data = new RegisterServiceData(id, name, image, listAddServices);
+                listData.set(pos, data);
+                notifyItemChanged(pos);
+                jsonServices.remove(pos);
+                Timber.e("array-- "+jsonServices);
+
+                Toast.makeText(context, "Remove " + listAddServices.get(pos).getName(), Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }*/
+
 
     private void initSelectionDialog() {
         dialogSelection = Utils.createDialog(context, R.layout.dialog_add_services);
@@ -120,7 +152,7 @@ public class RegisterServiceAdapter extends RecyclerView.Adapter<RegisterService
             if (serviceName.isEmpty() || description.isEmpty() || price.isEmpty() || duration.isEmpty()) {
                 Toast.makeText(context, R.string.toast_fill_data, Toast.LENGTH_SHORT).show();
             } else if (duration.length() < 5 || !duration.contains(":") ||
-                    String.valueOf(hours).length() > 2 || String.valueOf(min).length() > 2) {
+                     String.valueOf(hours).length() > 2 || String.valueOf(min).length() > 2) {
                 Toast.makeText(context, R.string.error_duration_format,
                         Toast.LENGTH_SHORT).show();
             } else if (hours > 12) {

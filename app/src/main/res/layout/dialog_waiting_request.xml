@@ -1,0 +1,36 @@
+<LinearLayout android:id="@+id/llRequesting"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:visibility="visible"
+    android:layout_centerInParent="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tvWaitingRequest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_basic_gradient_rounded"
+        android:text="@string/waiting_for_request"
+        android:textSize="@dimen/_25sdp"
+        android:textAppearance="@style/TextAppearance.FontMedium"
+        android:textColor="@color/colorLightGreen"
+        android:paddingLeft="@dimen/_20sdp"
+        android:paddingRight="@dimen/_20sdp"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingEnd="@dimen/_20sdp"
+        android:drawablePadding="@dimen/_10sdp"/>
+
+    <com.github.silvestrpredko.dotprogressbar.DotProgressBar
+        android:id="@+id/dot_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        app:amount="8"
+        app:duration="@android:integer/config_shortAnimTime"
+        app:endColor="@color/colorPrimary"
+        app:startColor="@color/colorAccent"
+        app:animationDirection="right"/>
+
+</LinearLayout>

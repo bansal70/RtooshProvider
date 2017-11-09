@@ -14,10 +14,14 @@ import com.rtoosh.provider.views.adapters.OrdersAdapter;
 
 import java.util.ArrayList;
 
-public class ServiceActivity extends AppBaseActivity implements View.OnClickListener{
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-    Toolbar toolbar;
-    RecyclerView recyclerOrders;
+public class ServiceActivity extends AppBaseActivity {
+
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.recyclerOrders) RecyclerView recyclerOrders;
     ArrayList<Order> listOrders;
     OrdersAdapter ordersAdapter;
 
@@ -25,12 +29,12 @@ public class ServiceActivity extends AppBaseActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service);
+        ButterKnife.bind(this);
 
         initViews();
     }
 
     private void initViews() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.mipmap.ic_cancel);
 
@@ -38,22 +42,17 @@ public class ServiceActivity extends AppBaseActivity implements View.OnClickList
         listOrders.add(new Order("2 Blowout", 2, 80));
         listOrders.add(new Order("1 Hair cut", 1, 90));
         listOrders.add(new Order("1 Nail polish", 1, 55));
-        recyclerOrders = (RecyclerView) findViewById(R.id.recyclerOrders);
+
         recyclerOrders.setLayoutManager(new LinearLayoutManager(mContext));
         ordersAdapter = new OrdersAdapter(mContext, listOrders);
         recyclerOrders.setAdapter(ordersAdapter);
 
-        findViewById(R.id.tvServiceCompleted).setOnClickListener(this);
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tvServiceCompleted:
-                startActivity(new Intent(mContext, PurchaseDetailsActivity.class));
-                Utils.gotoNextActivityAnimation(mContext);
-                break;
-        }
+    @OnClick(R.id.tvServiceCompleted)
+    public void serviceCompleted(View view) {
+        startActivity(new Intent(mContext, PurchaseDetailsActivity.class));
+        Utils.gotoNextActivityAnimation(mContext);
     }
 
     @Override

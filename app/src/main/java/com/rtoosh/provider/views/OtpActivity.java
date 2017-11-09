@@ -31,7 +31,6 @@ public class OtpActivity extends AppBaseActivity {
     @BindView(R.id.edit3) EditText edit3;
     @BindView(R.id.edit4) EditText edit4;
 
-    String otp = "";
     String deviceToken, lang, phone;
 
     @Override
@@ -48,16 +47,10 @@ public class OtpActivity extends AppBaseActivity {
         lang = RPPreferences.readString(mContext, "lang");
         phone = RPPreferences.readString(mContext, "phone");
 
-        otp = getIntent().getStringExtra("otp");
 
         Utils.setTextWatcherMoveFocus(edit1, edit2);
         Utils.setTextWatcherMoveFocus(edit2, edit3);
         Utils.setTextWatcherMoveFocus(edit3, edit4);
-        edit1.setText(String.valueOf(otp.charAt(0)));
-        edit2.setText(String.valueOf(otp.charAt(1)));
-        edit3.setText(String.valueOf(otp.charAt(2)));
-        edit4.setText(String.valueOf(otp.charAt(3)));
-        Toast.makeText(mContext, "Please enter "+otp+" for testing.", Toast.LENGTH_SHORT).show();
     }
 
     public void otpDone(View v) {
@@ -66,12 +59,9 @@ public class OtpActivity extends AppBaseActivity {
         if (edit1.getText().toString().isEmpty() || edit2.getText().toString().isEmpty() ||
                 edit3.getText().toString().isEmpty() || edit4.getText().toString().isEmpty()) {
             Toast.makeText(mContext, R.string.toast_digits_access_code, Toast.LENGTH_SHORT).show();
-        } else if (!otp.equals(resultedOTP)) {
-            Toast.makeText(mContext, R.string.incorrect_otp, Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             showDialog();
-            ModelManager.getInstance().getOtpManager().otpTask(this, OTP_TAG, phone, otp, lang);
+            ModelManager.getInstance().getOtpManager().otpTask(this, OTP_TAG, phone, resultedOTP, lang);
         }
     }
 

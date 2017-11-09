@@ -82,7 +82,9 @@
         <service android:name=".controller.NotificationManager" />
 
         <activity android:name=".views.ReportActivity" />
-        <activity android:name=".views.ContactActivity"></activity>
+        <activity android:name=".views.ContactActivity" />
+        <activity android:name=".views.ProfileActivity" />
+        <activity android:name=".views.WalletActivity"></activity>
     </application>
 
 </manifest>

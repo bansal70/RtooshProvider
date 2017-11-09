@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -53,18 +54,15 @@ public class RegisterInfoActivity extends AppBaseActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.editSurname) EditText editSurname;
     @BindView(R.id.editBio) EditText editBio;
-   /* @BindView(R.id.imgWork1) ImageView imgWork1;
-    @BindView(R.id.imgWork2) ImageView imgWork2;
-    @BindView(R.id.imgWork3) ImageView imgWork3;*/
     @BindView(R.id.imgBg) ImageView imgBg;
+    @BindView(R.id.recyclerWork) RecyclerView recyclerWork;
+    @BindView(R.id.cardWork) CardView cardWork;
 
     private static final int PERMISSION_REQUEST_CODE = 1001;
     static final int REQUEST_IMAGE_CAPTURE = 1;
-
     String pathBg = "";
     String surname, bio;
     String lang, user_id, id, order, services, info, deviceToken;
-    @BindView(R.id.recyclerWork) RecyclerView recyclerWork;
     MyWorkAdapter myWorkAdapter;
     private List<String> listImages;
     private String imageType = "";
@@ -178,8 +176,8 @@ public class RegisterInfoActivity extends AppBaseActivity {
         Timber.e("json info-- "+info);
 
         showDialog();
-        ModelManager.getInstance().getProviderInfoManager().providerInfoTask(mContext,
-                REGISTRATION_TAG, user_id, id, order, services, info, deviceToken, lang, pathBg, listImages);
+        ModelManager.getInstance().getProviderInfoManager().providerInfoTask(mContext, REGISTRATION_TAG,
+                user_id, id, order, services, info, deviceToken, lang, pathBg, myWorkAdapter.getAllImages());
     }
 
     private RegisterInfo getInfo() {

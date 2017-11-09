@@ -55,7 +55,7 @@
             android:textSize="@dimen/_16sdp" />
 
         <EditText
-            android:id="@+id/title"
+            android:id="@+id/editTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_25sdp"
@@ -72,7 +72,7 @@
 
 
         <EditText
-            android:id="@+id/description"
+            android:id="@+id/editDescription"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_100sdp"
             android:layout_marginLeft="@dimen/_25sdp"
@@ -87,7 +87,7 @@
             android:textSize="@dimen/_12sdp" />
 
         <Button
-            android:id="@+id/submit"
+            android:id="@+id/btSubmit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_25sdp"

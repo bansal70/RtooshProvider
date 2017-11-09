@@ -7,13 +7,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.rtoosh.provider.R;
 import com.rtoosh.provider.model.POJO.Order;
+import com.rtoosh.provider.model.custom.Utils;
 import com.rtoosh.provider.views.RequestsDetailActivity;
 
 import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ApprovedRequestAdapter extends RecyclerView.Adapter<ApprovedRequestAdapter.ViewHolder>{
     private Context context;
@@ -41,26 +45,20 @@ public class ApprovedRequestAdapter extends RecyclerView.Adapter<ApprovedRequest
         return 3;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private RecyclerView recyclerOrders;
-        private TextView tvDetails;
+    class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.recyclerOrders) RecyclerView recyclerOrders;
 
         private ViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
 
-            recyclerOrders = itemView.findViewById(R.id.recyclerOrders);
             recyclerOrders.setLayoutManager(new LinearLayoutManager(context));
-            tvDetails = itemView.findViewById(R.id.tvDetails);
-
-            tvDetails.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.tvDetails:
-                    context.startActivity(new Intent(context, RequestsDetailActivity.class));
-            }
+        @OnClick(R.id.tvDetails)
+        public void serviceDetails(View v) {
+            context.startActivity(new Intent(context, RequestsDetailActivity.class));
+            Utils.gotoNextActivityAnimation(context);
         }
     }
 }

@@ -11,70 +11,173 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/_10sdp">
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tvServiceName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/hair_cut"
-                android:textSize="@dimen/_15sdp"
-                android:layout_toLeftOf="@+id/tvServicePrice"
-                android:layout_toStartOf="@+id/tvServicePrice"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:textAppearance="@style/TextAppearance.FontMedium"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toLeftOf="@+id/layoutEdit"
+            android:layout_toStartOf="@+id/layoutEdit"
+            android:padding="@dimen/_10sdp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvServiceName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/hair_cut"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_toLeftOf="@+id/tvServicePrice"
+                    android:layout_toStartOf="@+id/tvServicePrice"
+                    android:textAppearance="@style/TextAppearance.FontMedium"
+                    android:textSize="@dimen/_15sdp" />
+
+                <TextView
+                    android:id="@+id/tvServicePrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/_15sdp"
+                    android:textAppearance="@style/TextAppearance.FontMedium"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"/>
+
+            </RelativeLayout>
 
             <TextView
-                android:id="@+id/tvServicePrice"
+                android:id="@+id/tvServiceContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/service"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textColor="@color/colorGrayDark"/>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/colorAccent"
-                android:textSize="@dimen/_15sdp"
-                android:textAppearance="@style/TextAppearance.FontMedium"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/duration"
+                    android:layout_gravity="center"
+                    android:textAppearance="@style/TextAppearance.FontRegular"
+                    android:textColor="@color/colorGrayDark"/>
+
+                <TextView
+                    android:id="@+id/tvServiceDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textAppearance="@style/TextAppearance.FontRegular"
+                    android:text="@string/service_duration"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+            <View
+                android:layout_width="@dimen/_1sdp"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:layout_toLeftOf="@+id/layoutEdit"
+                android:layout_toStartOf="@+id/layoutEdit"
+                android:background="@color/colorGray" />
+
+            <LinearLayout
+                android:id="@+id/layoutEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"/>
+                android:gravity="center"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/ivEditService"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/add"
+                    android:foreground="?selectableItemBackground"
+                    android:padding="@dimen/_5sdp"
+                    android:src="@drawable/ic_edit_service" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:background="@color/colorGray" />
+
+                <ImageView
+                    android:id="@+id/ivRemoveService"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/less"
+                    android:foreground="?selectableItemBackground"
+                    android:padding="@dimen/_5sdp"
+                    android:src="@drawable/ic_delete_service" />
+
+            </LinearLayout>
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tvServiceContent"
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/service"
-            android:textColor="@color/colorGrayDark"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/tvEdit"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/duration"
-                android:layout_gravity="center"
-                android:textAppearance="@style/TextAppearance.FontRegular"
-                android:textColor="@color/colorGrayDark"/>
+                android:text="@string/edit"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:padding="@dimen/_8sdp"
+                android:foreground="@drawable/ripple"
+                android:background="@drawable/custom_basic_gradient"/>
+
+            <View
+                android:layout_width="@dimen/_1sdp"
+                android:layout_height="match_parent"/>
 
             <TextView
-                android:id="@+id/tvServiceDuration"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvRemove"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="@string/remove"
                 android:gravity="center"
-                android:textAppearance="@style/TextAppearance.FontRegular"
-                android:text="@string/service_duration"/>
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:padding="@dimen/_8sdp"
+                android:foreground="@drawable/ripple"
+                android:background="@drawable/custom_basic_gradient"/>
 
-        </LinearLayout>
+        </LinearLayout>-->
 
     </LinearLayout>
 

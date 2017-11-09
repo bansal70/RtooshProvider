@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#F05F3E</color>
     <color name="colorAccent">#ED3368</color>
     <color name="colorAccentTransparent">#FCF2F5</color>
+    <color name="colorPrimaryTransparent">#30F05F3E</color>
+    <color name="colorPrimaryDarkTransparent">#30F05F3E</color>
     <color name="colorBlack">#454546</color>
     <color name="colorBlackTransparent">#ab454546</color>
     <color name="colorLightTransparent">#30000000</color>
@@ -26,4 +28,5 @@
     <color name="colorGreenDark">#395703</color>
     <color name="colorGrayTransparent">#F5F5F5</color>
     <color name="colorWhiteTransparent">#10FFFFFF</color>
+    <color name="colorLightGray">#F1F1F1</color>
 </resources>

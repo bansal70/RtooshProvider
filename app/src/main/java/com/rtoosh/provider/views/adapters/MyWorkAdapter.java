@@ -18,8 +18,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class MyWorkAdapter extends RecyclerView.Adapter<MyWorkAdapter.ViewHolder>{
+public class MyWorkAdapter extends RecyclerView.Adapter<MyWorkAdapter.ViewHolder> {
     private Context mContext;
     private List<String> listImages;
 
@@ -50,7 +51,18 @@ public class MyWorkAdapter extends RecyclerView.Adapter<MyWorkAdapter.ViewHolder
         @BindView(R.id.imgWork) ImageView imgWork;
         private ViewHolder(View itemView) {
             super(itemView);
+
             ButterKnife.bind(this, itemView);
         }
+
+        @OnClick(R.id.ivRemovePhoto)
+        public void removePhoto() {
+            listImages.remove(getAdapterPosition());
+            notifyDataSetChanged();
+        }
+    }
+
+    public List<String> getAllImages() {
+        return listImages;
     }
 }

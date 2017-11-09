@@ -12,6 +12,9 @@ import com.rtoosh.provider.model.POJO.Order;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder>{
     private Context mContext;
     private ArrayList<Order> listOrders;
@@ -37,7 +40,8 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
         else
             holder.tvQuantity.setVisibility(View.VISIBLE);
 
-        holder.tvQuantity.setText(order.getQuantity() + "*" + order.getPrice() + "=");
+        String quantity = order.getQuantity() + "*" + order.getPrice() + "=";
+        holder.tvQuantity.setText(quantity);
         int price = order.getQuantity() * order.getPrice();
         holder.tvPrice.setText(String.valueOf(price));
     }
@@ -47,15 +51,14 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
         return listOrders.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView tvService, tvQuantity, tvPrice;
+    class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tvService) TextView tvService;
+        @BindView(R.id.tvQuantity) TextView tvQuantity;
+        @BindView(R.id.tvPrice) TextView tvPrice;
 
         private ViewHolder(View itemView) {
             super(itemView);
-
-            tvService = itemView.findViewById(R.id.tvService);
-            tvQuantity = itemView.findViewById(R.id.tvQuantity);
-            tvPrice = itemView.findViewById(R.id.tvPrice);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

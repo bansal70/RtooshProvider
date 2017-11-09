@@ -72,11 +72,12 @@ public class PhoneVerificationActivity extends AppBaseActivity {
                     RPPreferences.putString(mContext, "active", data.accountStatus);
                     RPPreferences.putString(mContext, "id_number", data.idNumber);
                     RPPreferences.putString(mContext, "country_code", tvCode.getText().toString());
+                    RPPreferences.putString(mContext, "email", data.email);
+                    RPPreferences.putString(mContext, "full_name", data.fullName);
                 }
 
                 RPPreferences.putString(mContext, "phone", editPhone.getText().toString().trim());
-                startActivity(new Intent(this, OtpActivity.class)
-                .putExtra("otp", String.valueOf(loginResponse.otp)));
+                startActivity(new Intent(this, OtpActivity.class));
                 Utils.gotoNextActivityAnimation(this);
                 break;
 
