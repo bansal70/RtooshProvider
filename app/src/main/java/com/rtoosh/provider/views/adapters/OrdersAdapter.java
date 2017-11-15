@@ -8,18 +8,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rtoosh.provider.R;
-import com.rtoosh.provider.model.POJO.Order;
+import com.rtoosh.provider.model.POJO.RequestDetailsResponse;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder>{
     private Context mContext;
-    private ArrayList<Order> listOrders;
+    private List<RequestDetailsResponse.OrderItem> listOrders;
 
-    public OrdersAdapter(Context mContext, ArrayList<Order> listOrders) {
+    public OrdersAdapter(Context mContext, List<RequestDetailsResponse.OrderItem> listOrders) {
         this.mContext = mContext;
         this.listOrders = listOrders;
     }
@@ -32,17 +32,22 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(OrdersAdapter.ViewHolder holder, int position) {
-        Order order = listOrders.get(position);
-        holder.tvService.setText(order.getService());
+        RequestDetailsResponse.OrderItem orderItem = listOrders.get(position);
+        RequestDetailsResponse.Service service = orderItem.service;
 
-        if (order.getQuantity() == 1)
+        holder.tvService.setText(service.serviceName);
+
+
+        if (orderItem.noOfPerson.equals("1"))
             holder.tvQuantity.setVisibility(View.GONE);
         else
             holder.tvQuantity.setVisibility(View.VISIBLE);
 
-        String quantity = order.getQuantity() + "*" + order.getPrice() + "=";
+
+        String quantity = Integer.parseInt(orderItem.noOfPerson) + " x " + Double.parseDouble(orderItem.amount) + " = ";
         holder.tvQuantity.setText(quantity);
-        int price = order.getQuantity() * order.getPrice();
+
+        double price = Integer.parseInt(orderItem.noOfPerson) * Double.parseDouble(orderItem.amount);
         holder.tvPrice.setText(String.valueOf(price));
     }
 
@@ -61,4 +66,5 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
             ButterKnife.bind(this, itemView);
         }
     }
+
 }

@@ -7,16 +7,17 @@ import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import com.rtoosh.provider.R;
-import com.rtoosh.provider.model.POJO.Order;
+import com.rtoosh.provider.model.POJO.RequestDetailsResponse;
 import com.rtoosh.provider.views.adapters.OrdersAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RequestsDetailActivity extends AppBaseActivity {
 
     Toolbar toolbar;
     RecyclerView recyclerOrders;
-    ArrayList<Order> listOrders;
+    List<RequestDetailsResponse.OrderItem> listOrders;
     OrdersAdapter ordersAdapter;
     TextView tvCustomerName;
 
@@ -35,9 +36,9 @@ public class RequestsDetailActivity extends AppBaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         listOrders = new ArrayList<>();
-        listOrders.add(new Order("2 Blowout", 2, 80));
+        /*listOrders.add(new Order("2 Blowout", 2, 80));
         listOrders.add(new Order("1 Hair cut", 1, 90));
-        listOrders.add(new Order("1 Nail polish", 1, 55));
+        listOrders.add(new Order("1 Nail polish", 1, 55));*/
         recyclerOrders = findViewById(R.id.recyclerOrders);
         recyclerOrders.setLayoutManager(new LinearLayoutManager(mContext));
         ordersAdapter = new OrdersAdapter(mContext, listOrders);

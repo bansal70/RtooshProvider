@@ -10,8 +10,7 @@ import com.rtoosh.provider.model.RPPreferences;
 
 public class SplashActivity extends AppBaseActivity {
 
-    // launcher screen timer
-    static int SPLASH_TIME_OUT = 2000;
+    int SPLASH_TIME_OUT = 2000;
 
     Handler handler;
     Runnable runnable;
@@ -26,7 +25,11 @@ public class SplashActivity extends AppBaseActivity {
 
         handler = new Handler();
         runnable = () -> {
-            Intent intent = new Intent(mContext, MainActivity.class);
+            if (RPPreferences.readBoolean(mContext, "registered")) {
+                startActivity(new Intent(mContext, MainActivity.class));
+                return;
+            }
+            Intent intent = new Intent(mContext, IntroSliderActivity.class);
             startActivity(intent);
             finish();
         };

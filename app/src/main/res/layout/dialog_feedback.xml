@@ -20,6 +20,7 @@
             android:textColor="@color/colorPrimary"/>
 
         <RatingBar
+            android:id="@+id/rbCustomer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:numStars="5"
@@ -35,6 +36,7 @@
             android:textColor="@color/colorBlack"/>
 
         <EditText
+            android:id="@+id/editFeedback"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_60sdp"
             android:padding="@dimen/_5sdp"

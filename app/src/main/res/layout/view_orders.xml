@@ -33,27 +33,26 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.FontMedium"
             android:textColor="@color/colorBlack"
-            android:textSize="@dimen/_12sdp"
-            android:text="2*80="/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_12sdp"
-            android:textAppearance="@style/TextAppearance.FontMedium"/>
+            android:textSize="@dimen/_12sdp"/>
 
         <TextView
             android:id="@+id/tvPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="160"
             android:textSize="@dimen/_12sdp"
             android:textColor="@color/black"
             android:textAppearance="@style/TextAppearance.FontMedium"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/currency"
+            android:layout_marginLeft="@dimen/_2sdp"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            android:textAppearance="@style/TextAppearance.FontMedium"/>
+
     </LinearLayout>
 
 </RelativeLayout>

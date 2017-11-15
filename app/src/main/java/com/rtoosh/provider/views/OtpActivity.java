@@ -74,6 +74,7 @@ public class OtpActivity extends AppBaseActivity {
                 showToast(otpResponse.getMessage());
                 String id_number = RPPreferences.readString(mContext, "id_number");
                 if (!id_number.equals("0") && !id_number.isEmpty()) {
+                    RPPreferences.putBoolean(mContext, "registered", true);
                     startActivity(new Intent(mContext, MainActivity.class));
                     Utils.gotoNextActivityAnimation(this);
                     return;

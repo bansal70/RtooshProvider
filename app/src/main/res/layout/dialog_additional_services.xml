@@ -28,6 +28,7 @@
             android:textColor="@color/colorAccent"/>
 
         <EditText
+            android:id="@+id/editTotalServices"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
             android:padding="@dimen/_5sdp"
@@ -44,6 +45,7 @@
             android:textColor="@color/colorAccent"/>
 
         <EditText
+            android:id="@+id/editPaid"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
             android:background="@drawable/custom_edit_text_bg"
@@ -60,6 +62,7 @@
             android:textColor="@color/colorBlack"/>
 
         <EditText
+            android:id="@+id/editNote"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_60sdp"
             android:padding="@dimen/_5sdp"

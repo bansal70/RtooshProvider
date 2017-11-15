@@ -7,8 +7,11 @@ package com.rtoosh.provider.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
+import timber.log.Timber;
+
 public class Operations {
-    private static final String TAG = Operations.class.getSimpleName();
 
     public static JSONObject makeJsonRegisterService(String service, String serviceName, String description,
                                                  String price, String duration) {
@@ -29,5 +32,68 @@ public class Operations {
         }
 
         return jsonObject;
+    }
+
+    public static String updateProfileParams(String query) {
+        String params = Config.UPDATE_PROFILE_URL + query;
+        Timber.e("update_profile params-- "+params);
+        return params;
+    }
+
+    public static HashMap<String, String> acceptRequestParams(String request_id, String lang) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("request_id", request_id);
+        hashMap.put("lang", lang);
+
+        return hashMap;
+    }
+
+    public static HashMap<String, String> declineRequestParams(String request_id, String reason, String lang) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("request_id", request_id);
+        hashMap.put("reason", reason);
+        hashMap.put("lang", lang);
+
+        return hashMap;
+    }
+
+    public static HashMap<String, String> serviceStartedParams(String service_id, String lang) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("service_id", service_id);
+        hashMap.put("lang", lang);
+
+        return hashMap;
+    }
+
+    public static HashMap<String, String> serviceCompletedParams(String service_id, String lang) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("service_id", service_id);
+        hashMap.put("lang", lang);
+
+        return hashMap;
+    }
+
+    public static HashMap<String, String> additionalServiceParams(String order_id, String number_of_services,
+                                                                  String total_paid_amount, String note, String lang) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("order_id", order_id);
+        hashMap.put("number_of_services", number_of_services);
+        hashMap.put("total_paid_amount", total_paid_amount);
+        hashMap.put("note", note);
+        hashMap.put("lang", lang);
+
+        return hashMap;
+    }
+
+    public static HashMap<String, String> feedbackParams(String provider_id, String user_id, float rating,
+                                                         String comment, String lang) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("provider_id", provider_id);
+        hashMap.put("user_id", user_id);
+        hashMap.put("rating", String.valueOf(rating));
+        hashMap.put("comment", comment);
+        hashMap.put("lang", lang);
+
+        return hashMap;
     }
 }

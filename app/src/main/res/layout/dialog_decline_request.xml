@@ -42,6 +42,7 @@
                 android:layout_marginTop="@dimen/_10sdp"/>
 
             <EditText
+                android:id="@+id/editReason"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_80sdp"
                 android:padding="@dimen/_5sdp"

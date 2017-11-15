@@ -55,7 +55,6 @@ public class PhoneVerificationActivity extends AppBaseActivity {
             showDialog();
             ModelManager.getInstance().getPhoneVerificationManager().execute(mContext, OTP_TAG, code, number,
                     deviceToken, lang);
-            //ModelManager.getInstance().getPhoneVerificationManager().otpTask(Operations.otpParams(number, deviceToken, lang));
         }
     }
 
@@ -74,6 +73,7 @@ public class PhoneVerificationActivity extends AppBaseActivity {
                     RPPreferences.putString(mContext, "country_code", tvCode.getText().toString());
                     RPPreferences.putString(mContext, "email", data.email);
                     RPPreferences.putString(mContext, "full_name", data.fullName);
+                    RPPreferences.putString(mContext, "profile_pic", data.profilePic);
                 }
 
                 RPPreferences.putString(mContext, "phone", editPhone.getText().toString().trim());
@@ -114,8 +114,4 @@ public class PhoneVerificationActivity extends AppBaseActivity {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
 }

@@ -1,14 +1,9 @@
 package com.rtoosh.provider.views;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,7 +12,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.rtoosh.provider.R;
@@ -43,8 +37,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import timber.log.Timber;
 
-import static android.os.Build.VERSION_CODES.M;
-
 public class RegisterIDActivity extends AppBaseActivity implements CompoundButton.OnCheckedChangeListener,
         AdapterView.OnItemSelectedListener {
 
@@ -61,8 +53,6 @@ public class RegisterIDActivity extends AppBaseActivity implements CompoundButto
     private List<String> listIdType;
     private String online = "0", schedule = "0";
     String id, date, idType = "", filePath = "", user_id, lang;
-    private static final int PERMISSION_REQUEST_CODE = 1010;
-    private static final int REQUEST_IMAGE_CAPTURE = 101;
     private boolean isUploaded = false;
 
     @Override
@@ -178,41 +168,6 @@ public class RegisterIDActivity extends AppBaseActivity implements CompoundButto
         return registerID1;
     }
 
-    private void dispatchTakePictureIntent() {
-        if (Build.VERSION.SDK_INT >= M) {
-            ActivityCompat.requestPermissions(this, new String[]{
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
-        } else {
-            chooseImage();
-        }
-    }
-
-    public void chooseImage() {
-        Intent chooseImageIntent = ImagePicker.getPickImageIntent(this);
-        startActivityForResult(chooseImageIntent, REQUEST_IMAGE_CAPTURE);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == PERMISSION_REQUEST_CODE && hasAllPermissionsGranted(grantResults)) {
-            chooseImage();
-        } else {
-            Toast.makeText(this, R.string.grant_permissions, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private boolean hasAllPermissionsGranted(@NonNull int[] grantResults) {
-        for (int grantResult : grantResults) {
-            if (grantResult == PackageManager.PERMISSION_DENIED) {
-                return false;
-            }
-        }
-        return true;
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

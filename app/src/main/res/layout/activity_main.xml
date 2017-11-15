@@ -264,6 +264,7 @@
                 android:text="@string/go_online"
                 android:textStyle="bold"
                 android:textSize="@dimen/_18sdp"
+                android:focusable="false"
                 android:textColor="@color/colorBlack"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_10sdp"

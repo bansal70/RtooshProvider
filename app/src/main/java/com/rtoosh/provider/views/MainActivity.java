@@ -16,11 +16,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -29,6 +32,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.rtoosh.provider.R;
 import com.rtoosh.provider.controller.ModelManager;
 import com.rtoosh.provider.model.Constants;
+import com.rtoosh.provider.model.Operations;
+import com.rtoosh.provider.model.POJO.RequestDetailsResponse;
 import com.rtoosh.provider.model.POJO.Services;
 import com.rtoosh.provider.model.RPPreferences;
 import com.rtoosh.provider.model.custom.Utils;
@@ -50,6 +55,8 @@ import butterknife.OnTouch;
 public class MainActivity extends AppBaseActivity implements OnMapReadyCallback, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     private final String TAG = "MainActivity";
+    private final String ACCEPT_REQUEST_TAG = "AcceptRequest";
+    private final String DECLINE_REQUEST_TAG = "DeclineRequest";
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
@@ -58,13 +65,18 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
     @BindView(R.id.textOnline) TextView textOnline;
     @BindView(R.id.llRequesting) LinearLayout linearRequest;
     @BindView(R.id.rlOffline) RelativeLayout relativeOffline;
+    EditText editReason;
+    TextView tvProviderName;
+    ImageView ivProfilePic;
+    View navHeader;
 
     List<Services> listServices;
     Dialog dialogServices, dialogTerms, dialogRequest, dialogDecline;
     Handler handler;
     GoogleMap mGoogleMap;
-    String lang, user_id;
+    String lang, user_id, fullName, request_id;
     boolean online = false;
+    private boolean flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,11 +88,11 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
                 .findFragmentById(R.id.map);
         supportMapFragment.getMapAsync(this);
 
-        initViews();
         initServiceDialog();
         initTermsDialog();
         initRequestDialog();
         initDeclineDialog();
+        initViews();
     }
 
     private void initViews() {
@@ -90,8 +102,13 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
 
         lang = RPPreferences.readString(mContext, "lang");
         user_id = RPPreferences.readString(mContext, "user_id");
+        fullName = RPPreferences.readString(mContext, "full_name");
 
-     //   switchOnline.setOnCheckedChangeListener(this);
+        navHeader = navigationView.getHeaderView(0);
+        tvProviderName = navHeader.findViewById(R.id.tvProviderName);
+        ivProfilePic = navHeader.findViewById(R.id.ivProfilePic);
+        tvProviderName.setText(fullName);
+
         handler = new Handler();
 
         final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,
@@ -108,7 +125,21 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+        switchOnline.setClickable(false);
         navigationView.setNavigationItemSelectedListener(this);
+
+        if (RPPreferences.readBoolean(mContext, "online")) {
+            setOnline();
+        }
+
+        if (!flag) {
+            request_id = RPPreferences.readString(mContext, "request_id");
+            if (!request_id.isEmpty()) {
+                linearRequest.setVisibility(View.GONE);
+                dialogRequest.show();
+            }
+        }
+        flag = true;
     }
 
     @OnTouch(R.id.switchOnline)
@@ -127,15 +158,16 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
 
     private void initServiceDialog() {
         dialogServices = Utils.createDialog(mContext, R.layout.dialog_services);
-
         listServices = new ArrayList<>();
         listServices.add(new Services("Make Up", false));
         listServices.add(new Services("Hairs", false));
         listServices.add(new Services("Nails", false));
         listServices.add(new Services("Henna & Tattoos", false));
         listServices.add(new Services("All", false));
+
         RecyclerView recyclerView = dialogServices.findViewById(R.id.recyclerServices);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+
         ServiceAdapter serviceAdapter = new ServiceAdapter(mContext, listServices);
         recyclerView.setAdapter(serviceAdapter);
 
@@ -153,16 +185,14 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
 
     private void initTermsDialog() {
         dialogTerms = Utils.createDialog(mContext, R.layout.dialog_terms);
-
         dialogTerms.findViewById(R.id.tvAgree).setOnClickListener(view -> {
+            RPPreferences.putBoolean(mContext, "terms_accepted", true);
             showDialog();
             ModelManager.getInstance().getStatusManager().statusTask(mContext, TAG, user_id,
                     switchOnline.isChecked(), lang);
         });
 
-        dialogTerms.findViewById(R.id.tvCancel).setOnClickListener(view -> {
-            dialogTerms.dismiss();
-        });
+        dialogTerms.findViewById(R.id.tvCancel).setOnClickListener(view -> dialogTerms.dismiss());
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -173,8 +203,11 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         dialogRequest.findViewById(R.id.tvDecline).setOnClickListener(this);
     }
 
+
     private void initDeclineDialog() {
         dialogDecline = Utils.createDialog(mContext, R.layout.dialog_decline_request);
+
+        editReason = dialogDecline.findViewById(R.id.editReason);
         dialogDecline.findViewById(R.id.tvDeclineRequest).setOnClickListener(this);
         dialogDecline.findViewById(R.id.tvDeclineCancel).setOnClickListener(this);
     }
@@ -183,9 +216,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvAccept:
-                startActivity(new Intent(mContext, OrderDetailsActivity.class));
-                Utils.gotoNextActivityAnimation(mContext);
-                dialogRequest.dismiss();
+                acceptRequest();
                 break;
 
             case R.id.tvDecline:
@@ -194,8 +225,8 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
                 break;
 
             case R.id.tvDeclineRequest:
-                dialogDecline.dismiss();
-                Toast.makeText(mContext, R.string.request_declined, Toast.LENGTH_SHORT).show();
+                declineRequest();
+                flag = true;
                 break;
 
             case R.id.tvDeclineCancel:
@@ -205,9 +236,106 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         }
     }
 
-    public void requestsClick(View view) {
-        startActivity(new Intent(this, RequestsActivity.class));
-        Utils.gotoNextActivityAnimation(mContext);
+    private void setOnline() {
+        switchOnline.setChecked(true);
+        textOnline.setVisibility(View.VISIBLE);
+        linearRequest.setVisibility(View.VISIBLE);
+        relativeOffline.setVisibility(View.GONE);
+        RPPreferences.putBoolean(mContext, "online", true);
+    }
+
+    private void setOffline() {
+        showToast(getString(R.string.msg_offline));
+        switchOnline.setChecked(false);
+        textOnline.setVisibility(View.GONE);
+        linearRequest.setVisibility(View.GONE);
+        relativeOffline.setVisibility(View.VISIBLE);
+        RPPreferences.putBoolean(mContext, "online", false);
+    }
+
+    private void acceptRequest() {
+        showDialog();
+        ModelManager.getInstance().getRequestManager().acceptRequestTask(mContext, ACCEPT_REQUEST_TAG,
+                Operations.acceptRequestParams(RPPreferences.readString(mContext, "request_id"), lang));
+    }
+
+    private void declineRequest() {
+        showDialog();
+        ModelManager.getInstance().getRequestManager().declineRequestTask(mContext, DECLINE_REQUEST_TAG,
+                Operations.declineRequestParams(RPPreferences.readString(mContext, "request_id"),
+                        editReason.getText().toString(), lang));
+    }
+
+    @Subscribe(sticky = true)
+    public void onEvent(AbstractApiResponse apiResponse) {
+        EventBus.getDefault().removeAllStickyEvents();
+        dismissDialog();
+        switch (apiResponse.getRequestTag()) {
+            case TAG:
+                if (online) {
+                    dialogTerms.dismiss();
+                    setOnline();
+                } else {
+                    setOffline();
+                }
+                break;
+        }
+    }
+
+    @Subscribe(sticky = true)
+    public void onEvent(RequestDetailsResponse detailsResponse) {
+        EventBus.getDefault().removeAllStickyEvents();
+        dismissDialog();
+        switch (detailsResponse.getRequestTag()) {
+            case ACCEPT_REQUEST_TAG:
+                dialogRequest.dismiss();
+                startActivity(new Intent(mContext, OrderDetailsActivity.class)
+                .putExtra("requestDetails", detailsResponse));
+                Utils.gotoNextActivityAnimation(mContext);
+
+                RPPreferences.removeKey(mContext, "request_id");
+                RPPreferences.putString(mContext, "accepted_request_id", request_id);
+                break;
+
+            case DECLINE_REQUEST_TAG:
+                // showToast(detailsResponse.getMessage());
+                dialogDecline.dismiss();
+                RPPreferences.removeKey(mContext, "request_id");
+                break;
+        }
+    }
+
+    @Subscribe(sticky = true)
+    public void onEventMainThread(ApiErrorWithMessageEvent event) {
+        EventBus.getDefault().removeAllStickyEvents();
+        dismissDialog();
+        showToast(event.getResultMsgUser());
+    }
+
+    @Subscribe(sticky = true)
+    public void onEventMainThread(ApiErrorEvent event) {
+        EventBus.getDefault().removeAllStickyEvents();
+        dismissDialog();
+        showToast(Constants.SERVER_ERROR);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (flag) {
+            request_id = RPPreferences.readString(mContext, "request_id");
+            if (!request_id.isEmpty()) {
+                linearRequest.setVisibility(View.GONE);
+                dialogRequest.show();
+                flag = false;
+            }
+        }
+
+        String profilePic = RPPreferences.readString(mContext, "profile_pic");
+
+        Glide.with(mContext).load(profilePic)
+                .apply(RequestOptions.circleCropTransform().placeholder(R.mipmap.ic_user_placeholder))
+                .into(ivProfilePic);
     }
 
     @Override
@@ -252,7 +380,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
                 startActivity(new Intent(mContext, ContactActivity.class));
                 break;
             case R.id.nav_logout:
-
+                Utils.logoutAlert(mContext);
                 break;
         }
 
@@ -261,54 +389,9 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         return true;
     }
 
-    @Subscribe(sticky = true)
-    public void onEvent(AbstractApiResponse apiResponse) {
-        EventBus.getDefault().removeAllStickyEvents();
-        dismissDialog();
-        switch (apiResponse.getRequestTag()) {
-            case TAG:
-                if (online) {
-                    showToast("You are now online. You will now receive online request");
-                    switchOnline.setChecked(true);
-                    dialogTerms.dismiss();
-                    textOnline.setVisibility(View.VISIBLE);
-                    linearRequest.setVisibility(View.VISIBLE);
-                    relativeOffline.setVisibility(View.GONE);
-
-                    handler.postDelayed(() -> {
-                        //findViewById(R.id.llRequest).setVisibility(View.VISIBLE);
-                        if (!isFinishing()) {
-                            linearRequest.setVisibility(View.GONE);
-                            dialogRequest.show();
-                            RPPreferences.putBoolean(mContext, "terms_accepted", true);
-                        }
-                    }, 2000);
-                } else {
-                    showToast("You are offline. You will not get any online request");
-                    switchOnline.setChecked(false);
-                    textOnline.setVisibility(View.GONE);
-                    linearRequest.setVisibility(View.GONE);
-                    relativeOffline.setVisibility(View.VISIBLE);
-                }
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    @Subscribe(sticky = true)
-    public void onEventMainThread(ApiErrorWithMessageEvent event) {
-        EventBus.getDefault().removeAllStickyEvents();
-        dismissDialog();
-        showToast(event.getResultMsgUser());
-    }
-
-    @Subscribe(sticky = true)
-    public void onEventMainThread(ApiErrorEvent event) {
-        EventBus.getDefault().removeAllStickyEvents();
-        dismissDialog();
-        showToast(Constants.SERVER_ERROR);
+    public void requestsClick(View view) {
+        startActivity(new Intent(this, RequestsActivity.class));
+        Utils.gotoNextActivityAnimation(mContext);
     }
 
     @Override

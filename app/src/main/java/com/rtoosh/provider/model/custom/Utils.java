@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -20,6 +21,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -36,9 +38,16 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.rtoosh.provider.R;
+import com.rtoosh.provider.model.RPPreferences;
+import com.rtoosh.provider.views.PhoneVerificationActivity;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -49,7 +58,10 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import timber.log.Timber;
+
 public class Utils {
+    static String imagePath = "";
 
     @SuppressWarnings("ConstantConditions")
     public static Dialog showDialog(Context context) {
@@ -69,7 +81,7 @@ public class Utils {
         Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(layout);
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
         dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(dialogColor);
 
@@ -83,17 +95,17 @@ public class Utils {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                ((Activity)mContext).finish();
+                ((Activity) mContext).finish();
             }
         }).create().show();
     }
 
     public static void gotoPreviousActivityAnimation(Context mContext) {
-        ((Activity)mContext).overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+        ((Activity) mContext).overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
     }
 
     public static void gotoNextActivityAnimation(Context mContext) {
-        ((Activity)mContext).overridePendingTransition(R.anim.slide_in_from_right,R.anim.slide_out_to_left);
+        ((Activity) mContext).overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
     }
 
     public static boolean emailValidator(String email) {
@@ -120,7 +132,8 @@ public class Utils {
                 String date = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
                 textView.setText(date);
 
-            }};
+            }
+        };
 
         DatePickerDialog dpDialog = new DatePickerDialog(mContext, onDateSetListener, mYear, mMonth, mDay);
         DatePicker datePicker = dpDialog.getDatePicker();
@@ -140,24 +153,24 @@ public class Utils {
 
     public static void setTextWatcherMoveFocus(EditText editText, final EditText editNext) {
         editText.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String str = s.toString();
+                if (str.length() == 1) {
+                    editNext.requestFocus();
                 }
+            }
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    String str = s.toString();
-                    if (str.length() == 1) {
-                        editNext.requestFocus();
-                    }
-                }
+            @Override
+            public void afterTextChanged(Editable s) {
 
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-            });
+            }
+        });
     }
 
     public static void setTimePicker(Context mContext, TextView textView) {
@@ -165,7 +178,7 @@ public class Utils {
         int hour = c.get(Calendar.HOUR_OF_DAY);
         int minute = c.get(Calendar.MINUTE);
 
-        TimePickerDialog.OnTimeSetListener t= (view, hours, mins) -> {
+        TimePickerDialog.OnTimeSetListener t = (view, hours, mins) -> {
            /* String timeSet = "";
             if (hours > 12) {
                 hours -= 12;
@@ -197,8 +210,45 @@ public class Utils {
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
             if (imm != null)
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    public static void logoutAlert(final Context context) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+        alertBuilder.setMessage(R.string.logout_from_app);
+
+        alertBuilder.setPositiveButton(R.string.yes, (dialogInterface, i) -> {
+            dialogInterface.dismiss();
+            RPPreferences.clearPref(context);
+            context.startActivity(new Intent(context, PhoneVerificationActivity.class));
+            ((Activity) context).finish();
+            Toast.makeText(context, R.string.logged_out, Toast.LENGTH_SHORT).show();
+        });
+        alertBuilder.setNegativeButton(R.string.no, (dialogInterface, i) -> dialogInterface.dismiss());
+
+        AlertDialog alertDialog = alertBuilder.create();
+        alertDialog.show();
+    }
+
+    public static void smsIntent(Context mContext, String number) {
+        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+        sendIntent.setType("vnd.android-dir/mms-sms");
+        sendIntent.setData(Uri.parse("sms:" + number));
+        mContext.startActivity(sendIntent);
+    }
+
+    public static void callIntent(Context mContext, String number) {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", number, null));
+        mContext.startActivity(intent);
+    }
+
+
+    public static void getTotalTime(int hours, int minutes) {
+        int mHours = minutes / 60; //since both are ints, you get an int
+        int mMinutes = minutes % 60;
+        hours += mHours;
+        Timber.e("total time-- "+hours+":"+mMinutes);
     }
 
     /**
@@ -378,6 +428,20 @@ public class Utils {
         return sb;
     }
 
+    public static String downloadImage(Context mContext, String imageUrl) {
+        Glide.with(mContext)
+                .asBitmap()
+                .load(imageUrl)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        Uri uri = ImagePicker.getImageUri(mContext, resource);
+                        File finalFile = new File(ImagePicker.getRealPathFromURI(mContext, uri));
+                        imagePath = finalFile.getAbsolutePath();
+                    }
+                });
+        return imagePath;
+    }
 
 
 }

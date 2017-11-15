@@ -56,14 +56,14 @@
                             android:textSize="@dimen/_15sdp" />
 
                         <TextView
-                            android:id="@+id/textView3"
+                            android:id="@+id/tvActualPrice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:text="$305"
                             android:textAppearance="@style/TextAppearance.FontBold"
                             android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/_30sdp" />
+                            android:textSize="@dimen/_20sdp" />
 
                         <View
                             android:layout_width="match_parent"
@@ -112,7 +112,7 @@
                                 android:layout_toStartOf="@+id/llPrice"
                                 android:drawableLeft="@mipmap/ic_ticket_grey"
                                 android:drawableStart="@mipmap/ic_ticket_grey"
-                                android:drawablePadding="@dimen/_5sdp"
+                                android:drawablePadding="@dimen/_10sdp"
                                 android:textAppearance="@style/TextAppearance.FontMedium"
                                 android:gravity="center|start"/>
 
@@ -126,31 +126,29 @@
                                 android:layout_alignParentEnd="true">
 
                                 <TextView
-                                    android:id="@+id/tvQuantity"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textAppearance="@style/TextAppearance.FontMedium"
                                     android:textColor="@color/colorBlack"
                                     android:textSize="@dimen/_12sdp"
-                                    android:text="20% ="/>
+                                    android:text="20% = "/>
 
                                 <TextView
+                                    android:id="@+id/tvCommission"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="$"
-                                    android:layout_marginLeft="@dimen/_10sdp"
-                                    android:layout_marginStart="@dimen/_10sdp"
-                                    android:textColor="@color/black"
                                     android:textSize="@dimen/_12sdp"
+                                    android:textColor="@color/black"
                                     android:textAppearance="@style/TextAppearance.FontMedium"/>
 
                                 <TextView
-                                    android:id="@+id/tvPrice"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="61"
-                                    android:textSize="@dimen/_12sdp"
+                                    android:text="@string/currency"
+                                    android:layout_marginLeft="@dimen/_2sdp"
+                                    android:layout_marginStart="@dimen/_2sdp"
                                     android:textColor="@color/black"
+                                    android:textSize="@dimen/_12sdp"
                                     android:textAppearance="@style/TextAppearance.FontMedium"/>
                             </LinearLayout>
 
@@ -176,15 +174,15 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/total"
                                 android:textColor="@color/colorBlack"
-                                android:textSize="@dimen/_20sdp"
+                                android:textSize="@dimen/_15sdp"
                                 android:textAppearance="@style/TextAppearance.FontBold"/>
 
                             <TextView
+                                android:id="@+id/tvTotalPrice"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="$244"
                                 android:textColor="@color/colorAccent"
-                                android:textSize="@dimen/_20sdp"
+                                android:textSize="@dimen/_15sdp"
                                 android:layout_marginLeft="@dimen/_5sdp"
                                 android:layout_marginStart="@dimen/_5sdp"
                                 android:layout_marginBottom="@dimen/_10sdp"
@@ -307,9 +305,9 @@
                     android:textAppearance="@style/TextAppearance.FontBold"/>
 
                 <TextView
+                    android:id="@+id/tvCustomerName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sara Karmen"
                     android:textSize="@dimen/_15sdp"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:layout_marginStart="@dimen/_20sdp"

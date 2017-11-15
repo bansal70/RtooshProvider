@@ -15,6 +15,14 @@ public class ModelManager {
     private StatusManager statusManager;
     private ReportManager reportManager;
     private ContactManager contactManager;
+    private ProfileManager profileManager;
+    private UpdateProfileManager updateProfileManager;
+    private UpdatePasswordManager updatePasswordManager;
+    private RequestManager requestManager;
+    private ServiceStartedManager serviceStartedManager;
+    private ServiceCompletedManager serviceCompletedManager;
+    private AdditionalServiceManager additionalServiceManager;
+    private FeedbackManager feedbackManager;
 
     public static ModelManager getInstance() {
         if (modelManager != null)
@@ -33,6 +41,14 @@ public class ModelManager {
         statusManager = new StatusManager();
         reportManager = new ReportManager();
         contactManager = new ContactManager();
+        profileManager = new ProfileManager();
+        updateProfileManager = new UpdateProfileManager();
+        updatePasswordManager = new UpdatePasswordManager();
+        requestManager = new RequestManager();
+        serviceStartedManager = new ServiceStartedManager();
+        serviceCompletedManager = new ServiceCompletedManager();
+        additionalServiceManager = new AdditionalServiceManager();
+        feedbackManager = new FeedbackManager();
     }
 
     public PhoneVerificationManager getPhoneVerificationManager() {
@@ -69,5 +85,37 @@ public class ModelManager {
 
     public ContactManager getContactManager() {
         return contactManager;
+    }
+
+    public ProfileManager getProfileManager() {
+        return profileManager;
+    }
+
+    public UpdateProfileManager getUpdateProfileManager() {
+        return updateProfileManager;
+    }
+
+    public UpdatePasswordManager getUpdatePasswordManager() {
+        return updatePasswordManager;
+    }
+
+    public RequestManager getRequestManager() {
+        return requestManager;
+    }
+
+    public ServiceStartedManager getServiceStartedManager() {
+        return serviceStartedManager;
+    }
+
+    public ServiceCompletedManager getServiceCompletedManager() {
+        return serviceCompletedManager;
+    }
+
+    public AdditionalServiceManager getAdditionalServiceManager() {
+        return additionalServiceManager;
+    }
+
+    public FeedbackManager getFeedbackManager() {
+        return feedbackManager;
     }
 }

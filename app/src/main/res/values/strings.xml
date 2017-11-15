@@ -212,4 +212,19 @@
     <string name="account_name">Account name</string>
     <string name="string_weekly_balance">The weekly profit will be transferred to your bank account after two weeks</string>
     <string name="string_facing_any_problem">If you are facing any problem</string>
+    <string name="view_all">View All</string>
+    <string name="no_photo">No photo</string>
+
+    <string name="logout_from_app">Would you like to go out of the app?</string>
+    <string name="logged_out">You have been logged out of the app.</string>
+    <string name="string_current_password">Enter Current Password</string>
+    <string name="string_new_password">Enter New Password</string>
+    <string name="string_confirm_password">Confirm New Password</string>
+    <string name="update">Update</string>
+    <string name="error_password_missmatch">Password doesn\'t match</string>
+    <string name="remove_selected">Remove Selected</string>
+    <string name="add_photo">Add Photos</string>
+    <string name="msg_offline">You are offline. You will not get any online request now</string>
+    <string name="currency">SAR</string>
+    <string name="message_add_rating">Please give the rating to the customer</string>
 </resources>

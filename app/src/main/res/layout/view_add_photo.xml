@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView android:id="@+id/cardWork"
+    android:layout_width="@dimen/_90sdp"
+    android:layout_height="@dimen/_90sdp"
+    app:cardCornerRadius="@dimen/_5sdp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/imgSelect"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/plus"
+        android:scaleType="centerInside"
+        android:foreground="@drawable/ripple"
+        android:contentDescription="@string/upload"
+        android:background="@drawable/custom_basic_gradient"/>
+
+</android.support.v7.widget.CardView>

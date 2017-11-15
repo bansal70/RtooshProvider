@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.rtoosh.provider.views.PortfolioActivity">
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerPortfolio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_above="@+id/layoutButtons"/>
+
+    <LinearLayout
+        android:id="@+id/layoutButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/btRemovePhoto"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/remove_selected"
+            style="?selectableItemBackground"
+            android:textColor="@color/white"
+            android:textAppearance="@style/TextAppearance.FontMedium"
+            android:background="@drawable/custom_basic_gradient"
+            android:layout_weight="1"/>
+
+        <View
+            android:layout_width="@dimen/_1sdp"
+            android:layout_height="match_parent"/>
+
+        <Button
+            android:id="@+id/btAddPhoto"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/add_photo"
+            style="?selectableItemBackground"
+            android:textColor="@color/white"
+            android:textAppearance="@style/TextAppearance.FontMedium"
+            android:background="@drawable/custom_basic_gradient"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

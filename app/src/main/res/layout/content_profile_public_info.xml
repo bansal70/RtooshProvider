@@ -23,6 +23,7 @@
             android:src="@drawable/ic_settings_profile" />
 
         <LinearLayout
+            android:id="@+id/layoutChangePic"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_10sdp"
@@ -49,6 +50,7 @@
         </LinearLayout>
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgProfilePic"
             android:layout_width="@dimen/_60sdp"
             android:layout_height="@dimen/_60sdp"
             android:src="@mipmap/ic_user_placeholder"/>
@@ -68,7 +70,7 @@
             android:src="@drawable/ic_settings_name" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2sdp"
             android:layout_marginEnd="@dimen/_10sdp"
@@ -83,11 +85,15 @@
                 android:text="@string/text_surname"
                 android:textSize="@dimen/_12sdp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/editSurname"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_2sdp"
-                android:text="Salil"
+                android:enabled="false"
+                android:hint="@string/surname"
+                android:padding="@dimen/_10sdp"
+                android:background="@drawable/custom_edit_text_bg"
                 android:textAppearance="@style/TextAppearance.FontMedium" />
 
         </LinearLayout>
@@ -107,7 +113,7 @@
             android:src="@drawable/ic_settings_portfolio" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2sdp"
             android:layout_marginEnd="@dimen/_10sdp"
@@ -122,11 +128,17 @@
                 android:text="@string/bio"
                 android:textSize="@dimen/_12sdp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <EditText
+                android:id="@+id/editBio"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_80sdp"
                 android:layout_marginTop="@dimen/_2sdp"
-                android:text="Bio of provider"
+                android:hint="@string/bio"
+                android:enabled="false"
+                android:gravity="top"
+                android:padding="@dimen/_10sdp"
+                android:inputType="textMultiLine"
+                android:background="@drawable/custom_edit_text_bg"
                 android:textAppearance="@style/TextAppearance.FontMedium" />
 
         </LinearLayout>
@@ -163,36 +175,55 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/imgWork1"
                 android:layout_width="@dimen/_70sdp"
                 android:layout_height="@dimen/_70sdp"
                 android:background="@color/colorGrayLight"
-                android:contentDescription="@string/portfolio"
-                android:scaleType="centerInside"
-                android:src="@mipmap/ic_upload_image"/>
+                android:contentDescription="@string/portfolio" />
 
             <View
                 android:layout_width="@dimen/_5sdp"
                 android:layout_height="wrap_content"/>
 
             <ImageView
+                android:id="@+id/imgWork2"
                 android:layout_width="@dimen/_70sdp"
                 android:layout_height="@dimen/_70sdp"
                 android:background="@color/colorGrayLight"
-                android:contentDescription="@string/portfolio"
-                android:scaleType="centerInside"
-                android:src="@mipmap/ic_upload_image"/>
+                android:contentDescription="@string/portfolio" />
 
             <View
                 android:layout_width="@dimen/_5sdp"
                 android:layout_height="wrap_content"/>
 
-            <ImageView
+            <RelativeLayout
                 android:layout_width="@dimen/_70sdp"
-                android:layout_height="@dimen/_70sdp"
-                android:background="@color/colorGrayLight"
-                android:contentDescription="@string/portfolio"
-                android:scaleType="centerInside"
-                android:src="@mipmap/ic_upload_image"/>
+                android:layout_height="@dimen/_70sdp">
+
+                <ImageView
+                    android:id="@+id/imgViewAll"
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:background="@color/colorGrayLight"
+                    android:foreground="?selectableItemBackground"
+                    android:contentDescription="@string/portfolio"
+                    android:scaleType="centerInside"/>
+
+                <TextView
+                    android:id="@+id/tvViewAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/view_all"
+                    android:textSize="@dimen/_12sdp"
+                    android:gravity="center"
+                    android:layout_centerHorizontal="true"
+                    android:textAppearance="@style/TextAppearance.FontMedium"
+                    android:textColor="@color/colorWhite"
+                    android:drawableBottom="@drawable/ic_view_all"
+                    android:textAllCaps="true"/>
+
+            </RelativeLayout>
 
         </LinearLayout>
 
@@ -213,27 +244,43 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_2sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_10sdp"
             android:layout_marginStart="@dimen/_10sdp"
-            android:orientation="vertical">
+            android:layout_marginTop="@dimen/_2sdp"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/_12sdp"
-                android:text="@string/background_photo"/>
+                android:text="@string/background_photo"
+                android:textSize="@dimen/_12sdp" />
 
-            <ImageView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_110sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:src="@mipmap/ic_upload_image"
-                android:scaleType="centerInside"
-                android:background="@color/colorGrayLight"
-                android:contentDescription="@string/background_photo" />
+                android:layout_height="@dimen/_110sdp">
+
+                <ImageView
+                    android:id="@+id/imgCover"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/colorGrayLight"
+                    android:contentDescription="@string/background_photo" />
+
+                <TextView
+                    android:id="@+id/tvNoCover"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/no_photo"
+                    android:visibility="gone"
+                    android:textAppearance="@style/TextAppearance.FontBold"
+                    android:textColor="@color/colorWhite" />
+
+            </RelativeLayout>
 
         </LinearLayout>
 

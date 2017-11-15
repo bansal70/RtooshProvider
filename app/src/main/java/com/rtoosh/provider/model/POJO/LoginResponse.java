@@ -24,5 +24,7 @@ public class LoginResponse extends AbstractApiResponse{
         public String email;
         @SerializedName("full_name")
         public String fullName;
+        @SerializedName("profile_pic")
+        public String profilePic;
     }
 }

@@ -1,14 +1,9 @@
 package com.rtoosh.provider.views;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -44,8 +38,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import timber.log.Timber;
-
-import static android.os.Build.VERSION_CODES.M;
 
 public class RegisterInfoActivity extends AppBaseActivity {
 
@@ -108,42 +100,6 @@ public class RegisterInfoActivity extends AppBaseActivity {
         dispatchTakePictureIntent();
     }
 
-    private void dispatchTakePictureIntent() {
-        if (Build.VERSION.SDK_INT >= M) {
-            ActivityCompat.requestPermissions(this, new String[]{
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
-        } else {
-            chooseImage();
-        }
-    }
-
-    public void chooseImage() {
-        Intent chooseImageIntent = ImagePicker.getPickImageIntent(this);
-        startActivityForResult(chooseImageIntent, REQUEST_IMAGE_CAPTURE);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == PERMISSION_REQUEST_CODE && hasAllPermissionsGranted(grantResults)) {
-            chooseImage();
-        } else {
-            Toast.makeText(this, R.string.grant_permissions, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private boolean hasAllPermissionsGranted(@NonNull int[] grantResults) {
-        for (int grantResult : grantResults) {
-            if (grantResult == PackageManager.PERMISSION_DENIED) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -195,6 +151,7 @@ public class RegisterInfoActivity extends AppBaseActivity {
         switch (apiResponse.getRequestTag()) {
             case REGISTRATION_TAG:
                 showToast(apiResponse.getMessage());
+                RPPreferences.putBoolean(mContext, "registered", true);
                 startActivity(new Intent(mContext, MainActivity.class));
                 Utils.gotoNextActivityAnimation(this);
                 break;
