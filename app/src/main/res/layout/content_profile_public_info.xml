@@ -93,6 +93,7 @@
                 android:enabled="false"
                 android:hint="@string/surname"
                 android:padding="@dimen/_10sdp"
+                android:inputType="text"
                 android:background="@drawable/custom_edit_text_bg"
                 android:textAppearance="@style/TextAppearance.FontMedium" />
 

@@ -214,7 +214,7 @@ public class Utils {
         }
     }
 
-    public static void logoutAlert(final Context context) {
+    public static void logoutAlert(final Activity context) {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
         alertBuilder.setMessage(R.string.logout_from_app);
 
@@ -222,7 +222,7 @@ public class Utils {
             dialogInterface.dismiss();
             RPPreferences.clearPref(context);
             context.startActivity(new Intent(context, PhoneVerificationActivity.class));
-            ((Activity) context).finish();
+            context.finish();
             Toast.makeText(context, R.string.logged_out, Toast.LENGTH_SHORT).show();
         });
         alertBuilder.setNegativeButton(R.string.no, (dialogInterface, i) -> dialogInterface.dismiss());

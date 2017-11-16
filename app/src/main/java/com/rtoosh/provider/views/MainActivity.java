@@ -2,9 +2,11 @@ package com.rtoosh.provider.views;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -24,6 +26,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -51,20 +57,31 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTouch;
+import timber.log.Timber;
 
-public class MainActivity extends AppBaseActivity implements OnMapReadyCallback, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
+        View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private final String TAG = "MainActivity";
     private final String ACCEPT_REQUEST_TAG = "AcceptRequest";
     private final String DECLINE_REQUEST_TAG = "DeclineRequest";
+    final String UPDATE_LOCATION_TAG = "UpdateLocation";
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
-    @BindView(R.id.nav_view) NavigationView navigationView;
-    @BindView(R.id.switchOnline) SwitchCompat switchOnline;
-    @BindView(R.id.textOnline) TextView textOnline;
-    @BindView(R.id.llRequesting) LinearLayout linearRequest;
-    @BindView(R.id.rlOffline) RelativeLayout relativeOffline;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
+    @BindView(R.id.switchOnline)
+    SwitchCompat switchOnline;
+    @BindView(R.id.textOnline)
+    TextView textOnline;
+    @BindView(R.id.llRequesting)
+    LinearLayout linearRequest;
+    @BindView(R.id.rlOffline)
+    RelativeLayout relativeOffline;
     EditText editReason;
     TextView tvProviderName;
     ImageView ivProfilePic;
@@ -93,6 +110,16 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         initRequestDialog();
         initDeclineDialog();
         initViews();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+
+        mGoogleApiClient.connect();
+
+        fetchLocation();
     }
 
     private void initViews() {
@@ -151,7 +178,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
             online = false;
             showDialog();
             ModelManager.getInstance().getStatusManager().statusTask(mContext, TAG, user_id,
-                    switchOnline.isChecked(), lang);
+                    false, lang);
         }
         return false;
     }
@@ -176,7 +203,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
             if (RPPreferences.readBoolean(mContext, "terms_accepted")) {
                 showDialog();
                 ModelManager.getInstance().getStatusManager().statusTask(mContext, TAG, user_id,
-                        switchOnline.isChecked(), lang);
+                        true, lang);
                 return;
             }
             dialogTerms.show();
@@ -189,7 +216,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
             RPPreferences.putBoolean(mContext, "terms_accepted", true);
             showDialog();
             ModelManager.getInstance().getStatusManager().statusTask(mContext, TAG, user_id,
-                    switchOnline.isChecked(), lang);
+                    true, lang);
         });
 
         dialogTerms.findViewById(R.id.tvCancel).setOnClickListener(view -> dialogTerms.dismiss());
@@ -279,6 +306,12 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
                     setOffline();
                 }
                 break;
+
+            case DECLINE_REQUEST_TAG:
+                showToast(apiResponse.getMessage());
+                dialogDecline.dismiss();
+                RPPreferences.removeKey(mContext, "request_id");
+                break;
         }
     }
 
@@ -290,17 +323,11 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
             case ACCEPT_REQUEST_TAG:
                 dialogRequest.dismiss();
                 startActivity(new Intent(mContext, OrderDetailsActivity.class)
-                .putExtra("requestDetails", detailsResponse));
+                        .putExtra("requestDetails", detailsResponse));
                 Utils.gotoNextActivityAnimation(mContext);
 
                 RPPreferences.removeKey(mContext, "request_id");
                 RPPreferences.putString(mContext, "accepted_request_id", request_id);
-                break;
-
-            case DECLINE_REQUEST_TAG:
-                // showToast(detailsResponse.getMessage());
-                dialogDecline.dismiss();
-                RPPreferences.removeKey(mContext, "request_id");
                 break;
         }
     }
@@ -353,8 +380,8 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
             e.printStackTrace();
         }*/
 
-        LatLng mohali = new LatLng(30.706326, 76.704865);
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mohali, 15));
+       /* LatLng mohali = new LatLng(30.706326, 76.704865);
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mohali, 15));*/
     }
 
     @Override
@@ -373,6 +400,9 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
             case R.id.nav_report:
                 startActivity(new Intent(mContext, ReportActivity.class));
                 break;
+            case R.id.nav_calendar:
+
+                break;
             case R.id.nav_setting:
 
                 break;
@@ -380,7 +410,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
                 startActivity(new Intent(mContext, ContactActivity.class));
                 break;
             case R.id.nav_logout:
-                Utils.logoutAlert(mContext);
+                Utils.logoutAlert(this);
                 break;
         }
 
@@ -402,4 +432,35 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
             super.onBackPressed();
         }
     }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+        mLastLocation = location;
+        Timber.e("Updated location:: "
+                + "latitude-- "+mLastLocation.getLatitude()
+                + "\nlongitude-- "+mLastLocation.getLongitude());
+        LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+        if (mGoogleMap != null)
+            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+
+        ModelManager.getInstance().getUpdateLocationManager().updateLocationTask(mContext, UPDATE_LOCATION_TAG,
+                Operations.updateLocationParams(user_id, latLng.latitude, latLng.longitude, lang));
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
 }

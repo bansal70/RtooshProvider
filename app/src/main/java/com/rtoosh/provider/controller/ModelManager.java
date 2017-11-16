@@ -23,6 +23,8 @@ public class ModelManager {
     private ServiceCompletedManager serviceCompletedManager;
     private AdditionalServiceManager additionalServiceManager;
     private FeedbackManager feedbackManager;
+    private UpdateLocationManager updateLocationManager;
+    private WalletManager walletManager;
 
     public static ModelManager getInstance() {
         if (modelManager != null)
@@ -49,6 +51,8 @@ public class ModelManager {
         serviceCompletedManager = new ServiceCompletedManager();
         additionalServiceManager = new AdditionalServiceManager();
         feedbackManager = new FeedbackManager();
+        updateLocationManager = new UpdateLocationManager();
+        walletManager = new WalletManager();
     }
 
     public PhoneVerificationManager getPhoneVerificationManager() {
@@ -117,5 +121,13 @@ public class ModelManager {
 
     public FeedbackManager getFeedbackManager() {
         return feedbackManager;
+    }
+
+    public UpdateLocationManager getUpdateLocationManager() {
+        return updateLocationManager;
+    }
+
+    public WalletManager getWalletManager() {
+        return walletManager;
     }
 }

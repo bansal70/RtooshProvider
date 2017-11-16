@@ -37,15 +37,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Your Balance"
+                        android:text="@string/your_balance"
                         android:textSize="@dimen/_14sdp"
                         android:textColor="@color/white"
                         android:textAppearance="@style/TextAppearance.FontMedium"/>
 
                     <TextView
+                        android:id="@+id/tvBalance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="$100"
                         android:textColor="@color/white"
                         android:textAppearance="@style/TextAppearance.FontMedium"
                         android:textSize="@dimen/_20sdp"
@@ -95,7 +95,6 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
-                            android:text="$4890"
                             android:textAppearance="@style/TextAppearance.FontMedium"
                             android:textColor="@color/colorAccent" />
 
@@ -124,7 +123,6 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
-                            android:text="$870"
                             android:textAppearance="@style/TextAppearance.FontMedium"
                             android:textColor="@color/colorAccent" />
 
@@ -153,7 +151,6 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
-                            android:text="$230"
                             android:textAppearance="@style/TextAppearance.FontMedium"
                             android:textColor="@color/colorAccent" />
 
@@ -187,20 +184,49 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
-                            android:text="$5720"
                             android:textAppearance="@style/TextAppearance.FontMedium"
                             android:textColor="@color/colorAccent" />
 
                     </RelativeLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/_5sdp"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:text="@string/bank_account_details"
-                        android:textAppearance="@style/TextAppearance.FontMedium"
-                        android:textColor="@color/colorAccent" />
+                        app:cardPreventCornerOverlap="true">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/bank_account_details"
+                                android:textSize="@dimen/_14sdp"
+                                android:textColor="@color/colorAccent"
+                                android:padding="@dimen/_10sdp"
+                                android:layout_toLeftOf="@+id/imgEdit"
+                                android:layout_toStartOf="@+id/imgEdit"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentLeft="true"
+                                android:textAppearance="@style/TextAppearance.FontMedium"/>
+
+                            <ImageView
+                                android:id="@+id/imgEdit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_edit_service"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:padding="@dimen/_10sdp"
+                                android:contentDescription="@string/edit"
+                                android:foreground="?selectableItemBackground"
+                                android:layout_alignParentRight="true"/>
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
 
                     <View
                         android:layout_width="match_parent"
@@ -226,10 +252,13 @@
                             android:textAppearance="@style/TextAppearance.FontRegular"/>
 
                         <EditText
+                            android:id="@+id/editAccountName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/account_name"
                             android:padding="@dimen/_8sdp"
+                            android:enabled="false"
+                            android:inputType="text"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:background="@drawable/custom_edit_text_bg"
                             android:textAppearance="@style/TextAppearance.FontRegular" />
@@ -248,10 +277,13 @@
                             android:textAppearance="@style/TextAppearance.FontRegular"/>
 
                         <EditText
+                            android:id="@+id/editIBAN"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/iban_account_number"
                             android:padding="@dimen/_8sdp"
+                            android:enabled="false"
+                            android:inputType="text"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:background="@drawable/custom_edit_text_bg"
                             android:textAppearance="@style/TextAppearance.FontRegular" />
@@ -297,6 +329,7 @@
                 android:text="@string/string_facing_any_problem"/>
 
             <TextView
+                android:id="@+id/tvContactUs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/contact_us"

@@ -227,4 +227,7 @@
     <string name="msg_offline">You are offline. You will not get any online request now</string>
     <string name="currency">SAR</string>
     <string name="message_add_rating">Please give the rating to the customer</string>
+    <string name="your_balance">Your Balance</string>
+    <string name="nav_calendar">Calendar</string>
+    <string name="reviews">Reviews</string>
 </resources>

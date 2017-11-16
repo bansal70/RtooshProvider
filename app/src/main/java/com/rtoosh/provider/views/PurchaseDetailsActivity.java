@@ -1,6 +1,7 @@
 package com.rtoosh.provider.views;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
@@ -208,6 +209,8 @@ public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnC
             case FEEDBACK_TAG:
                 dialogFeedback.dismiss();
                 Toast.makeText(mContext, R.string.feedback_submitted, Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, MainActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 break;
         }
     }

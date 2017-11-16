@@ -18,4 +18,7 @@ public class Constants {
 
     public static final int REGISTER_SUCCESS = 1003;
     public static final int REGISTER_ERROR = 1004;
+
+    public static final long FASTEST_TIME_INTERVAL = 3*60*1000; // 3 minutes
+    public static final long TIME_INTERVAL = 5*60*1000; // 5 minutes
 }

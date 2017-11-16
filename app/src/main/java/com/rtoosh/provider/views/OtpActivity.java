@@ -47,7 +47,6 @@ public class OtpActivity extends AppBaseActivity {
         lang = RPPreferences.readString(mContext, "lang");
         phone = RPPreferences.readString(mContext, "phone");
 
-
         Utils.setTextWatcherMoveFocus(edit1, edit2);
         Utils.setTextWatcherMoveFocus(edit2, edit3);
         Utils.setTextWatcherMoveFocus(edit3, edit4);
@@ -61,7 +60,7 @@ public class OtpActivity extends AppBaseActivity {
             Toast.makeText(mContext, R.string.toast_digits_access_code, Toast.LENGTH_SHORT).show();
         } else {
             showDialog();
-            ModelManager.getInstance().getOtpManager().otpTask(this, OTP_TAG, phone, resultedOTP, lang);
+            ModelManager.getInstance().getOtpManager().otpTask(mContext, OTP_TAG, phone, resultedOTP, deviceToken, lang);
         }
     }
 
@@ -105,7 +104,6 @@ public class OtpActivity extends AppBaseActivity {
             default:
                 break;
         }
-
     }
 
     @Subscribe(sticky = true)

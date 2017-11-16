@@ -96,4 +96,33 @@ public class Operations {
 
         return hashMap;
     }
+
+    public static HashMap<String, String> updateLocationParams(String user_id, double lat, double lng, String lang) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("user_id", user_id);
+        hashMap.put("lat", String.valueOf(lat));
+        hashMap.put("lng", String.valueOf(lng));
+        hashMap.put("lang", lang);
+
+        return hashMap;
+    }
+
+    public static HashMap<String, String> updateWalletParams(String user_id, String name, String iBan,  String lang) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("user_id", user_id);
+        hashMap.put("name", name);
+        hashMap.put("iban_no", iBan);
+        hashMap.put("lang", lang);
+
+        return hashMap;
+    }
+
+    public static HashMap<String, String> walletParams(String user_id, String lang) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("user_id", user_id);
+        hashMap.put("lang", lang);
+
+        return hashMap;
+    }
+
 }

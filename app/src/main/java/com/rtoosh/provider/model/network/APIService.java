@@ -9,6 +9,7 @@ import com.rtoosh.provider.model.POJO.OtpResponse;
 import com.rtoosh.provider.model.POJO.ProfileResponse;
 import com.rtoosh.provider.model.POJO.RegisterResponse;
 import com.rtoosh.provider.model.POJO.RequestDetailsResponse;
+import com.rtoosh.provider.model.POJO.WalletResponse;
 import com.rtoosh.provider.model.POJO.register.RegisterServiceResponse;
 
 import java.util.HashMap;
@@ -35,9 +36,11 @@ public interface APIService {
                                       @Query("lang") String lang);
 
     @POST("customers/verifyOtp")
-    Call<OtpResponse> phoneResponse(@Query("phone") String phone,
-                                    @Query("otp") String otp,
-                                    @Query("lang") String lang);
+    Call<OtpResponse> otpResponse(@Query("phone") String phone,
+                                  @Query("otp") String otp,
+                                  @Query("deviceToken") String deviceToken,
+                                  @Query("deviceType") String deviceType,
+                                  @Query("lang") String lang);
 
     @POST("apis/Register")
     Call<RegisterResponse> registerResponse(@Query("full_name") String full_name,
@@ -155,5 +158,14 @@ public interface APIService {
 
     @POST("apis/addFeedback")
     Call<AbstractApiResponse> feedbackResponse(@QueryMap HashMap<String, String> mapParams);
+
+    @POST("apis/updateLocation")
+    Call<AbstractApiResponse> updateLocationResponse(@QueryMap HashMap<String, String> mapParams);
+
+    @POST("customers/updateAccount")
+    Call<AbstractApiResponse> updateWalletResponse(@QueryMap HashMap<String, String> mapParams);
+
+    @POST("customers/wallet")
+    Call<WalletResponse> walletResponse(@QueryMap HashMap<String, String> mapParams);
 
 }
