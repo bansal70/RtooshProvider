@@ -13,6 +13,7 @@ import com.rtoosh.provider.model.Operations;
 import com.rtoosh.provider.model.POJO.HistoryResponse;
 import com.rtoosh.provider.model.POJO.RequestDetailsResponse;
 import com.rtoosh.provider.model.RPPreferences;
+import com.rtoosh.provider.model.custom.DateUtils;
 import com.rtoosh.provider.model.event.ApiErrorEvent;
 import com.rtoosh.provider.model.event.ApiErrorWithMessageEvent;
 import com.rtoosh.provider.views.adapters.ApprovedRequestAdapter;
@@ -40,9 +41,9 @@ public class RequestsActivity extends AppBaseActivity {
     @BindView(R.id.tvApprovedRequests) TextView tvApprovedRequests;
     @BindView(R.id.tvCompletedRequests) TextView tvCompletedRequests;
 
-    private NewRequestsAdapter newRequestsAdapter;
-    private ApprovedRequestAdapter approvedRequestAdapter;
-    private CompletedRequestsAdapter completedRequestsAdapter;
+    NewRequestsAdapter newRequestsAdapter;
+    ApprovedRequestAdapter approvedRequestAdapter;
+    CompletedRequestsAdapter completedRequestsAdapter;
 
     private List<HistoryResponse.Data> pendingRequestsList;
     private List<HistoryResponse.Data> approvedRequestsList;
@@ -90,16 +91,41 @@ public class RequestsActivity extends AppBaseActivity {
 
         List<HistoryResponse.Data> dataList = historyResponse.data;
 
+        String timeOut;
+        int day = 0, hour = 0, min, sec;
+
         for (int i=0; i<dataList.size(); i++) {
             RequestDetailsResponse.Order order = dataList.get(i).order;
+            if (order.orderType.equals(Constants.ORDER_ONLINE)) {
+                String time = DateUtils.twoDatesBetweenTime(order.created, serverTime);
+                timeOut = DateUtils.getTimeout(time);
+                String[] dateTime = timeOut.split(":");
+                min = Integer.parseInt(dateTime[0]);
+                sec = Integer.parseInt(dateTime[1]);
+            } else {
+                timeOut = DateUtils.printDifference(order.scheduleDate, serverTime);
+                String[] dateTime = timeOut.split(":");
+                day = Integer.parseInt(dateTime[0]);
+                hour = Integer.parseInt(dateTime[1]);
+                min = Integer.parseInt(dateTime[2]);
+                sec = Integer.parseInt(dateTime[3]);
+            }
+
+            order.timeRemains = timeOut;
+
             switch (order.status) {
                 case Constants.ORDER_PENDING:
-                    pendingRequestsList.add(dataList.get(i));
+                    if (day > 1 || hour > 1 || min > 1 || sec > 1)
+                        pendingRequestsList.add(dataList.get(i));
                     break;
                 case Constants.ORDER_ACCEPTED:
-                    approvedRequestsList.add(dataList.get(i));
+                    if (day > 1 || hour > 1 || min > 1 || sec > 1)
+                        approvedRequestsList.add(dataList.get(i));
                     break;
                 case Constants.ORDER_COMPLETED:
+                    completedRequestsList.add(dataList.get(i));
+                    break;
+                case Constants.ORDER_REVIEWED:
                     completedRequestsList.add(dataList.get(i));
                     break;
             }

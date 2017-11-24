@@ -3,6 +3,7 @@ package com.rtoosh.provider.views.adapters;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,13 +23,13 @@ import com.rtoosh.provider.model.custom.Utils;
 import com.rtoosh.provider.model.event.ApiErrorEvent;
 import com.rtoosh.provider.model.event.ApiErrorWithMessageEvent;
 import com.rtoosh.provider.model.network.AbstractApiResponse;
-import com.rtoosh.provider.views.MinuteTimer;
 import com.rtoosh.provider.views.OrderDetailsActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,8 +48,6 @@ public class NewRequestsAdapter extends RecyclerView.Adapter<NewRequestsAdapter.
     private ApprovedRequestAdapter approvedRequestAdapter;
     private int pos;
     private OnDataChangeListener mOnDataChangeListener;
-    private int days = 0, hours = 0, minutes = 0, seconds = 0;
-    long totalTime = 0;
 
     public NewRequestsAdapter(Context context, List<HistoryResponse.Data> pendingRequestsList,
                               List<HistoryResponse.Data> approvedRequestsList,
@@ -92,16 +91,21 @@ public class NewRequestsAdapter extends RecyclerView.Adapter<NewRequestsAdapter.
         holder.tvTotalRequests.setText(totalRequests);
 
         String time = "", timeOut = "";
+        int seconds, minutes, hours, days;
+        long totalTime;
+
         if (order.orderType.equals(Constants.ORDER_ONLINE)) {
-            time = DateUtils.twoDatesBetweenTime(order.created, serverTime);
-            timeOut = DateUtils.getTimeout(time);
+            timeOut = order.timeRemains;
+            /*time = DateUtils.twoDatesBetweenTime(order.created, serverTime);
+            timeOut = DateUtils.getTimeout(time);*/
             String[] split = timeOut.split(":");
-            minutes = Integer.parseInt(split[0]);
-            seconds = Integer.parseInt(split[1]);
-            totalTime = minutes*60 + seconds;
+            minutes = Integer.parseInt(split[2]);
+            seconds = Integer.parseInt(split[3]);
+            totalTime = minutes *60 + seconds;
         } else {
-            timeOut = DateUtils.printDifference(order.scheduleDate, serverTime);
-            Timber.e("timeout- "+timeOut);
+            /*timeOut = DateUtils.printDifference(order.scheduleDate, serverTime);
+            Timber.e("timeout- "+timeOut);*/
+            timeOut = order.timeRemains;
             String[] split = timeOut.split(":");
             days = Integer.parseInt(split[0]);
             hours = Integer.parseInt(split[1]);
@@ -109,15 +113,36 @@ public class NewRequestsAdapter extends RecyclerView.Adapter<NewRequestsAdapter.
             seconds = Integer.parseInt(split[3]);
             if (days == 0 && hours == 0) {
                 totalTime = minutes * 60 + seconds;
-
             } else {
                 totalTime = 60 * 60 * 24 * days + hours * 60 * 60 + minutes * 60 + seconds;
             }
         }
 
-        MinuteTimer minuteTimer = new MinuteTimer(totalTime * 1000,
+        new CountDownTimer(totalTime*1000, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+                String days = TimeUnit.HOURS.toDays(TimeUnit.MILLISECONDS.toHours(millisUntilFinished))+"";
+                String hours = (TimeUnit.MILLISECONDS.toHours(millisUntilFinished) -
+                        TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(millisUntilFinished)))+"";
+                String minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) -
+                        TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished))+"";
+                String seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))+"";
+
+                holder.tvTimeRemaining.setText(String.format("%s:%s:%s:%s", days, hours, minutes, seconds));
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        }.start();
+
+       /* MinuteTimer minuteTimer = new MinuteTimer(totalTime * 1000,
                 1000, minutes, seconds, holder.tvTimeRemaining);
-        minuteTimer.start();
+        minuteTimer.start();*/
 
        /* MyCountDownTimer myCountDownTimer = new MyCountDownTimer(totalTime * 1000,
                 1000, days, hours, minutes, seconds, holder.tvTimeRemaining);
@@ -147,8 +172,6 @@ public class NewRequestsAdapter extends RecyclerView.Adapter<NewRequestsAdapter.
 
             }
         }.start();*/
-        // Timber.e("server time-- "+serverTime);
-        // DateUtils.getTimeDifference(DateUtils.getTimeFormat(serverTime), DateUtils.getTimeFormat(order.created));
     }
 
     @Override
@@ -234,6 +257,8 @@ public class NewRequestsAdapter extends RecyclerView.Adapter<NewRequestsAdapter.
                 }
 
                 pendingRequestsList.remove(pos);
+                //notifyItemRemoved(pos);
+                //notifyItemRangeChanged(pos, pendingRequestsList.size());
                 notifyDataSetChanged();
     //            Utils.showToast(context, detailsResponse.getMessage());
                 if(mOnDataChangeListener != null){

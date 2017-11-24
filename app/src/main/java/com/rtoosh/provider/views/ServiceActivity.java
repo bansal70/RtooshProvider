@@ -61,7 +61,7 @@ public class ServiceActivity extends AppBaseActivity {
 
     private void initViews() {
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.mipmap.ic_cancel);
+        //toolbar.setNavigationIcon(R.mipmap.ic_cancel);
 
         lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
         user_id = RPPreferences.readString(mContext, Constants.USER_ID_KEY);
@@ -158,6 +158,6 @@ public class ServiceActivity extends AppBaseActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        moveTaskToBack(true);
     }
 }

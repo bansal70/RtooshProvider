@@ -282,11 +282,12 @@ public abstract class AppBaseActivity extends AppCompatActivity implements Locat
                     * For this we'll implement Location Listener and override onLocationChanged*/
                 Timber.e("no data for current location");
 
-                if (mGoogleApiClient != null && !mGoogleApiClient.isConnected())
+                if (mGoogleApiClient != null && !mGoogleApiClient.isConnected()) {
                     mGoogleApiClient.connect();
 
-                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
-                        mLocationRequest, this);
+                    LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
+                            mLocationRequest, this);
+                }
             }
         });
 

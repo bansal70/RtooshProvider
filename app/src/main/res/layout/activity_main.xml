@@ -149,7 +149,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/custom_circular_pink_bg"
-                    android:text="@string/three"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
@@ -215,18 +214,18 @@
                     android:gravity="center">
 
                     <TextView
+                        android:id="@+id/tvRecentDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="10 Oct"
                         android:gravity="center"
                         android:drawableLeft="@mipmap/ic_calendar_unselected"
                         android:drawableStart="@mipmap/ic_calendar_unselected"
                         android:drawablePadding="@dimen/_2sdp"/>
 
                     <TextView
+                        android:id="@+id/tvRecentTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="6:30"
                         android:gravity="center"
                         android:padding="@dimen/_5sdp"
                         android:drawableLeft="@mipmap/ic_clock_pink"
@@ -240,7 +239,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/custom_circular_green_bg"
-                    android:text="5"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"

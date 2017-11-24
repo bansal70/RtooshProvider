@@ -77,7 +77,7 @@
         <activity android:name=".views.WalletActivity" />
         <activity android:name=".views.PortfolioActivity" />
 
-        <service android:name=".controller.NotificationManager">
+        <service android:name=".controller.NotificationController">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

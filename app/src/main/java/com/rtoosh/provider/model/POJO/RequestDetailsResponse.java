@@ -20,8 +20,17 @@ public class RequestDetailsResponse extends AbstractApiResponse{
     public class Data implements Serializable{
         @SerializedName("client")
         public Client client;
+        @SerializedName("Provider")
+        public Provider provider;
         @SerializedName("OrderItem")
         public List<OrderItem> orderItem = null;
+    }
+
+    public class Provider implements Serializable{
+        @SerializedName("lat")
+        public String lat;
+        @SerializedName("lng")
+        public String lng;
     }
 
     public class Client implements Serializable{
@@ -33,6 +42,10 @@ public class RequestDetailsResponse extends AbstractApiResponse{
         public String phone;
         @SerializedName("full_name")
         public String fullName;
+        @SerializedName("lat")
+        public String lat;
+        @SerializedName("lng")
+        public String lng;
     }
 
     @Parcel
@@ -111,5 +124,6 @@ public class RequestDetailsResponse extends AbstractApiResponse{
         public String status;
         @SerializedName("order_type")
         public String orderType;
+        public String timeRemains;
     }
 }

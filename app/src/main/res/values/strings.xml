@@ -253,4 +253,10 @@
     <string name="spinner_electricity_bill">Electricity Bill</string>
     <string name="spinner_gov_id">Government ID</string>
     <string name="completed_requests">Completed Requests</string>
+    <string name="order_accepted">Accepted</string>
+    <string name="order_initiated">Initiated</string>
+    <string name="order_started">Started</string>
+    <string name="hours">Hours</string>
+    <string name="customer_service_request">Customers Service Requests</string>
+    <string name="service_requests">Service Requests</string>
 </resources>

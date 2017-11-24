@@ -6,9 +6,12 @@ package com.rtoosh.provider.controller;
 
 import android.app.ActivityManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -25,9 +28,9 @@ import java.util.List;
 
 import timber.log.Timber;
 
-public class NotificationManager extends FirebaseMessagingService {
+public class NotificationController extends FirebaseMessagingService {
 
-    private static final String TAG = NotificationManager.class.getSimpleName();
+    private static final String TAG = NotificationController.class.getSimpleName();
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -52,7 +55,7 @@ public class NotificationManager extends FirebaseMessagingService {
         if (orderType.equals(Constants.ORDER_ONLINE)) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             // RPPreferences.putString(getApplicationContext(), "request_id", requestId);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("service_request", true);
             intent.putExtra("order_id", requestId);
             startActivity(intent);
@@ -74,13 +77,36 @@ public class NotificationManager extends FirebaseMessagingService {
 
     private void showSmallNotification(NotificationCompat.Builder mBuilder, int icon, String title,
                                        String message,PendingIntent resultPendingIntent) {
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        // The id of the channel.
+        String id = "my_channel_01";
+        // The user-visible name of the channel.
+        CharSequence name = getString(R.string.service_requests);
+        // The user-visible description of the channel.
+        String description = getString(R.string.customer_service_request);
+        NotificationChannel mChannel = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_LOW;
+            mChannel = new NotificationChannel(id, name, importance);
+
+            // Configure the notification channel.
+            mChannel.setDescription(description);
+            mChannel.enableLights(true);
+            // Sets the notification light color for notifications posted to this
+            // channel, if the device supports this feature.
+            mChannel.setLightColor(Color.RED);
+            mChannel.enableVibration(true);
+            mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+            if (mNotificationManager != null) {
+                mNotificationManager.createNotificationChannel(mChannel);
+            }
+        }
 
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
 
         inboxStyle.addLine(message);
 
-        Notification notification;
-        notification = mBuilder.setSmallIcon(icon).setTicker(title).setWhen(0)
+        Notification notification = mBuilder.setSmallIcon(icon).setTicker(title).setWhen(0)
                 .setAutoCancel(true)
                 .setContentTitle(title)
                 .setContentIntent(resultPendingIntent)
@@ -88,12 +114,11 @@ public class NotificationManager extends FirebaseMessagingService {
                 .setStyle(inboxStyle)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentText(message)
+                .setChannelId(id)
                 .build();
 
-        android.app.NotificationManager notificationManager =
-                (android.app.NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if (notificationManager != null)
-        notificationManager.notify(0, notification);
+        if (mNotificationManager != null)
+            mNotificationManager.notify(0, notification);
     }
 
     private Intent getPreviousIntent() {

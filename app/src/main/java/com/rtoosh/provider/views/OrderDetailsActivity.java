@@ -57,6 +57,7 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
     private final String TAG = "OrderDetailsActivity";
 
     @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.toolbarTitle) TextView toolbarTitle;
     @BindView(R.id.recyclerOrders) RecyclerView recyclerOrders;
     @BindView(R.id.tvTotalPrice) TextView tvTotalPrice;
     @BindView(R.id.tvCustomerName) TextView tvCustomerName;
@@ -95,7 +96,7 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
 
     private void initViews() {
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.mipmap.ic_cancel);
+        toolbarTitle.setText(getString(R.string.order_details));
 
         lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
         user_id = RPPreferences.readString(mContext, Constants.USER_ID_KEY);
@@ -203,9 +204,18 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
         }catch (Resources.NotFoundException e){
             e.printStackTrace();
         }
+        RequestDetailsResponse.Data data = requestDetailsResponse.data;
+        RequestDetailsResponse.Provider provider = data.provider;
+        RequestDetailsResponse.Client client = data.client;
 
-        start = new LatLng(30.706326, 76.704865);
-        end = new LatLng(30.710452, 76.712629);
+        double providerLat = Double.parseDouble(provider.lat);
+        double providerLng = Double.parseDouble(provider.lng);
+
+        double clientLat = Double.parseDouble(client.lat);
+        double clientLng = Double.parseDouble(client.lng);
+
+        start = new LatLng(providerLat, providerLng);
+        end = new LatLng(clientLat, clientLng);
        // mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(start, 15));
 
         Routing routing = new Routing.Builder()
@@ -260,31 +270,37 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
         }
 
         // Start marker
-        MarkerOptions options = new MarkerOptions();
-        options.position(start);
-        options.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_pin));
-        mGoogleMap.addMarker(options);
+        MarkerOptions first = new MarkerOptions();
+        first.position(start);
+        first.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_pin));
+        mGoogleMap.addMarker(first);
 
         // End marker
-        options = new MarkerOptions();
-        options.position(end);
-        options.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_pin));
-        mGoogleMap.addMarker(options);
+        MarkerOptions second = new MarkerOptions();
+        second.position(end);
+        second.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_pin));
+        mGoogleMap.addMarker(second);
 
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         builder.include(start);
         builder.include(end);
         /* initialize the padding for map boundary*/
         int padding = 20;
-        /* create the bounds from latlngBuilder to set into map camera*/
         LatLngBounds bounds = builder.build();
+        LatLngBounds latLngBounds = Utils.createBoundsWithMinDiagonal(first, second);
         /* create the camera with bounds and padding to set into map*/
-        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(latLngBounds, padding);
         mGoogleMap.moveCamera(cu);
     }
 
     @Override
     public void onRoutingCancelled() {
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
 
     }
 }

@@ -1,6 +1,7 @@
 package com.rtoosh.provider.views;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,10 +20,12 @@ import com.rtoosh.provider.views.adapters.OrdersAdapter;
 import org.parceler.Parcels;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 public class RequestsDetailActivity extends AppBaseActivity {
 
@@ -84,9 +87,12 @@ public class RequestsDetailActivity extends AppBaseActivity {
 
             int persons = Integer.parseInt(listOrders.get(i).noOfPerson);
             totalPersons += persons;
-            String[] time = service.duration.split(":");
-            hour += persons * Integer.parseInt(time[0]);
-            minutes += persons * Integer.parseInt(time[1]);
+            Timber.e("duration-- "+service.duration);
+            if (service.duration != null && service.duration.contains(":")) {
+                String[] time = service.duration.split(":");
+                hour += persons * Integer.parseInt(time[0]);
+                minutes += persons * Integer.parseInt(time[1]);
+            }
 
             amount = Double.parseDouble(listOrders.get(i).amount);
             price += persons * amount;
@@ -103,10 +109,68 @@ public class RequestsDetailActivity extends AppBaseActivity {
         tvPersons.setText(String.valueOf(totalPersons));
         tvOrderId.setText(data.order.id);
         tvTotalPrice.setText(String.format("%s %s", String.valueOf(price), Constants.CURRENCY));
-        tvTime.setText(String.format("%s %s %s",
-                DateUtils.getTimeFormat(order.created),
-                DateUtils.getDayOfWeek(order.created),
-                DateUtils.getDateFormat(order.created)));
+        if (data.order.orderType.equals(Constants.ORDER_ONLINE)) {
+            tvTime.setText(String.format("%s %s %s",
+                    DateUtils.getTimeFormat(order.created),
+                    DateUtils.getDayOfWeek(order.created),
+                    DateUtils.getDateFormat(order.created)));
+        } else {
+            tvTime.setText(String.format("%s %s %s",
+                    DateUtils.getTimeFormat(order.scheduleDate),
+                    DateUtils.getDayOfWeek(order.scheduleDate),
+                    DateUtils.getDateFormat(order.scheduleDate)));
+        }
+
+        int seconds, minutes, hours, days;
+        long totalTime;
+        String timeOut;
+
+        if (order.orderType.equals(Constants.ORDER_ONLINE)) {
+            timeOut = order.timeRemains;
+            /*time = DateUtils.twoDatesBetweenTime(order.created, serverTime);
+            timeOut = DateUtils.getTimeout(time);*/
+            String[] split = timeOut.split(":");
+            minutes = Integer.parseInt(split[0]);
+            seconds = Integer.parseInt(split[1]);
+            totalTime = minutes *60 + seconds;
+        } else {
+            /*timeOut = DateUtils.printDifference(order.scheduleDate, serverTime);
+            Timber.e("timeout- "+timeOut);*/
+            timeOut = order.timeRemains;
+            String[] split = timeOut.split(":");
+            days = Integer.parseInt(split[0]);
+            hours = Integer.parseInt(split[1]);
+            minutes = Integer.parseInt(split[2]);
+            seconds = Integer.parseInt(split[3]);
+            if (days == 0 && hours == 0) {
+                totalTime = minutes * 60 + seconds;
+            } else {
+                totalTime = 60 * 60 * 24 * days + hours * 60 * 60 + minutes * 60 + seconds;
+            }
+        }
+
+        new CountDownTimer(totalTime*1000, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+                String days = TimeUnit.HOURS.toDays(TimeUnit.MILLISECONDS.toHours(millisUntilFinished))+"";
+                String hours = (TimeUnit.MILLISECONDS.toHours(millisUntilFinished) -
+                        TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(millisUntilFinished)))+"";
+                String minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) -
+                        TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished))+"";
+               /* String seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))+"";*/
+
+               tvTimeLeft.setText(String.format("%s %s %s %s %s %s", days, getString(R.string.days),
+                       hours, getString(R.string.hours), minutes, getString(R.string.minutes)));
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        }.start();
 
         recyclerOrders.setLayoutManager(new LinearLayoutManager(mContext));
         ordersAdapter = new OrdersAdapter(mContext, listOrders);

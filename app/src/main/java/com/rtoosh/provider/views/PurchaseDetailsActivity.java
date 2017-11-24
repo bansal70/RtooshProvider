@@ -74,8 +74,8 @@ public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnC
 
     private void initViews() {
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      /*  if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
         lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
         user_id = RPPreferences.readString(mContext, Constants.USER_ID_KEY);
@@ -244,4 +244,8 @@ public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnC
         tvNo.setTextColor(ContextCompat.getColor(mContext, b));
     }
 
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
 }

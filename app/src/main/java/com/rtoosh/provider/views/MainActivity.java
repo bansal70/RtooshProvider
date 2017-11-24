@@ -40,10 +40,12 @@ import com.rtoosh.provider.R;
 import com.rtoosh.provider.controller.ModelManager;
 import com.rtoosh.provider.model.Constants;
 import com.rtoosh.provider.model.Operations;
+import com.rtoosh.provider.model.POJO.HistoryResponse;
 import com.rtoosh.provider.model.POJO.RequestDetailsResponse;
 import com.rtoosh.provider.model.POJO.Services;
 import com.rtoosh.provider.model.RPPreferences;
 import com.rtoosh.provider.model.Utility;
+import com.rtoosh.provider.model.custom.DateUtils;
 import com.rtoosh.provider.model.custom.Utils;
 import com.rtoosh.provider.model.event.ApiErrorEvent;
 import com.rtoosh.provider.model.event.ApiErrorWithMessageEvent;
@@ -69,6 +71,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
     private final String ACCEPT_REQUEST_TAG = "AcceptRequest";
     private final String DECLINE_REQUEST_TAG = "DeclineRequest";
     final String UPDATE_LOCATION_TAG = "UpdateLocation";
+    private final String HISTORY_TAG = "TOTAL_REQUESTS";
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
@@ -77,6 +80,11 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
     @BindView(R.id.textOnline) TextView textOnline;
     @BindView(R.id.llRequesting) LinearLayout linearRequest;
     @BindView(R.id.rlOffline) RelativeLayout relativeOffline;
+    @BindView(R.id.tvNewRequest) TextView tvNewRequests;
+    @BindView(R.id.tvApprovedRequests) TextView tvApprovedRequests;
+    @BindView(R.id.tvRecentDate) TextView tvRecentDate;
+    @BindView(R.id.tvRecentTime) TextView tvRecentTime;
+
     TextView tvMinutes, tvSeconds;
 
     EditText editReason;
@@ -328,6 +336,71 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         }
     }
 
+    private void setHistory(HistoryResponse historyResponse) {
+        List<HistoryResponse.Data> pendingRequestsList = new ArrayList<>();
+        List<HistoryResponse.Data> approvedRequestsList = new ArrayList<>();
+
+        String serverTime = historyResponse.serverTime;
+        List<HistoryResponse.Data> dataList = historyResponse.data;
+        String timeOut;
+        int day = 0, hour = 0, min, sec;
+        for (int i=0; i<dataList.size(); i++) {
+            RequestDetailsResponse.Order order = dataList.get(i).order;
+            if (order.orderType.equals(Constants.ORDER_ONLINE)) {
+                 String time = DateUtils.twoDatesBetweenTime(order.created, serverTime);
+                 timeOut = DateUtils.getTimeout(time);
+                String[] dateTime = timeOut.split(":");
+                min = Integer.parseInt(dateTime[0]);
+                sec = Integer.parseInt(dateTime[1]);
+            } else {
+                timeOut = DateUtils.printDifference(order.scheduleDate, serverTime);
+                String[] dateTime = timeOut.split(":");
+                day = Integer.parseInt(dateTime[0]);
+                hour = Integer.parseInt(dateTime[1]);
+                min = Integer.parseInt(dateTime[2]);
+                sec = Integer.parseInt(dateTime[3]);
+            }
+
+            order.timeRemains = timeOut;
+
+            switch (order.status) {
+                case Constants.ORDER_PENDING:
+                    if (day > 1 || hour > 1 || min > 1 || sec > 1)
+                        pendingRequestsList.add(dataList.get(i));
+                    break;
+                case Constants.ORDER_ACCEPTED:
+                    if (day > 1 || hour > 1 || min > 1 || sec > 1)
+                        approvedRequestsList.add(dataList.get(i));
+                    break;
+            }
+        }
+
+        if (approvedRequestsList.size() != 0) {
+            tvRecentDate.setText(DateUtils.getDateFormat(approvedRequestsList.get(0).order.created));
+            tvRecentTime.setText(DateUtils.getTimeFormat(approvedRequestsList.get(0).order.created));
+        } else {
+            tvRecentDate.setVisibility(View.GONE);
+            tvRecentTime.setVisibility(View.GONE);
+        }
+
+        tvNewRequests.setText(String.valueOf(pendingRequestsList.size()));
+        tvApprovedRequests.setText(String.valueOf(approvedRequestsList.size()));
+    }
+
+    @Subscribe(sticky = true)
+    public void onEvent(HistoryResponse historyResponse) {
+        EventBus.getDefault().removeAllStickyEvents();
+        dismissDialog();
+        switch (historyResponse.getRequestTag()) {
+            case HISTORY_TAG:
+                setHistory(historyResponse);
+                break;
+
+            default:
+                break;
+        }
+    }
+
     @Subscribe(sticky = true)
     public void onEventMainThread(ApiErrorWithMessageEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
@@ -350,6 +423,10 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
             switchOnline.setChecked(false);
             setOffline();
         }
+
+        showDialog();
+        ModelManager.getInstance().getRequestsHistoryManager().historyTask(mContext, HISTORY_TAG,
+                Operations.historyParams(user_id, lang));
 
         String profilePic = RPPreferences.readString(mContext, Constants.PROFILE_PIC_KEY);
 

@@ -131,7 +131,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_5sdp"
                             android:layout_marginStart="@dimen/_5sdp"
-                            android:text="1 Day 5 Hours 45 Minutes"
                             android:maxLines="1"
                             android:ellipsize="end"
                             android:textSize="@dimen/_12sdp"

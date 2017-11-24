@@ -165,8 +165,8 @@ public class DateUtils {
         int min = 0, sec = 0;
         if (timeDiff.contains(":")) {
             String[] splitCurrentTime = timeDiff.split(":");
-            min = Integer.parseInt(splitCurrentTime[0]);
-            sec = Integer.parseInt(splitCurrentTime[1]);
+            min = Integer.parseInt(splitCurrentTime[2]);
+            sec = Integer.parseInt(splitCurrentTime[3]);
 
             if (min < 10) {
                 min = 10 - min - 1;

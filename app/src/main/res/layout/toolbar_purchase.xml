@@ -12,8 +12,6 @@
         android:layout_height="wrap_content"
         android:text="@string/purchase_detail"
         android:textAppearance="@style/TextAppearance.FontMedium"
-        android:layout_marginRight="?attr/actionBarSize"
-        android:layout_marginEnd="?attr/actionBarSize"
         android:textColor="@color/colorWhite"
         android:gravity="center"/>
 
