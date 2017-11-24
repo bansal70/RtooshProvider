@@ -36,7 +36,7 @@ public class ProviderInfoManager {
             return;
         }
 
-        String job_hours = RPPreferences.readString(mContext, "job_hours");
+        String job_hours = RPPreferences.readString(mContext, Constants.SCHEDULE_HOURS_KEY);
 
         if (coverFile.isEmpty() && workFiles.size() == 0) {
             Call<AbstractApiResponse> call = apiService.registerInfoResponse(user_id, register_id, register_order,

@@ -52,9 +52,9 @@ public class RegistrationActivity extends AppBaseActivity implements AdapterView
 
     private void initViews() {
         deviceToken = FirebaseInstanceId.getInstance().getToken();
-        lang = RPPreferences.readString(mContext, "lang");
-        phone = RPPreferences.readString(mContext, "phone");
-        country_code = RPPreferences.readString(mContext, "country_code");
+        lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
+        phone = RPPreferences.readString(mContext, Constants.PHONE_KEY);
+        country_code = RPPreferences.readString(mContext, Constants.COUNTRY_CODE_KEY);
 
         listSelect = new ArrayList<>();
         listSelect.add("Select");
@@ -108,8 +108,11 @@ public class RegistrationActivity extends AppBaseActivity implements AdapterView
             case REGISTER_TAG:
                 showToast(registerResponse.getMessage());
                 RegisterResponse.Data data = registerResponse.data;
-                RPPreferences.putString(mContext, "user_id", data.id);
-                startActivity(new Intent(this, RegisterIDActivity.class));
+                RegisterResponse.User user = data.user;
+                RPPreferences.putString(mContext, Constants.USER_ID_KEY, user.id);
+
+                startActivity(new Intent(this, RegisterIDActivity.class)
+                        .putExtra("user_id", user.id));
                 Utils.gotoNextActivityAnimation(this);
                 break;
 
@@ -138,7 +141,7 @@ public class RegistrationActivity extends AppBaseActivity implements AdapterView
         switch (event.getRequestTag()) {
             case REGISTER_TAG:
                 dismissDialog();
-                showToast(Constants.SERVER_ERROR);
+                showToast(getString(R.string.something_went_wrong));
                 break;
 
             default:

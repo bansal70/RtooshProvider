@@ -21,7 +21,6 @@ import com.rtoosh.provider.model.Constants;
 import com.rtoosh.provider.model.POJO.register.RegisterInfo;
 import com.rtoosh.provider.model.RPPreferences;
 import com.rtoosh.provider.model.custom.ImagePicker;
-import com.rtoosh.provider.model.custom.Utils;
 import com.rtoosh.provider.model.event.ApiErrorEvent;
 import com.rtoosh.provider.model.event.ApiErrorWithMessageEvent;
 import com.rtoosh.provider.model.network.AbstractApiResponse;
@@ -74,8 +73,8 @@ public class RegisterInfoActivity extends AppBaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         deviceToken = FirebaseInstanceId.getInstance().getToken();
-        lang = RPPreferences.readString(mContext, "lang");
-        user_id = RPPreferences.readString(mContext, "user_id");
+        lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
+        user_id = RPPreferences.readString(mContext, Constants.USER_ID_KEY);
         id = getIntent().getStringExtra("ID");
         order = getIntent().getStringExtra("order");
         services = getIntent().getStringExtra("services");
@@ -151,9 +150,10 @@ public class RegisterInfoActivity extends AppBaseActivity {
         switch (apiResponse.getRequestTag()) {
             case REGISTRATION_TAG:
                 showToast(apiResponse.getMessage());
-                RPPreferences.putBoolean(mContext, "registered", true);
-                startActivity(new Intent(mContext, MainActivity.class));
-                Utils.gotoNextActivityAnimation(this);
+                RPPreferences.putBoolean(mContext, Constants.REGISTERED_KEY, true);
+                startActivity(new Intent(mContext, PhoneVerificationActivity.class)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK  | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                //Utils.gotoNextActivityAnimation(this);
                 break;
 
             default:
@@ -172,7 +172,7 @@ public class RegisterInfoActivity extends AppBaseActivity {
     public void onEventMainThread(ApiErrorEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
-        showToast(Constants.SERVER_ERROR);
+        showToast(getString(R.string.something_went_wrong));
     }
 
 }

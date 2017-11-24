@@ -19,19 +19,16 @@
 
             <ImageView
                 android:id="@+id/imgCategory"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_40sdp"
                 android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:background="@drawable/custom_basic_gradient"
                 android:contentDescription="@string/hair_cut"
-                android:paddingBottom="@dimen/_5sdp"
-                android:paddingLeft="@dimen/_5sdp"
-                android:paddingRight="@dimen/_5sdp"
-                android:paddingStart="@dimen/_5sdp"
-                android:paddingEnd="@dimen/_5sdp"
-                android:paddingTop="@dimen/_5sdp"
-                android:visibility="gone"
+                android:visibility="visible"
+                android:scaleType="fitXY"
                 android:src="@drawable/ic_profile_hair" />
 
             <TextView
@@ -42,6 +39,8 @@
                 android:layout_gravity="center"
                 android:layout_toLeftOf="@+id/llCategory"
                 android:layout_toStartOf="@+id/llCategory"
+                android:layout_toRightOf="@+id/imgCategory"
+                android:layout_toEndOf="@+id/imgCategory"
                 android:gravity="center|start"
                 android:layout_centerVertical="true"
                 android:text="@string/hair"

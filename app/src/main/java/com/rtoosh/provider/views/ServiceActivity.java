@@ -63,9 +63,9 @@ public class ServiceActivity extends AppBaseActivity {
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.mipmap.ic_cancel);
 
-        lang = RPPreferences.readString(mContext, "lang");
-        user_id = RPPreferences.readString(mContext, "user_id");
-        request_id = RPPreferences.readString(mContext, "accepted_request_id");
+        lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
+        user_id = RPPreferences.readString(mContext, Constants.USER_ID_KEY);
+        request_id = getIntent().getStringExtra("request_id");
 
         requestDetailsResponse = (RequestDetailsResponse) getIntent().getSerializableExtra("requestDetails");
 
@@ -135,7 +135,8 @@ public class ServiceActivity extends AppBaseActivity {
         switch (apiResponse.getRequestTag()) {
             case TAG:
                 startActivity(new Intent(mContext, PurchaseDetailsActivity.class)
-                        .putExtra("requestDetails", requestDetailsResponse));
+                        .putExtra("requestDetails", requestDetailsResponse)
+                        .putExtra("request_id", request_id));
                 Utils.gotoNextActivityAnimation(mContext);
                 break;
         }
@@ -152,7 +153,7 @@ public class ServiceActivity extends AppBaseActivity {
     public void onEventMainThread(ApiErrorEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
-        showToast(Constants.SERVER_ERROR);
+        showToast(getString(R.string.something_went_wrong));
     }
 
     @Override

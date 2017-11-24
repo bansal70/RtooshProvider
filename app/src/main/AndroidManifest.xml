@@ -35,9 +35,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".views.IntroSliderActivity" />
-        <activity android:name=".views.MainActivity"
-            android:launchMode="singleTask"/>
-
+        <activity
+            android:name=".views.MainActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".views.OrderDetailsActivity" />
         <activity android:name=".views.ServiceActivity" />
         <activity
@@ -71,16 +71,15 @@
         <activity android:name=".views.RequestsActivity" />
         <activity android:name=".views.RequestsDetailActivity" />
         <activity android:name=".views.ScheduleWorkActivity" />
-
         <activity android:name=".views.ReportActivity" />
         <activity android:name=".views.ContactActivity" />
         <activity android:name=".views.ProfileActivity" />
         <activity android:name=".views.WalletActivity" />
-        <activity android:name=".views.PortfolioActivity"/>
+        <activity android:name=".views.PortfolioActivity" />
 
-        <service android:name=".controller.NotificationManager" >
+        <service android:name=".controller.NotificationManager">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
@@ -93,6 +92,11 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
+        <activity android:name=".views.CalendarActivity" />
+        <activity android:name=".views.SettingsActivity" />
+        <activity android:name=".views.ReviewsActivity" />
+        <activity android:name=".views.EditDocActivity"></activity>
     </application>
 
 </manifest>

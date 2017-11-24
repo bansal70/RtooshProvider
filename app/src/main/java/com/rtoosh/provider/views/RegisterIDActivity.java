@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.rtoosh.provider.R;
 import com.rtoosh.provider.controller.ModelManager;
+import com.rtoosh.provider.controller.ProgressRequestBody;
 import com.rtoosh.provider.model.Constants;
 import com.rtoosh.provider.model.POJO.register.RegisterID;
 import com.rtoosh.provider.model.RPPreferences;
@@ -35,10 +36,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.MultipartBody;
 import timber.log.Timber;
 
 public class RegisterIDActivity extends AppBaseActivity implements CompoundButton.OnCheckedChangeListener,
-        AdapterView.OnItemSelectedListener {
+        AdapterView.OnItemSelectedListener, ProgressRequestBody.UploadCallbacks {
 
     private final String ID_TAG = "RegisterIDActivity";
 
@@ -53,7 +55,7 @@ public class RegisterIDActivity extends AppBaseActivity implements CompoundButto
     private List<String> listIdType;
     private String online = "0", schedule = "0";
     String id, date, idType = "", filePath = "", user_id, lang;
-    private boolean isUploaded = false;
+    private boolean isUploaded = false, isUploading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +68,8 @@ public class RegisterIDActivity extends AppBaseActivity implements CompoundButto
     }
 
     private void initViews() {
-        lang = RPPreferences.readString(mContext, "lang");
-        user_id = RPPreferences.readString(mContext, "user_id");
+        lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
+        user_id = RPPreferences.readString(mContext, Constants.USER_ID_KEY);
 
         cbOnline.setOnCheckedChangeListener(this);
         cbSchedule.setOnCheckedChangeListener(this);
@@ -75,12 +77,12 @@ public class RegisterIDActivity extends AppBaseActivity implements CompoundButto
 
     private void initID() {
         listIdType = new ArrayList<>();
-        listIdType.add("ID Type");
-        listIdType.add("Driving Licence");
-        listIdType.add("Utility Bill");
-        listIdType.add("Voter Card");
-        listIdType.add("Electricity Bill");
-        listIdType.add("Government ID");
+        listIdType.add(getString(R.string.spinner_id_type));
+        listIdType.add(getString(R.string.spinner_licence));
+        listIdType.add(getString(R.string.spinner_bill));
+        listIdType.add(getString(R.string.spinner_voter_card));
+        listIdType.add(getString(R.string.spinner_electricity_bill));
+        listIdType.add(getString(R.string.spinner_gov_id));
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this,
                 R.layout.spinner_item, listIdType);
@@ -96,6 +98,10 @@ public class RegisterIDActivity extends AppBaseActivity implements CompoundButto
 
     @OnClick(R.id.tvPickSchedule)
     public void pickSchedule() {
+        if (schedule.equals("0")) {
+            showToast(getString(R.string.text_set_schedule_type));
+            return;
+        }
         startActivity(new Intent(mContext, ScheduleWorkActivity.class));
         Utils.gotoNextActivityAnimation(mContext);
     }
@@ -119,6 +125,7 @@ public class RegisterIDActivity extends AppBaseActivity implements CompoundButto
         }
     }
 
+    @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if (position != 0)
             idType = listIdType.get(position);
@@ -145,6 +152,8 @@ public class RegisterIDActivity extends AppBaseActivity implements CompoundButto
             showToast(getString(R.string.error_work_type));
         } else if (!isUploaded) {
             showToast(getString(R.string.error_upload_id));
+        } else if (!isUploading) {
+            showToast("Please wait while we are uploading your id");
         } else {
             RegisterID registerID = createIdObject();
             Gson gson = new Gson();
@@ -178,10 +187,36 @@ public class RegisterIDActivity extends AppBaseActivity implements CompoundButto
             File finalFile = new File(ImagePicker.getRealPathFromURI(this, tempUri));
             filePath = finalFile.getAbsolutePath();
 
+            ProgressRequestBody fileBody = new ProgressRequestBody(finalFile, this);
+            MultipartBody.Part filePart = MultipartBody.Part.createFormData("id_image",
+                    finalFile.getName(), fileBody);
+
             ModelManager.getInstance().getUploadIDManager()
-                    .uploadIDTask(mContext, ID_TAG, user_id, lang, filePath);
+                    .uploadIDTask(mContext, ID_TAG, user_id, lang, filePart);
             textUpload.setVisibility(View.VISIBLE);
+            isUploaded = true;
         }
+    }
+
+    @Override
+    public void onProgressUpdate(int percentage) {
+        String percent = getString(R.string.uploading) + " " + percentage + "%";
+        textUpload.setText(percent);
+    }
+
+    @Override
+    public void onError() {
+        // do something on error
+        Timber.e("error while uploading the image");
+        isUploading = false;
+    }
+
+    @Override
+    public void onFinish() {
+        // do something on upload finished
+        // for example start next uploading at queue
+        isUploading = true;
+        textUpload.setText(R.string.uploaded);
     }
 
     @Subscribe(sticky = true)
@@ -192,7 +227,7 @@ public class RegisterIDActivity extends AppBaseActivity implements CompoundButto
             case ID_TAG:
                 showToast(apiResponse.getMessage());
                 textUpload.setText(R.string.uploaded);
-                isUploaded = true;
+                isUploading = true;
                 break;
 
             default:
@@ -211,7 +246,7 @@ public class RegisterIDActivity extends AppBaseActivity implements CompoundButto
     public void onEventMainThread(ApiErrorEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
-        showToast(Constants.SERVER_ERROR);
+        showToast(getString(R.string.something_went_wrong));
     }
 
     @Override

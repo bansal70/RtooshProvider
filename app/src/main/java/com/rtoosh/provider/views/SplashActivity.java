@@ -6,6 +6,7 @@ import android.os.Handler;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.rtoosh.provider.R;
+import com.rtoosh.provider.model.Constants;
 import com.rtoosh.provider.model.RPPreferences;
 
 public class SplashActivity extends AppBaseActivity {
@@ -21,11 +22,11 @@ public class SplashActivity extends AppBaseActivity {
         setContentView(R.layout.activity_splash);
         FirebaseInstanceId.getInstance().getToken();
 
-        RPPreferences.putString(mContext, "lang", "en");
+        RPPreferences.putString(mContext, Constants.LANGUAGE_KEY, Constants.LANGUAGE_EN);
 
         handler = new Handler();
         runnable = () -> {
-            if (RPPreferences.readBoolean(mContext, "registered")) {
+            if (RPPreferences.readBoolean(mContext, Constants.REGISTERED_KEY)) {
                 startActivity(new Intent(mContext, MainActivity.class));
                 return;
             }

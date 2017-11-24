@@ -34,9 +34,21 @@
         <item name="android:colorForeground">@color/colorGrayDark</item>
     </style>
 
+    <style name="SwitchAppearance">
+        <item name="colorControlActivated">@color/colorGreen</item>
+        <item name="colorSwitchThumbNormal">@color/white</item>
+        <item name="android:colorForeground">@color/red_A700</item>
+    </style>
+
     <style name="RatingBar" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/colorGrayDark</item>
         <item name="colorControlActivated">@color/colorYellow</item>
+    </style>
+
+    <style name="CustomRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/custom_rating_bar</item>
+        <item name="android:minHeight">@dimen/_60sdp</item>
+        <item name="android:maxHeight">@dimen/_60sdp</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

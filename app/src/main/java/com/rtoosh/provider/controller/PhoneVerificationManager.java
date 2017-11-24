@@ -27,7 +27,7 @@ public class PhoneVerificationManager {
             return;
         }
         Call<LoginResponse> call = apiService.phoneResponse(code, phone,
-                deviceToken, Constants.DEVICE_TYPE, lang);
+                deviceToken, Constants.DEVICE_TYPE, lang, Constants.USER_TYPE);
         call.enqueue(callback);
     }
 }

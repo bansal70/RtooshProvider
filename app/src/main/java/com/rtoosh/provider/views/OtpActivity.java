@@ -44,8 +44,8 @@ public class OtpActivity extends AppBaseActivity {
 
     private void initViews() {
         deviceToken = FirebaseInstanceId.getInstance().getToken();
-        lang = RPPreferences.readString(mContext, "lang");
-        phone = RPPreferences.readString(mContext, "phone");
+        lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
+        phone = RPPreferences.readString(mContext, Constants.PHONE_KEY);
 
         Utils.setTextWatcherMoveFocus(edit1, edit2);
         Utils.setTextWatcherMoveFocus(edit2, edit3);
@@ -71,10 +71,11 @@ public class OtpActivity extends AppBaseActivity {
             case OTP_TAG:
                 dismissDialog();
                 showToast(otpResponse.getMessage());
-                String id_number = RPPreferences.readString(mContext, "id_number");
+                String id_number = RPPreferences.readString(mContext, Constants.ID_NUMBER_KEY);
                 if (!id_number.equals("0") && !id_number.isEmpty()) {
-                    RPPreferences.putBoolean(mContext, "registered", true);
-                    startActivity(new Intent(mContext, MainActivity.class));
+                    RPPreferences.putBoolean(mContext, Constants.REGISTERED_KEY, true);
+                    startActivity(new Intent(mContext, MainActivity.class)
+                            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     Utils.gotoNextActivityAnimation(this);
                     return;
                 }
@@ -112,7 +113,7 @@ public class OtpActivity extends AppBaseActivity {
         switch (event.getRequestTag()) {
             case OTP_TAG:
                 dismissDialog();
-                showToast(Constants.SERVER_ERROR);
+                showToast(getString(R.string.something_went_wrong));
                 break;
 
             default:

@@ -70,8 +70,8 @@ public class PortfolioActivity extends AppBaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbarTitle.setText(getString(R.string.profile));
 
-        lang = RPPreferences.readString(mContext, "lang");
-        user_id = RPPreferences.readString(mContext, "user_id");
+        lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
+        user_id = RPPreferences.readString(mContext, Constants.USER_ID_KEY);
 
         initRecycler();
     }
@@ -181,6 +181,6 @@ public class PortfolioActivity extends AppBaseActivity {
     public void onEventMainThread(ApiErrorEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
-        showToast(Constants.SERVER_ERROR);
+        showToast(getString(R.string.something_went_wrong));
     }
 }

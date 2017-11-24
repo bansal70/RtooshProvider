@@ -13,7 +13,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -40,14 +39,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.rtoosh.provider.R;
 import com.rtoosh.provider.model.RPPreferences;
 import com.rtoosh.provider.views.PhoneVerificationActivity;
 
-import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -61,7 +56,6 @@ import java.util.regex.Pattern;
 import timber.log.Timber;
 
 public class Utils {
-    static String imagePath = "";
 
     @SuppressWarnings("ConstantConditions")
     public static Dialog showDialog(Context context) {
@@ -117,22 +111,21 @@ public class Utils {
         return matcher.matches();
     }
 
+    public static boolean isValidMobile(String phone) {
+        return android.util.Patterns.PHONE.matcher(phone).matches();
+    }
+
     public static void maxDatePicker(Context mContext, final TextView textView) {
         final Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR); // current year
         int mMonth = c.get(Calendar.MONTH); // current month
         int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
         // date picker dialog
-        DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog.OnDateSetListener onDateSetListener = (view, year, monthOfYear, dayOfMonth) -> {
+            // set day of month , month and year value in the edit text
+            String date = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+            textView.setText(date);
 
-            @Override
-            public void onDateSet(DatePicker view, int year,
-                                  int monthOfYear, int dayOfMonth) {
-                // set day of month , month and year value in the edit text
-                String date = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
-                textView.setText(date);
-
-            }
         };
 
         DatePickerDialog dpDialog = new DatePickerDialog(mContext, onDateSetListener, mYear, mMonth, mDay);
@@ -206,6 +199,33 @@ public class Utils {
         new TimePickerDialog(mContext, t, hour, minute, false).show();
     }
 
+    public static void setTimePicker24Hours(Context mContext, TextView textView) {
+        final Calendar c = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
+
+        TimePickerDialog.OnTimeSetListener t = (view, hours, mins) -> {
+
+            String hrs, minutes;
+
+            if (hours < 10)
+                hrs = "0" + hours;
+            else
+                hrs = String.valueOf(hours);
+
+            if (mins < 10)
+                minutes = "0" + mins;
+            else
+                minutes = String.valueOf(mins);
+
+            String aTime = String.valueOf(hrs) + ':' + minutes;
+
+            textView.setText(aTime);
+        };
+
+        new TimePickerDialog(mContext, t, hour, minute, true).show();
+    }
+
     public static void hideKeyboard(Context mContext, View view) {
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -243,6 +263,9 @@ public class Utils {
         mContext.startActivity(intent);
     }
 
+    public static void showToast(Context context, String msg) {
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+    }
 
     public static void getTotalTime(int hours, int minutes) {
         int mHours = minutes / 60; //since both are ints, you get an int
@@ -427,21 +450,5 @@ public class Utils {
         sb.setSpan(bss, 0, sb.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         return sb;
     }
-
-    public static String downloadImage(Context mContext, String imageUrl) {
-        Glide.with(mContext)
-                .asBitmap()
-                .load(imageUrl)
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                        Uri uri = ImagePicker.getImageUri(mContext, resource);
-                        File finalFile = new File(ImagePicker.getRealPathFromURI(mContext, uri));
-                        imagePath = finalFile.getAbsolutePath();
-                    }
-                });
-        return imagePath;
-    }
-
 
 }

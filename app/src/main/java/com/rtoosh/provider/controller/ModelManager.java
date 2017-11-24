@@ -25,6 +25,10 @@ public class ModelManager {
     private FeedbackManager feedbackManager;
     private UpdateLocationManager updateLocationManager;
     private WalletManager walletManager;
+    private RequestsHistoryManager requestsHistoryManager;
+    private CalendarManager calendarManager;
+    private UpdateInfoManager updateInfoManager;
+    private RatingsManager ratingsManager;
 
     public static ModelManager getInstance() {
         if (modelManager != null)
@@ -53,6 +57,10 @@ public class ModelManager {
         feedbackManager = new FeedbackManager();
         updateLocationManager = new UpdateLocationManager();
         walletManager = new WalletManager();
+        requestsHistoryManager = new RequestsHistoryManager();
+        calendarManager = new CalendarManager();
+        updateInfoManager = new UpdateInfoManager();
+        ratingsManager = new RatingsManager();
     }
 
     public PhoneVerificationManager getPhoneVerificationManager() {
@@ -129,5 +137,21 @@ public class ModelManager {
 
     public WalletManager getWalletManager() {
         return walletManager;
+    }
+
+    public RequestsHistoryManager getRequestsHistoryManager() {
+        return requestsHistoryManager;
+    }
+
+    public CalendarManager getCalendarManager() {
+        return calendarManager;
+    }
+
+    public UpdateInfoManager getUpdateInfoManager() {
+        return updateInfoManager;
+    }
+
+    public RatingsManager getRatingsManager() {
+        return ratingsManager;
     }
 }

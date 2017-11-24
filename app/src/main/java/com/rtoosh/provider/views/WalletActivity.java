@@ -60,8 +60,8 @@ public class WalletActivity extends AppBaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbarTitle.setText(getString(R.string.wallet));
 
-        lang = RPPreferences.readString(mContext, "lang");
-        user_id = RPPreferences.readString(mContext, "user_id");
+        lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
+        user_id = RPPreferences.readString(mContext, Constants.USER_ID_KEY);
 
         showDialog();
         ModelManager.getInstance().getWalletManager().walletTask(mContext, WALLET_TAG,
@@ -71,7 +71,6 @@ public class WalletActivity extends AppBaseActivity {
     @OnClick(R.id.imgEdit)
     public void editProfile() {
         if (isEdit) {
-            showDialog();
             updateWallet();
         } else {
             imgEdit.setImageResource(R.drawable.ic_profile_done);
@@ -92,7 +91,6 @@ public class WalletActivity extends AppBaseActivity {
         showDialog();
         ModelManager.getInstance().getWalletManager().updateWalletTask(mContext, UPDATE_WALLET_TAG,
                 Operations.updateWalletParams(user_id, accountName, iBan, lang));
-
     }
 
     private void setEnabled(boolean status) {
@@ -112,8 +110,12 @@ public class WalletActivity extends AppBaseActivity {
         WalletResponse.Account account = walletResponse.account;
         WalletResponse.AccountDetails details = account.account;
 
-        editAccountName.setText(details.name);
-        editIBAN.setText(details.ibanNo);
+        if (details != null) {
+            if (!details.name.isEmpty())
+                editAccountName.setText(details.name);
+            if (!details.ibanNo.isEmpty())
+                editIBAN.setText(details.ibanNo);
+        }
     }
 
     @Subscribe(sticky = true)
@@ -152,7 +154,7 @@ public class WalletActivity extends AppBaseActivity {
     public void onEventMainThread(ApiErrorEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
-        showToast(Constants.SERVER_ERROR);
+        showToast(getString(R.string.something_went_wrong));
     }
 
     @OnClick(R.id.tvContactUs)

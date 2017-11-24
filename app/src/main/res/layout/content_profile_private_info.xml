@@ -168,7 +168,6 @@
         android:padding="@dimen/_10sdp"
         android:textAllCaps="true"
         android:background="@color/white"
-        android:clickable="true"
         android:foreground="?selectableItemBackground"
         android:textAppearance="@style/TextAppearance.FontMedium"
         android:textColor="@color/colorAccent"

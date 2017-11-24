@@ -4,9 +4,11 @@ package com.rtoosh.provider.model.network;
  * Created by rishav on 10/26/2017.
  */
 
+import com.rtoosh.provider.model.POJO.HistoryResponse;
 import com.rtoosh.provider.model.POJO.LoginResponse;
 import com.rtoosh.provider.model.POJO.OtpResponse;
 import com.rtoosh.provider.model.POJO.ProfileResponse;
+import com.rtoosh.provider.model.POJO.RatingsResponse;
 import com.rtoosh.provider.model.POJO.RegisterResponse;
 import com.rtoosh.provider.model.POJO.RequestDetailsResponse;
 import com.rtoosh.provider.model.POJO.WalletResponse;
@@ -33,7 +35,8 @@ public interface APIService {
                                       @Query("phone") String phone,
                                       @Query("deviceToken") String deviceToken,
                                       @Query("devicetype") String deviceType,
-                                      @Query("lang") String lang);
+                                      @Query("lang") String lang,
+                                      @Query("userType") String userType);
 
     @POST("customers/verifyOtp")
     Call<OtpResponse> otpResponse(@Query("phone") String phone,
@@ -167,5 +170,30 @@ public interface APIService {
 
     @POST("customers/wallet")
     Call<WalletResponse> walletResponse(@QueryMap HashMap<String, String> mapParams);
+
+    @POST("apis/orderList")
+    Call<HistoryResponse> historyResponse(@QueryMap HashMap<String, String> mapParams);
+
+    @POST("customers/vacationMode")
+    Call<AbstractApiResponse> vacationResponse(@QueryMap HashMap<String, String> mapParams);
+
+    @POST("customers/updateServiceOrder")
+    Call<AbstractApiResponse> updateInfoResponse(@QueryMap HashMap<String, String> mapParams);
+
+    @POST("apis/updateWorkType")
+    Call<AbstractApiResponse> updateWorkResponse(@QueryMap HashMap<String, String> mapParams);
+
+    @POST("apis/fetchReview")
+    Call<RatingsResponse> ratingsResponse(@QueryMap HashMap<String, String> mapParams);
+
+    @POST("apis/updateSchedule")
+    Call<AbstractApiResponse> updateScheduleResponse(@QueryMap HashMap<String, String> mapParams);
+
+    @Multipart
+    @POST("apis/updateProfile")
+    Call<AbstractApiResponse> updateDocResponse(@QueryMap HashMap<String, String> mapParams, @Part MultipartBody.Part idImmage);
+
+    @POST("apis/updateProfile")
+    Call<AbstractApiResponse> updateDocResponse(@QueryMap HashMap<String, String> mapParams);
 
 }

@@ -8,7 +8,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.StringTokenizer;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
+
+import timber.log.Timber;
 
 /**
  * Created by rishav on 10/31/2017.
@@ -40,6 +44,201 @@ public class DateUtils {
         days[6] = "Sunday";
         return days;
     }
+
+    private String getMonthName(final int index, final Locale locale, final boolean shortName)
+    {
+        String format = "%tB";
+
+        if (shortName)
+            format = "%tb";
+
+        Calendar calendar = Calendar.getInstance(locale);
+        calendar.set(Calendar.MONTH, index);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+
+        return String.format(locale, format, calendar);
+    }
+
+    public static String getDate(String dateTime) {
+
+        StringTokenizer tk = new StringTokenizer(dateTime);
+        String date = tk.nextToken();
+        String time = tk.nextToken();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM", Locale.getDefault());
+        SimpleDateFormat sdfs = new SimpleDateFormat("hh:mm", Locale.getDefault());
+        Date dt = null;
+        try {
+            dt = sdf.parse(date);
+            System.out.println("Time Display: " + sdfs.format(dt));
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return sdf.format(dt);
+    }
+
+    public static String getDateFormat(String dateTime) {
+        // Get date from string
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date date = null;
+        try {
+            date = dateFormatter.parse(dateTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM", Locale.getDefault());
+
+        return dateFormat.format(date);
+    }
+
+    public static String getTimeFormat(String dateTime) {
+        // Get date from string
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date date = null;
+        try {
+            date = dateFormatter.parse(dateTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+// Get time from date
+        SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        return timeFormatter.format(date);
+    }
+
+    public static void getTimeDifference(String serverTime, String orderTime) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date date1 = null, date2 = null;
+        try {
+            date1 = simpleDateFormat.parse(orderTime);
+            date2 = simpleDateFormat.parse(serverTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (date1 != null && date2 != null) {
+            long difference = date2.getTime() - date1.getTime();
+            int days = (int) (difference / (1000 * 60 * 60 * 24));
+            int hours = (int) ((difference - (1000 * 60 * 60 * 24 * days)) / (1000 * 60 * 60));
+            int min = (int) (difference - (1000 * 60 * 60 * 24 * days) - (1000 * 60 * 60 * hours)) / (1000 * 60);
+            hours = (hours < 0 ? -hours : hours);
+            Timber.e("======= min"+" :: " + min + "\n=== hour" + hours + "\n== days" + days);
+        }
+    }
+
+    public static String twoDatesBetweenTime(String orderTime, String serverTime) {
+        int day = 0;
+        int hh = 0;
+        int mm = 0;
+        int sec = 0;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            Date oldDate = dateFormat.parse(orderTime);
+            Date cDate = dateFormat.parse(serverTime);
+            Long timeDiff = cDate.getTime() - oldDate.getTime();
+            day = (int) TimeUnit.MILLISECONDS.toDays(timeDiff);
+            hh = (int) (TimeUnit.MILLISECONDS.toHours(timeDiff) - TimeUnit.DAYS.toHours(day));
+            mm = (int) (TimeUnit.MILLISECONDS.toMinutes(timeDiff) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(timeDiff)));
+            sec = (int) (TimeUnit.MILLISECONDS.toSeconds(timeDiff) -
+                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeDiff)) -
+                    TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(timeDiff)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return day + ":" + hh + ":" + mm + ":" + sec;
+        /*if (day > 0) {
+            return day + ":" + hh + ":" + mm + ":" + sec;
+        }
+        else if (day == 0) {
+            return hh + ":" +mm + ":" + sec;
+        } else if (hh == 0) {
+            return String.valueOf(mm) + ":" + sec;
+        } else {
+            return day + ":" + hh + ":" + mm;
+        }*/
+    }
+
+    public static String getTimeout(String timeDiff) {
+        int min = 0, sec = 0;
+        if (timeDiff.contains(":")) {
+            String[] splitCurrentTime = timeDiff.split(":");
+            min = Integer.parseInt(splitCurrentTime[0]);
+            sec = Integer.parseInt(splitCurrentTime[1]);
+
+            if (min < 10) {
+                min = 10 - min - 1;
+            }
+            sec = 60 - sec;
+        }
+        return String.valueOf(min) + ":" + sec;
+    }
+
+    public static String getTimeoutSchedule(String timeDiff) {
+        int day = 0, hour = 0, min = 0, sec = 0;
+        if (timeDiff.contains(":")) {
+            String[] splitCurrentTime = timeDiff.split(":");
+            day = Integer.parseInt(splitCurrentTime[0]);
+            hour = Integer.parseInt(splitCurrentTime[1]);
+            min = Integer.parseInt(splitCurrentTime[2]);
+            sec = Integer.parseInt(splitCurrentTime[3]);
+
+            if (min < 10) {
+                min = 10 - min - 1;
+            }
+            sec = 60 - sec;
+        }
+        return day + ":" + hour + ":" + min + ":" + sec;
+    }
+
+    public static String printDifference(String orderTime, String serverTime) {
+        String time = "";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date date1 = null, date2 = null;
+
+        try {
+            date1 = simpleDateFormat.parse(serverTime);
+            date2 = simpleDateFormat.parse(orderTime);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (date1 != null && date2 != null) {
+            //milliseconds
+            long different = date2.getTime() - date1.getTime();
+
+            System.out.println("startDate : " + orderTime);
+            System.out.println("endDate : " + serverTime);
+            System.out.println("different : " + different);
+
+            long secondsInMilli = 1000;
+            long minutesInMilli = secondsInMilli * 60;
+            long hoursInMilli = minutesInMilli * 60;
+            long daysInMilli = hoursInMilli * 24;
+
+            long elapsedDays = different / daysInMilli;
+            different = different % daysInMilli;
+
+            long elapsedHours = different / hoursInMilli;
+            different = different % hoursInMilli;
+
+            long elapsedMinutes = different / minutesInMilli;
+            different = different % minutesInMilli;
+
+            long elapsedSeconds = different / secondsInMilli;
+
+            time = elapsedDays + ":" + elapsedHours + ":" + elapsedMinutes + ":" +  elapsedSeconds;
+            System.out.printf(
+                    "%d :, %d :, %d :, %d :",
+                    elapsedDays, elapsedHours, elapsedMinutes, elapsedSeconds);
+        }
+
+        return time;
+    }
+
     /**
      * Returns abbreviated (3 letters) day of the week.
      *

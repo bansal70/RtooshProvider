@@ -10,6 +10,8 @@ import android.view.View;
 import com.rtoosh.provider.R;
 import com.rtoosh.provider.controller.ModelManager;
 import com.rtoosh.provider.model.Constants;
+import com.rtoosh.provider.model.Operations;
+import com.rtoosh.provider.model.POJO.AddService;
 import com.rtoosh.provider.model.POJO.register.RegisterServiceData;
 import com.rtoosh.provider.model.POJO.register.RegisterServiceResponse;
 import com.rtoosh.provider.model.RPPreferences;
@@ -20,6 +22,7 @@ import com.rtoosh.provider.views.adapters.RegisterServiceAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,7 +43,9 @@ public class RegisterServiceActivity extends AppBaseActivity {
     List<RegisterServiceResponse.Data> listServices;
     private List<RegisterServiceData> listData;
     private RegisterServiceAdapter registerServiceAdapter;
+    List<AddService> listAddServices;
     String id, order, services;
+    JSONArray jsonServices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,26 +61,37 @@ public class RegisterServiceActivity extends AppBaseActivity {
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        lang = RPPreferences.readString(mContext, "lang");
+        lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
         id = getIntent().getStringExtra("ID");
         order = getIntent().getStringExtra("order");
 
         listServices = new ArrayList<>();
         listData = new ArrayList<>();
+        listAddServices = new ArrayList<>();
+        jsonServices = new JSONArray();
 
         ModelManager.getInstance().getServicesListManager().serviceTask(mContext, SERVICE_TAG, lang);
         showDialog();
 
         recyclerServices.setLayoutManager(new LinearLayoutManager(mContext));
-        registerServiceAdapter = new RegisterServiceAdapter(mContext, listData);
+        registerServiceAdapter = new RegisterServiceAdapter(mContext, listData, listAddServices);
         recyclerServices.setAdapter(registerServiceAdapter);
     }
 
     public void nextService(View v) {
         try {
+            for (RegisterServiceData data : listData) {
+                List<AddService> addServiceList = data.getListAddServices();
+                for (AddService service : addServiceList) {
+                    jsonServices.put(Operations.makeJsonRegisterService(data.getId(),
+                            service.getName(), service.getDescription(), service.getPrice(), service.getDuration()));
+                }
+            }
+
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("services", registerServiceAdapter.getArray());
+            jsonObject.put("services", jsonServices);
             services = jsonObject.toString();
+
             Timber.e("json services-- " + services);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -119,7 +135,7 @@ public class RegisterServiceActivity extends AppBaseActivity {
     public void onEventMainThread(ApiErrorEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
-        showToast(Constants.SERVER_ERROR);
+        showToast(getString(R.string.something_went_wrong));
     }
 
     @Override

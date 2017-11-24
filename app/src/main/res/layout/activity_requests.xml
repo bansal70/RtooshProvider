@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/new_requests"
                 android:textSize="@dimen/_14sdp"
-                android:textAppearance="@style/TextAppearance.FontBold"
+                android:textAppearance="@style/TextAppearance.FontMedium"
                 android:gravity="start|center"
                 android:textColor="@color/colorBlack"
                 android:layout_centerVertical="true"
@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_circular_pink_bg"
-                android:text="@string/two"
+                android:text="@string/zero"
                 android:layout_toLeftOf="@+id/imgDropDown"
                 android:layout_toStartOf="@+id/imgDropDown"
                 android:layout_centerVertical="true"
@@ -89,7 +89,6 @@
             android:id="@+id/recyclerNewRequests"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"
             android:padding="@dimen/_8sdp"/>
 
         <android.support.v7.widget.CardView
@@ -114,7 +113,7 @@
                     android:text="@string/approved_requests"
                     android:textSize="@dimen/_14sdp"
                     android:textColor="@color/colorBlack"
-                    android:textAppearance="@style/TextAppearance.FontBold"
+                    android:textAppearance="@style/TextAppearance.FontMedium"
                     android:gravity="start|center"
                     android:layout_centerVertical="true"
                     android:drawablePadding="@dimen/_10sdp"
@@ -128,7 +127,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/custom_circular_gray_bg"
-                    android:text="@string/three"
+                    android:text="@string/zero"
                     android:layout_toLeftOf="@+id/imgDropDown2"
                     android:layout_toStartOf="@+id/imgDropDown2"
                     android:layout_centerVertical="true"
@@ -159,7 +158,75 @@
             android:id="@+id/recyclerApprovedRequests"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"
+            android:padding="@dimen/_8sdp"/>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardPreventCornerOverlap="false"
+            app:cardElevation="@dimen/_5sdp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorGray"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/completed_requests"
+                    android:textSize="@dimen/_14sdp"
+                    android:textColor="@color/colorBlack"
+                    android:textAppearance="@style/TextAppearance.FontMedium"
+                    android:gravity="start|center"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:layout_toLeftOf="@+id/tvCompletedRequests"
+                    android:layout_toStartOf="@+id/tvCompletedRequests"
+                    android:drawableLeft="@drawable/ic_service_like"
+                    android:drawableStart="@drawable/ic_service_like"/>
+
+                <TextView
+                    android:id="@+id/tvCompletedRequests"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_circular_gray_bg"
+                    android:text="@string/zero"
+                    android:layout_toLeftOf="@+id/imgDropDown3"
+                    android:layout_toStartOf="@+id/imgDropDown3"
+                    android:layout_centerVertical="true"
+                    android:textAppearance="@style/TextAppearance.FontMedium"
+                    android:textSize="@dimen/_15sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:textColor="@color/colorWhite"/>
+
+                <ImageView
+                    android:id="@+id/imgDropDown3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_dropdown"
+                    android:contentDescription="@null"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerCompletedRequests"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:padding="@dimen/_8sdp"/>
 
     </LinearLayout>

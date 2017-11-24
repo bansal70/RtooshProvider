@@ -14,15 +14,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.rtoosh.provider.R;
-import com.rtoosh.provider.model.Operations;
 import com.rtoosh.provider.model.POJO.AddService;
 import com.rtoosh.provider.model.POJO.register.RegisterServiceData;
-import com.rtoosh.provider.model.custom.MaskWatcher;
 import com.rtoosh.provider.model.custom.Utils;
 
-import org.json.JSONArray;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -36,14 +31,11 @@ public class RegisterServiceAdapter extends RecyclerView.Adapter<RegisterService
     private List<RegisterServiceData> listData;
     private int position;
     private String id, name, image;
-    private JSONArray jsonServices;
 
-    public RegisterServiceAdapter(Context context, List<RegisterServiceData> listData) {
+    public RegisterServiceAdapter(Context context, List<RegisterServiceData> listData, List<AddService> listAddServices) {
         this.context = context;
         this.listData = listData;
-        listAddServices = new ArrayList<>();
-        initSelectionDialog();
-        jsonServices = new JSONArray();
+        this.listAddServices = listAddServices;
     }
 
     @Override
@@ -62,11 +54,9 @@ public class RegisterServiceAdapter extends RecyclerView.Adapter<RegisterService
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         listAddServices = data.getListAddServices();
-        RegisterServiceDetailsAdapter registerServiceDetailsAdapter = new RegisterServiceDetailsAdapter(
-                context, data.getListAddServices());
+        RegisterServiceDetailsAdapter registerServiceDetailsAdapter = new RegisterServiceDetailsAdapter(context,
+                data.getListAddServices());
         holder.recyclerView.setAdapter(registerServiceDetailsAdapter);
-
-        //registerServiceDetailsAdapter.setClickListener(this);
     }
 
     @Override
@@ -93,65 +83,36 @@ public class RegisterServiceAdapter extends RecyclerView.Adapter<RegisterService
             name = data.getName();
             image = data.getImage();
             listAddServices = data.getListAddServices();
-            dialogSelection.show();
+            initSelectionDialog();
         }
     }
-
-   /* @Override
-    public void onClick(View view, int pos) {
-        switch (view.getId()) {
-            case R.id.ivEditService:
-                Toast.makeText(context, "Edit " + pos, Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.ivRemoveService:
-                RegisterServiceData data = listData.get(position);
-                id = data.getId();
-                name = data.getName();
-                image = data.getImage();
-                listAddServices = data.getListAddServices();
-
-AddService addService = new AddService(listAddServices.get(pos).getName(),
-                        listAddServices.get(pos).getDescription(),
-                        listAddServices.get(pos).getPrice(),
-                        listAddServices.get(pos).getDuration());
-                listAddServices.remove(addService);
-                RegisterServiceData data = new RegisterServiceData(id, name, image, listAddServices);
-                listData.set(pos, data);
-                notifyItemChanged(pos);
-                jsonServices.remove(pos);
-                Timber.e("array-- "+jsonServices);
-
-                Toast.makeText(context, "Remove " + listAddServices.get(pos).getName(), Toast.LENGTH_SHORT).show();
-                break;
-        }
-    }*/
-
 
     private void initSelectionDialog() {
         dialogSelection = Utils.createDialog(context, R.layout.dialog_add_services);
         final EditText editServiceName = dialogSelection.findViewById(R.id.editServiceName);
         final EditText editServiceContent = dialogSelection.findViewById(R.id.editServiceContent);
         final EditText editServicePrice = dialogSelection.findViewById(R.id.editServicePrice);
-        final EditText editServiceDuration = dialogSelection.findViewById(R.id.editServiceDuration);
-        editServiceDuration.addTextChangedListener(new MaskWatcher("##:##"));
+        final TextView editServiceDuration = dialogSelection.findViewById(R.id.editServiceDuration);
+       // editServiceDuration.addTextChangedListener(new MaskWatcher("##:##"));
+
+        editServiceDuration.setOnClickListener(v -> Utils.setTimePicker24Hours(context, editServiceDuration));
 
         dialogSelection.findViewById(R.id.tvDoneSelection).setOnClickListener(view -> {
             String serviceName = editServiceName.getText().toString().trim();
             String description = editServiceContent.getText().toString().trim();
             String price = editServicePrice.getText().toString().trim();
             String duration = editServiceDuration.getText().toString().trim();
-            int hours =0, min = 0;
+           /* int hours =0, min = 0;
             if (duration.contains(":")) {
                 String[] split = duration.split(":");
                 if (split.length > 1) {
                     hours = Integer.parseInt(split[0]);
                     min = Integer.parseInt(split[1]);
                 }
-            }
+            }*/
             if (serviceName.isEmpty() || description.isEmpty() || price.isEmpty() || duration.isEmpty()) {
                 Toast.makeText(context, R.string.toast_fill_data, Toast.LENGTH_SHORT).show();
-            } else if (duration.length() < 5 || !duration.contains(":") ||
+            }/* else if (duration.length() < 5 || !duration.contains(":") ||
                      String.valueOf(hours).length() > 2 || String.valueOf(min).length() > 2) {
                 Toast.makeText(context, R.string.error_duration_format,
                         Toast.LENGTH_SHORT).show();
@@ -159,7 +120,8 @@ AddService addService = new AddService(listAddServices.get(pos).getName(),
                 Toast.makeText(context, R.string.error_hours_range, Toast.LENGTH_SHORT).show();
             } else if (min > 59) {
                 Toast.makeText(context, R.string.error_minutes_range, Toast.LENGTH_SHORT).show();
-            } else {
+            }*/
+            else {
                 dialogSelection.dismiss();
                 AddService addService = new AddService(serviceName, description, price, duration);
                 listAddServices.add(addService);
@@ -167,14 +129,11 @@ AddService addService = new AddService(listAddServices.get(pos).getName(),
                 listData.set(position, data);
                 notifyItemChanged(position);
 
-                jsonServices.put(Operations.makeJsonRegisterService(id, serviceName, description, price, duration));
             }
 
         });
-    }
 
-    public JSONArray getArray() {
-        return jsonServices;
+        dialogSelection.show();
     }
 
 }

@@ -1,29 +1,33 @@
 package com.rtoosh.provider.views.adapters;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rtoosh.provider.R;
 import com.rtoosh.provider.model.Constants;
 import com.rtoosh.provider.model.POJO.AddService;
-import com.rtoosh.provider.model.custom.ItemClickListener;
+import com.rtoosh.provider.model.custom.Utils;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class RegisterServiceDetailsAdapter extends RecyclerView.Adapter<RegisterServiceDetailsAdapter.ViewHolder> {
     private Context context;
     private List<AddService> listServices;
-    private ItemClickListener clickListener;
+    private Dialog dialogSelection;
 
-    public RegisterServiceDetailsAdapter(Context context, List<AddService> listServices) {
+    RegisterServiceDetailsAdapter(Context context, List<AddService> listServices) {
         this.context = context;
         this.listServices = listServices;
     }
@@ -48,7 +52,7 @@ public class RegisterServiceDetailsAdapter extends RecyclerView.Adapter<Register
         return listServices.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tvServiceName) TextView tvServiceName;
         @BindView(R.id.tvServiceContent) TextView tvServiceContent;
         @BindView(R.id.tvServicePrice) TextView tvServicePrice;
@@ -59,33 +63,56 @@ public class RegisterServiceDetailsAdapter extends RecyclerView.Adapter<Register
         private ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
-            ivEditService.setOnClickListener(this);
-            ivRemoveService.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.ivEditService:
-                    if (clickListener != null)
-                        clickListener.onClick(ivEditService, getAdapterPosition());
-                    break;
+        @OnClick(R.id.ivEditService)
+        public void editService() {
+            initSelectionDialog(listServices.get(getAdapterPosition()), getAdapterPosition());
+            //dialogSelection.show();
+        }
 
-                case R.id.ivRemoveService:
-                    if (clickListener != null)
-                        clickListener.onClick(ivRemoveService, getAdapterPosition());
+        @OnClick(R.id.ivRemoveService)
+        public void removeService() {
+            listServices.remove(getAdapterPosition());
+            notifyItemRemoved(getAdapterPosition());
+            notifyItemRangeChanged(getAdapterPosition(), listServices.size());
+        }
 
-                    /*listServices.remove(getAdapterPosition());
-                    notifyItemRemoved(getAdapterPosition());
-                    notifyItemRangeChanged(getAdapterPosition(), listServices.size());*/
-                    break;
+    }
+
+    private void initSelectionDialog(AddService update_selection, int pos) {
+        dialogSelection = Utils.createDialog(context, R.layout.dialog_add_services);
+        final EditText editServiceName = dialogSelection.findViewById(R.id.editServiceName);
+        final EditText editServiceContent = dialogSelection.findViewById(R.id.editServiceContent);
+        final EditText editServicePrice = dialogSelection.findViewById(R.id.editServicePrice);
+        final TextView editServiceDuration = dialogSelection.findViewById(R.id.editServiceDuration);
+
+        editServiceDuration.setOnClickListener(v -> Utils.setTimePicker24Hours(context, editServiceDuration));
+
+        editServiceName.setText(update_selection.getName());
+        editServiceContent.setText(update_selection.getDescription());
+        editServicePrice.setText(update_selection.getPrice());
+        editServiceDuration.setText(update_selection.getDuration());
+
+        dialogSelection.findViewById(R.id.tvDoneSelection).setOnClickListener(view -> {
+            String serviceName = editServiceName.getText().toString().trim();
+            String description = editServiceContent.getText().toString().trim();
+            String price = editServicePrice.getText().toString().trim();
+            String duration = editServiceDuration.getText().toString().trim();
+            if (serviceName.isEmpty() || description.isEmpty() || price.isEmpty() || duration.isEmpty()) {
+                Toast.makeText(context, R.string.toast_fill_data, Toast.LENGTH_SHORT).show();
+            } else {
+                dialogSelection.dismiss();
+                AddService addService = new AddService(serviceName, description, price, duration);
+                listServices.set(pos, addService);
+
+                notifyItemChanged(pos);
+                notifyDataSetChanged();
             }
 
-        }
+        });
+
+        dialogSelection.show();
     }
 
-    public void setClickListener(ItemClickListener itemClickListener) {
-        this.clickListener = itemClickListener;
-    }
 }

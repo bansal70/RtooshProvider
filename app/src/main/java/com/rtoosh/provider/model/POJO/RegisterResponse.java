@@ -12,6 +12,11 @@ public class RegisterResponse extends AbstractApiResponse{
     public Data data;
 
     public class Data {
+        @SerializedName("User")
+        public User user;
+    }
+
+    public class User {
         @SerializedName("id")
         public String id;
     }

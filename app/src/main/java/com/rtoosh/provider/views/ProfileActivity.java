@@ -24,6 +24,7 @@ import com.rtoosh.provider.model.custom.ImagePicker;
 import com.rtoosh.provider.model.custom.Utils;
 import com.rtoosh.provider.model.event.ApiErrorEvent;
 import com.rtoosh.provider.model.event.ApiErrorWithMessageEvent;
+import com.rtoosh.provider.model.event.RequestFinishedEvent;
 import com.rtoosh.provider.model.network.AbstractApiResponse;
 
 import org.greenrobot.eventbus.EventBus;
@@ -83,8 +84,8 @@ public class ProfileActivity extends AppBaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbarTitle.setText(getString(R.string.profile));
 
-        lang = RPPreferences.readString(mContext, "lang");
-        user_id = RPPreferences.readString(mContext, "user_id");
+        lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
+        user_id = RPPreferences.readString(mContext, Constants.USER_ID_KEY);
 
         showDialog();
         ModelManager.getInstance().getProfileManager().profileTask(mContext, PROFILE_TAG, user_id, lang);
@@ -148,7 +149,7 @@ public class ProfileActivity extends AppBaseActivity {
             tvNoCover.setVisibility(View.VISIBLE);
 
 
-        RPPreferences.putString(mContext, "profile_pic", user.profilePic);
+        RPPreferences.putString(mContext, Constants.PROFILE_PIC_KEY, user.profilePic);
     }
 
     @OnClick(R.id.layoutChangePic)
@@ -249,6 +250,12 @@ public class ProfileActivity extends AppBaseActivity {
                 .putParcelableArrayListExtra("imagesList", imagesList), REQUEST_CODE);
     }
 
+    @OnClick(R.id.tvEditDocument)
+    public void editDocument() {
+        startActivity(new Intent(mContext, EditDocActivity.class));
+        Utils.gotoNextActivityAnimation(mContext);
+    }
+
     @Subscribe(sticky = true)
     public void onEvent(ProfileResponse profileResponse) {
         EventBus.getDefault().removeAllStickyEvents();
@@ -295,9 +302,15 @@ public class ProfileActivity extends AppBaseActivity {
     }
 
     @Subscribe(sticky = true)
+    public void onEventMainThread(RequestFinishedEvent event) {
+        EventBus.getDefault().removeAllStickyEvents();
+//        dismissDialog();
+    }
+
+    @Subscribe(sticky = true)
     public void onEventMainThread(ApiErrorEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
-        showToast(Constants.SERVER_ERROR);
+        showToast(getString(R.string.something_went_wrong));
     }
 }

@@ -3,6 +3,8 @@ package com.rtoosh.provider.model.POJO;
 import com.google.gson.annotations.SerializedName;
 import com.rtoosh.provider.model.network.AbstractApiResponse;
 
+import org.parceler.Parcel;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -33,7 +35,8 @@ public class RequestDetailsResponse extends AbstractApiResponse{
         public String fullName;
     }
 
-    public class OrderItem implements Serializable{
+    @Parcel
+    public static class OrderItem implements Serializable{
         @SerializedName("id")
         public String id;
         @SerializedName("order_id")
@@ -54,7 +57,8 @@ public class RequestDetailsResponse extends AbstractApiResponse{
         public Service service;
     }
 
-    public class Service implements Serializable{
+    @Parcel
+    public static class Service implements Serializable{
         @SerializedName("id")
         public String id;
         @SerializedName("cat_id")
@@ -71,7 +75,8 @@ public class RequestDetailsResponse extends AbstractApiResponse{
         public String duration;
     }
 
-    public class Order implements Serializable{
+    @Parcel
+    public static class Order implements Serializable{
         @SerializedName("id")
         public String id;
         @SerializedName("lat")
@@ -102,5 +107,9 @@ public class RequestDetailsResponse extends AbstractApiResponse{
         public String note;
         @SerializedName("cancel_reason")
         public String cancelReason;
+        @SerializedName("status")
+        public String status;
+        @SerializedName("order_type")
+        public String orderType;
     }
 }

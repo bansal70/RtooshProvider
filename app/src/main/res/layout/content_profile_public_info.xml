@@ -179,6 +179,7 @@
                 android:id="@+id/imgWork1"
                 android:layout_width="@dimen/_70sdp"
                 android:layout_height="@dimen/_70sdp"
+                android:scaleType="fitXY"
                 android:background="@color/colorGrayLight"
                 android:contentDescription="@string/portfolio" />
 
@@ -190,6 +191,7 @@
                 android:id="@+id/imgWork2"
                 android:layout_width="@dimen/_70sdp"
                 android:layout_height="@dimen/_70sdp"
+                android:scaleType="fitXY"
                 android:background="@color/colorGrayLight"
                 android:contentDescription="@string/portfolio" />
 
@@ -205,7 +207,7 @@
                     android:id="@+id/imgViewAll"
                     android:layout_width="@dimen/_70sdp"
                     android:layout_height="@dimen/_70sdp"
-                    android:background="@color/colorGrayLight"
+                    android:background="@drawable/custom_basic_gradient"
                     android:foreground="?selectableItemBackground"
                     android:contentDescription="@string/portfolio"
                     android:scaleType="centerInside"/>
@@ -268,6 +270,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:scaleType="fitXY"
                     android:background="@color/colorGrayLight"
                     android:contentDescription="@string/background_photo" />
 

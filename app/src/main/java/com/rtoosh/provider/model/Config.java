@@ -5,9 +5,6 @@ package com.rtoosh.provider.model;
  */
 
 public class Config {
-    public static final String BASE_URL = "http://nimbyisttechnologies.com/himanshu/rtoosh/api/";
-    static final String SEND_OTP_URL = "sentOtp";
-    static final String REGISTER_URL = "Register";
+    public static final String BASE_URL = "http://rotsys.com/api/";
     static final String UPDATE_PROFILE_URL = "apis/updateProfile?";
-
 }

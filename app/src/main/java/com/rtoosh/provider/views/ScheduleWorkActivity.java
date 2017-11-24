@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.google.gson.Gson;
 import com.rtoosh.provider.R;
+import com.rtoosh.provider.model.Constants;
 import com.rtoosh.provider.model.POJO.register.OpeningHours;
 import com.rtoosh.provider.model.POJO.register.OpeningTime;
 import com.rtoosh.provider.model.RPPreferences;
@@ -65,7 +66,7 @@ public class ScheduleWorkActivity extends AppBaseActivity {
         Gson gson = new Gson();
         String jsonHours = gson.toJson(scheduleHoursAdapter.hoursList());
         Timber.e("hours-- "+jsonHours);
-        RPPreferences.putString(mContext, "job_hours", jsonHours);
+        RPPreferences.putString(mContext, Constants.SCHEDULE_HOURS_KEY, jsonHours);
 
         finish();
         Utils.gotoPreviousActivityAnimation(mContext);

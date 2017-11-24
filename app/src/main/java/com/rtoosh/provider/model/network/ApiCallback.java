@@ -76,6 +76,7 @@ public class ApiCallback<T extends AbstractApiResponse> implements Callback<T> {
             EventBus.getDefault().postSticky(new ApiErrorEvent(requestTag, t));
         }
 
+        t.printStackTrace();
         finishRequest();
     }
 

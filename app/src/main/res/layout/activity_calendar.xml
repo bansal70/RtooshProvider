@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.rtoosh.provider.views.CalendarActivity">
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp">
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/switchVacation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/vacation_mode"
+                    app:switchMinWidth="@dimen/_35sdp"
+                    android:focusable="false"
+                    android:clickable="false"
+                    app:theme="@style/SwitchAppearance"
+                    app:switchPadding="@dimen/_10sdp"
+                    android:textAppearance="@style/TextAppearance.FontMedium"
+                    android:padding="@dimen/_10sdp"/>
+
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
+                android:textAppearance="@style/TextAppearance.FontRegular"
+                android:text="@string/warning_vacation_mode"/>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/switchOnline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:text="@string/online"
+                    app:switchMinWidth="@dimen/_35sdp"
+                    app:theme="@style/SwitchAppearance"
+                    android:textAppearance="@style/TextAppearance.FontMedium"
+                    app:switchPadding="@dimen/_10sdp"
+                    android:padding="@dimen/_10sdp"/>
+
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
+                android:textAppearance="@style/TextAppearance.FontRegular"
+                android:text="@string/text_online_orders"/>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/switchSchedule"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/schedule"
+                    style="@style/SwitchAppearance"
+                    app:switchMinWidth="@dimen/_35sdp"
+                    android:focusable="false"
+                    android:clickable="false"
+                    app:theme="@style/SwitchAppearance"
+                    android:textAppearance="@style/TextAppearance.FontMedium"
+                    android:padding="@dimen/_10sdp"/>
+
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:id="@+id/tvScheduleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
+                android:textAppearance="@style/TextAppearance.FontRegular"
+                android:text="@string/text_schedule_orders"/>
+
+            <LinearLayout
+                android:id="@+id/scheduleLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardUseCompatPadding="true"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:cardPreventCornerOverlap="true">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/schedule"
+                            android:textSize="@dimen/_14sdp"
+                            android:textColor="@color/colorAccent"
+                            android:padding="@dimen/_10sdp"
+                            android:layout_toLeftOf="@+id/imgEdit"
+                            android:layout_toStartOf="@+id/imgEdit"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentLeft="true"
+                            android:textAppearance="@style/TextAppearance.FontMedium"/>
+
+                        <ImageView
+                            android:id="@+id/imgEdit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_edit_service"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:padding="@dimen/_10sdp"
+                            android:contentDescription="@string/edit"
+                            android:foreground="?selectableItemBackground"
+                            android:layout_alignParentRight="true"/>
+
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerSchedule"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

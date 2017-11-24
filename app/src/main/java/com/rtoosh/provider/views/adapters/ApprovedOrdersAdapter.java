@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rtoosh.provider.R;
-import com.rtoosh.provider.model.POJO.Order;
+import com.rtoosh.provider.model.POJO.RequestDetailsResponse;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,11 +18,11 @@ import butterknife.ButterKnife;
 
 public class ApprovedOrdersAdapter extends RecyclerView.Adapter<ApprovedOrdersAdapter.ViewHolder>{
     private Context mContext;
-    private ArrayList<Order> listOrders;
+    private List<RequestDetailsResponse.OrderItem> orderItemList;
 
-    ApprovedOrdersAdapter(Context mContext, ArrayList<Order> listOrders) {
+    ApprovedOrdersAdapter(Context mContext, List<RequestDetailsResponse.OrderItem> orderItemList) {
         this.mContext = mContext;
-        this.listOrders = listOrders;
+        this.orderItemList = orderItemList;
     }
 
     @Override
@@ -33,13 +33,15 @@ public class ApprovedOrdersAdapter extends RecyclerView.Adapter<ApprovedOrdersAd
 
     @Override
     public void onBindViewHolder(ApprovedOrdersAdapter.ViewHolder holder, int position) {
-        Order order = listOrders.get(position);
-        holder.tvService.setText(order.getService());
+        RequestDetailsResponse.OrderItem orderItem = orderItemList.get(position);
+        RequestDetailsResponse.Service service = orderItem.service;
+
+        holder.tvService.setText(service.serviceName);
     }
 
     @Override
     public int getItemCount() {
-        return listOrders.size();
+        return orderItemList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{

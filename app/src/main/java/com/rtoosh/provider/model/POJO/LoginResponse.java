@@ -26,5 +26,13 @@ public class LoginResponse extends AbstractApiResponse{
         public String fullName;
         @SerializedName("profile_pic")
         public String profilePic;
+        @SerializedName("work_online")
+        public String workOnline;
+        @SerializedName("work_schedule")
+        public String workSchedule;
+        @SerializedName("vacation_mode")
+        public String vacationMode;
+        @SerializedName("online")
+        public String online;
     }
 }

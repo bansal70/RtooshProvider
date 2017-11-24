@@ -44,10 +44,10 @@ public class ContactActivity extends AppBaseActivity {
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        lang = RPPreferences.readString(mContext, "lang");
-        user_id = RPPreferences.readString(mContext, "user_id");
-        email = RPPreferences.readString(mContext, "email");
-        name = RPPreferences.readString(mContext, "full_name");
+        lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
+        user_id = RPPreferences.readString(mContext, Constants.USER_ID_KEY);
+        email = RPPreferences.readString(mContext, Constants.EMAIL_KEY);
+        name = RPPreferences.readString(mContext, Constants.FULL_NAME_KEY);
 
         tvName.setText(name);
         tvEmail.setText(email);
@@ -88,6 +88,6 @@ public class ContactActivity extends AppBaseActivity {
     public void onEventMainThread(ApiErrorEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
-        showToast(Constants.SERVER_ERROR);
+        showToast(getString(R.string.something_went_wrong));
     }
 }

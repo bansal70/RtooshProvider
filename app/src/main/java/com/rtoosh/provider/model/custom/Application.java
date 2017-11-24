@@ -6,9 +6,13 @@ import android.util.Log;
 import com.rtoosh.provider.BuildConfig;
 import com.rtoosh.provider.R;
 
+import org.acra.ACRA;
+import org.acra.annotation.ReportsCrashes;
+
 import timber.log.Timber;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
+@ReportsCrashes(formUri = "", mailTo = "rishav.orem@gmail.com")
 public final class Application extends android.app.Application {
 
     public static String Font_Text = "fonts/AvenirLTStd-Light.otf";
@@ -16,6 +20,7 @@ public final class Application extends android.app.Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        ACRA.init(this);
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         } else {

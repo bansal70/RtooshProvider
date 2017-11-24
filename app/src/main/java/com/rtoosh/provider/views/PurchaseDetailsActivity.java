@@ -77,9 +77,9 @@ public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnC
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        lang = RPPreferences.readString(mContext, "lang");
-        user_id = RPPreferences.readString(mContext, "user_id");
-        request_id = RPPreferences.readString(mContext, "accepted_request_id");
+        lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
+        user_id = RPPreferences.readString(mContext, Constants.USER_ID_KEY);
+        request_id = getIntent().getStringExtra("request_id");
 
         requestDetailsResponse = (RequestDetailsResponse) getIntent().getSerializableExtra("requestDetails");
 
@@ -226,7 +226,7 @@ public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnC
     public void onEventMainThread(ApiErrorEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
-        showToast(Constants.SERVER_ERROR);
+        showToast(getString(R.string.something_went_wrong));
     }
 
     private void setBackgroundColor(int a, int b) {

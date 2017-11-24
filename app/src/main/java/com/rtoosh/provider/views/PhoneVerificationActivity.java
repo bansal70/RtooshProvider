@@ -35,27 +35,29 @@ public class PhoneVerificationActivity extends AppBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_verification);
         ButterKnife.bind(this);
+        RPPreferences.putString(mContext, Constants.LANGUAGE_KEY, Constants.LANGUAGE_EN);
 
         initViews();
     }
 
     private void initViews() {
-        RPPreferences.removeKey(mContext, "user_id");
+        RPPreferences.removeKey(mContext, Constants.USER_ID_KEY);
         deviceToken = FirebaseInstanceId.getInstance().getToken();
-        lang = RPPreferences.readString(mContext, "lang");
+        lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
     }
 
     public void sendOtp(View view) {
         String number = editPhone.getText().toString().trim();
         String code = tvCode.getText().toString();
 
-        if (number.isEmpty() || number.length() < 10)
+        if (!Utils.isValidMobile(number)) {
             showToast(getString(R.string.toast_invalid_number));
-        else {
-            showDialog();
-            ModelManager.getInstance().getPhoneVerificationManager().execute(mContext, OTP_TAG, code, number,
-                    deviceToken, lang);
+            return;
         }
+
+        showDialog();
+        ModelManager.getInstance().getPhoneVerificationManager().execute(mContext, OTP_TAG, code, number,
+                deviceToken, lang);
     }
 
     @Subscribe(sticky = true)
@@ -67,16 +69,20 @@ public class PhoneVerificationActivity extends AppBaseActivity {
                 showToast(loginResponse.getMessage());
                 LoginResponse.Data data = loginResponse.data;
                 if (data != null) {
-                    RPPreferences.putString(mContext, "user_id", data.id);
-                    RPPreferences.putString(mContext, "active", data.accountStatus);
-                    RPPreferences.putString(mContext, "id_number", data.idNumber);
-                    RPPreferences.putString(mContext, "country_code", tvCode.getText().toString());
-                    RPPreferences.putString(mContext, "email", data.email);
-                    RPPreferences.putString(mContext, "full_name", data.fullName);
-                    RPPreferences.putString(mContext, "profile_pic", data.profilePic);
+                    RPPreferences.putString(mContext, Constants.USER_ID_KEY, data.id);
+                    RPPreferences.putString(mContext, Constants.ACTIVE_KEY, data.accountStatus);
+                    RPPreferences.putString(mContext, Constants.ID_NUMBER_KEY, data.idNumber);
+                    RPPreferences.putString(mContext, Constants.COUNTRY_CODE_KEY, tvCode.getText().toString());
+                    RPPreferences.putString(mContext, Constants.EMAIL_KEY, data.email);
+                    RPPreferences.putString(mContext, Constants.FULL_NAME_KEY, data.fullName);
+                    RPPreferences.putString(mContext, Constants.PROFILE_PIC_KEY, data.profilePic);
+                    RPPreferences.putString(mContext, Constants.WORK_ONLINE_KEY, data.workOnline);
+                    RPPreferences.putString(mContext, Constants.WORK_SCHEDULE_KEY, data.workSchedule);
+                    RPPreferences.putString(mContext, Constants.VACATION_MODE_KEY, data.vacationMode);
+                    RPPreferences.putString(mContext, Constants.USER_STATUS_KEY, data.online);
                 }
 
-                RPPreferences.putString(mContext, "phone", editPhone.getText().toString().trim());
+                RPPreferences.putString(mContext, Constants.PHONE_KEY, editPhone.getText().toString().trim());
                 startActivity(new Intent(this, OtpActivity.class));
                 Utils.gotoNextActivityAnimation(this);
                 break;
@@ -106,7 +112,7 @@ public class PhoneVerificationActivity extends AppBaseActivity {
         switch (event.getRequestTag()) {
             case OTP_TAG:
                 dismissDialog();
-                showToast(Constants.SERVER_ERROR);
+                showToast(getString(R.string.something_went_wrong));
                 break;
 
             default:

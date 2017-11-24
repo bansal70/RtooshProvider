@@ -43,7 +43,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:orientation="vertical">
 
             <android.support.v7.widget.CardView
@@ -110,7 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:padding="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_margin="@dimen/_10sdp"
                 android:hint="@string/set_your_minimum_order"
                 android:textAppearance="@style/TextAppearance.FontMedium"
                 android:background="@drawable/custom_edit_text_bg"

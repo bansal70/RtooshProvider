@@ -16,7 +16,7 @@
             android:title="@string/history" />
         <item
             android:id="@+id/nav_reviews"
-            android:icon="@mipmap/ic_review"
+            android:icon="@drawable/ic_review"
             android:title="@string/reviews" />
         <item
             android:id="@+id/nav_report"

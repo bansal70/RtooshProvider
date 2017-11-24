@@ -69,7 +69,7 @@
             android:gravity="top"
             android:textAppearance="@style/TextAppearance.FontMedium"
             android:background="@drawable/custom_edit_text_bg"
-            android:inputType="text"/>
+            android:inputType="textMultiLine"/>
 
         <TextView
             android:id="@+id/tvSend"

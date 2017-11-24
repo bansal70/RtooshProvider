@@ -39,7 +39,7 @@ public class ScheduleHoursAdapter extends RecyclerView.Adapter<ScheduleHoursAdap
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.view_schedule_hours, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.view_job_hours, parent, false);
         return new ViewHolder(view);
     }
 
@@ -70,10 +70,28 @@ public class ScheduleHoursAdapter extends RecyclerView.Adapter<ScheduleHoursAdap
             ButterKnife.bind(this, itemView);
         }
 
-        @OnClick(R.id.tvDays)
+        @OnClick(R.id.layoutDay)
         public void selectHours() {
             position = getAdapterPosition();
             timeDialog.show();
+        }
+
+        @OnClick(R.id.imgClear)
+        public void clearDay() {
+            position = getAdapterPosition();
+            OpeningHours openingHours = openingHoursList.get(position);
+            OpeningTime openingTime = new OpeningTime("", "");
+            openingHours = new OpeningHours(openingHours.getDay(), openingTime);
+            //if (!openingTime.getFrom().isEmpty() || !openingTime.getTo().isEmpty()) {
+           /* openingTime.setFrom("");
+            openingTime.setTo("");
+
+            openingHours.setDay(openingHours.getDay());
+            openingHours.setOpeningTime(openingTime);*/
+            openingHoursList.set(position, openingHours);
+            //notifyItemChanged(position);
+            notifyDataSetChanged();
+            // }
         }
     }
 

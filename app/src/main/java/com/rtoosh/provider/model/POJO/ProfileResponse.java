@@ -25,6 +25,9 @@ public class ProfileResponse extends AbstractApiResponse implements Serializable
         public List<Service> service = null;
         @SerializedName("ProviderImages")
         public ArrayList<ProviderImage> providerImages = null;
+        @SerializedName("Hour")
+        public List<Hour> hour = null;
+
     }
 
     public static class ProviderImage implements Parcelable {
@@ -122,6 +125,8 @@ public class ProfileResponse extends AbstractApiResponse implements Serializable
         public String workOnline;
         @SerializedName("work_schedule")
         public String workSchedule;
+        @SerializedName("vacation_mode")
+        public String vacationMode;
         @SerializedName("max_persons")
         public String maxPersons;
         @SerializedName("max_services")
@@ -158,5 +163,18 @@ public class ProfileResponse extends AbstractApiResponse implements Serializable
         public String rating;
         @SerializedName("total_review")
         public String totalReview;
+    }
+
+    public class Hour {
+        @SerializedName("id")
+        public String id;
+        @SerializedName("day")
+        public String day;
+        @SerializedName("open")
+        public String open;
+        @SerializedName("provider_id")
+        public String providerId;
+        @SerializedName("close")
+        public String close;
     }
 }

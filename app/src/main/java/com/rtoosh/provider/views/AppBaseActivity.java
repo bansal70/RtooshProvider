@@ -264,6 +264,8 @@ public abstract class AppBaseActivity extends AppCompatActivity implements Locat
         }
         /*Getting the location after acquiring location service*/
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, location -> {
+            if (mGoogleApiClient != null && !mGoogleApiClient.isConnected())
+                mGoogleApiClient.connect();
             // Got last known location. In some rare situations this can be null.
             if (location != null) {
                 // Logic to handle location object
@@ -271,6 +273,7 @@ public abstract class AppBaseActivity extends AppCompatActivity implements Locat
                 Timber.e("Last location:: "
                         + "latitude-- "+mLastLocation.getLatitude()
                         + "\nlongitude-- "+mLastLocation.getLongitude());
+                if (mGoogleApiClient.isConnected())
                 LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
                         mLocationRequest, this);
             } else {

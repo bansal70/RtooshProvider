@@ -65,6 +65,7 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
     @BindView(R.id.tvTotalPersons) TextView tvTotalPersons;
     @BindView(R.id.tvHour) TextView tvHour;
     @BindView(R.id.tvMinutes) TextView tvMinutes;
+    @BindView(R.id.tvEstimatedTime) TextView tvEstimatedTime;
 
     GoogleMap mGoogleMap;
     OrdersAdapter ordersAdapter;
@@ -96,13 +97,12 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.mipmap.ic_cancel);
 
-        lang = RPPreferences.readString(mContext, "lang");
-        user_id = RPPreferences.readString(mContext, "user_id");
-        request_id = RPPreferences.readString(mContext, "accepted_request_id");
+        lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
+        user_id = RPPreferences.readString(mContext, Constants.USER_ID_KEY);
+        request_id = getIntent().getStringExtra("request_id");
+        requestDetailsResponse = (RequestDetailsResponse) getIntent().getSerializableExtra("requestDetails");
 
         polylines = new ArrayList<>();
-
-        requestDetailsResponse = (RequestDetailsResponse) getIntent().getSerializableExtra("requestDetails");
         setData();
     }
 
@@ -169,7 +169,8 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
         switch (apiResponse.getRequestTag()) {
             case TAG:
                 startActivity(new Intent(mContext, ServiceActivity.class)
-                        .putExtra("requestDetails", requestDetailsResponse));
+                        .putExtra("requestDetails", requestDetailsResponse)
+                        .putExtra("request_id", request_id));
                 Utils.gotoNextActivityAnimation(mContext);
                 break;
         }
@@ -186,9 +187,8 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
     public void onEventMainThread(ApiErrorEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
-        showToast(Constants.SERVER_ERROR);
+        showToast(getString(R.string.something_went_wrong));
     }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -249,7 +249,14 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
             Polyline polyline = mGoogleMap.addPolyline(polyOptions);
             polylines.add(polyline);
 
-            //Toast.makeText(getApplicationContext(),"Route "+ (i+1) +": distance - "+ route.get(i).getDistanceValue()+": duration - "+ route.get(i).getDurationValue(),Toast.LENGTH_SHORT).show();
+            /*Toast.makeText(getApplicationContext(),"Route "+ (i+1) +
+                    ": distance - "+ route.get(i).getDistanceValue()+": duration - "+
+                    route.get(i).getDurationValue(), Toast.LENGTH_SHORT).show();*/
+
+            String distanceWithTime = route.get(i).getDurationText() + " ("
+                    + route.get(i).getDistanceText() + ")";
+
+            tvEstimatedTime.setText(distanceWithTime);
         }
 
         // Start marker

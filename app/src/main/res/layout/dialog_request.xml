@@ -36,9 +36,10 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/tvMinutes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="05"
+                android:text="04"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_40sdp"
                 android:textAppearance="@style/TextAppearance.FontMedium"/>
@@ -71,6 +72,7 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/tvSeconds"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="59"

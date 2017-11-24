@@ -7,7 +7,9 @@
     app:cardUseCompatPadding="true"
     android:padding="@dimen/_10sdp"
     app:cardElevation="@dimen/_2sdp"
-    tools:showIn="@layout/activity_register_order"
+    android:layout_marginLeft="@dimen/_10sdp"
+    android:layout_marginRight="@dimen/_10sdp"
+    android:focusable="false"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
@@ -63,7 +65,8 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/llAdd"
             android:layout_toStartOf="@+id/llAdd"
-            android:padding="@dimen/_10sdp">
+            android:paddingLeft="@dimen/_5sdp"
+            android:paddingRight="@dimen/_5sdp">
 
             <TextView
                 android:layout_width="wrap_content"

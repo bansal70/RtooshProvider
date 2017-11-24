@@ -125,4 +125,73 @@ public class Operations {
         return hashMap;
     }
 
+    public static HashMap<String, String> historyParams(String provider_id, String lang) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("provider_id", provider_id);
+        hashMap.put("lang", lang);
+
+        return hashMap;
+    }
+
+    public static HashMap<String, String> vacationParams(String user_id, String type, String lang) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("user_id", user_id);
+        hashMap.put("type", type);
+        hashMap.put("lang", lang);
+
+        return hashMap;
+    }
+
+    public static HashMap<String, String> updateInfoParams(String user_id, String register_service,
+                                                           String register_order, String lang) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("user_id", user_id);
+        hashMap.put("register_service", register_service);
+        hashMap.put("register_order", register_order);
+        hashMap.put("lang", lang);
+
+        return hashMap;
+    }
+
+    public static HashMap<String, String> updateWorkParams(String user_id, String work_online,
+                                                           String work_schedule, String lang) {
+
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("user_id", user_id);
+        hashMap.put("work_online", work_online);
+        hashMap.put("work_schedule", work_schedule);
+        hashMap.put("lang", lang);
+
+        return hashMap;
+    }
+
+    public static HashMap<String, String> ratingsParams(String provider_id, String lang) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("provider_id", provider_id);
+        hashMap.put("lang", lang);
+
+        return hashMap;
+    }
+
+    public static HashMap<String, String> updateScheduleParams(String user_id, String hours, String lang) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("user_id", user_id);
+        hashMap.put("register_schedule_hours", hours);
+        hashMap.put("lang", lang);
+
+        return hashMap;
+    }
+
+    public static HashMap<String, String> updateDocParams(String user_id, String issue_date, String id_type,
+                                                          String id_number ,String lang) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("id", user_id);
+        hashMap.put("id_number", id_number);
+        hashMap.put("issue_date", issue_date);
+        hashMap.put("id_type", id_type);
+        hashMap.put("lang", lang);
+
+        return hashMap;
+    }
+
 }
