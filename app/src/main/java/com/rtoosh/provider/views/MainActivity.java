@@ -235,7 +235,6 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         tvSeconds = dialogRequest.findViewById(R.id.tvSeconds);
     }
 
-
     private void initDeclineDialog() {
         dialogDecline = Utils.createDialog(mContext, R.layout.dialog_decline_request);
 
@@ -443,11 +442,10 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         if (request_id != null && !request_id.isEmpty()) {
             linearRequest.setVisibility(View.GONE);
             dialogRequest.show();
+            tvMinutes.setText(Constants.TIMEOUT_MINUTES);
+            myCountDownTimer = new MyCountDownTimer(Constants.COUNTDOWN_TIME, 1000);
+            myCountDownTimer.start();
         }
-
-        tvMinutes.setText(Constants.TIMEOUT_MINUTES);
-        myCountDownTimer = new MyCountDownTimer(Constants.COUNTDOWN_TIME, 1000);
-        myCountDownTimer.start();
     }
 
     @Override

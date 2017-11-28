@@ -43,6 +43,11 @@ public class Constants {
     public static final String ORDER_REVIEWED = "8";
     public static final String ORDER_TIMEOUT = "9";
 
+    public static final String NOTIFY_ACCOUNT_STATUS = "1";
+    public static final String NOTIFY_ORDER = "2";
+    public static final String NOTIFY_REMINDER = "3";
+    public static final String NOTIFY_SERVICE_STARTED = "4";
+
     public static final String VACATION_MODE_OFF = "0";
     public static final String VACATION_MODE_ON = "1";
 

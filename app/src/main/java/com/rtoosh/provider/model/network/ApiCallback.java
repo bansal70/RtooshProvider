@@ -50,7 +50,7 @@ public class ApiCallback<T extends AbstractApiResponse> implements Callback<T> {
         }
         T result = response.body();
         if (response.isSuccessful() && result != null) {
-            Timber.e(requestTag + "response-- "+result.getResponse());
+            Timber.e(requestTag + "response-- " + result.getResponse());
             if (result.getResponse().equals("0")) {
                 // Error occurred. Check for error message from api.
                 String resultMsg = result.getMessage();

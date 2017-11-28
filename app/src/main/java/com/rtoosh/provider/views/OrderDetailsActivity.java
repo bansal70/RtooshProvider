@@ -54,6 +54,7 @@ import static com.rtoosh.provider.R.id.map;
 
 public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyCallback, RoutingListener {
 
+    private final String ORDER_DETAILS_TAG = "ORDER_DETAILS";
     private final String TAG = "OrderDetailsActivity";
 
     @BindView(R.id.toolbar) Toolbar toolbar;
@@ -87,10 +88,6 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
         setContentView(R.layout.activity_order_details);
         ButterKnife.bind(this);
 
-        SupportMapFragment mapFragment = (SupportMapFragment)getSupportFragmentManager()
-                .findFragmentById(map);
-        mapFragment.getMapAsync(this);
-
         initViews();
     }
 
@@ -101,13 +98,16 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
         lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
         user_id = RPPreferences.readString(mContext, Constants.USER_ID_KEY);
         request_id = getIntent().getStringExtra("request_id");
-        requestDetailsResponse = (RequestDetailsResponse) getIntent().getSerializableExtra("requestDetails");
+        //requestDetailsResponse = (RequestDetailsResponse) getIntent().getSerializableExtra("requestDetails");
+
+        showDialog();
+        ModelManager.getInstance().getRequestManager().acceptRequestTask(mContext, ORDER_DETAILS_TAG,
+                Operations.acceptRequestParams(request_id, lang));
 
         polylines = new ArrayList<>();
-        setData();
     }
 
-    private void setData() {
+    private void setData(RequestDetailsResponse requestDetailsResponse) {
         RequestDetailsResponse.Data data = requestDetailsResponse.data;
         RequestDetailsResponse.Client client = data.client;
         List<RequestDetailsResponse.OrderItem> listOrders = data.orderItem;
@@ -144,6 +144,18 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
         recyclerOrders.setAdapter(ordersAdapter);
         ordersAdapter.notifyDataSetChanged();
         tvTotalPrice.setText(String.format("%s %s", String.valueOf(price), Constants.CURRENCY));
+
+        SupportMapFragment mapFragment = (SupportMapFragment)getSupportFragmentManager()
+                .findFragmentById(map);
+        mapFragment.getMapAsync(this);
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        request_id = intent.getStringExtra("request_id");
     }
 
     @OnClick(R.id.tvSms)
@@ -161,6 +173,18 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
         showDialog();
         ModelManager.getInstance().getServiceStartedManager().startServiceTask(mContext, TAG,
                 Operations.serviceStartedParams(request_id, lang));
+    }
+
+    @Subscribe(sticky = true)
+    public void onEvent(RequestDetailsResponse detailsResponse) {
+        EventBus.getDefault().removeAllStickyEvents();
+        dismissDialog();
+        switch (detailsResponse.getRequestTag()) {
+            case ORDER_DETAILS_TAG:
+                setData(detailsResponse);
+                requestDetailsResponse = detailsResponse;
+                break;
+        }
     }
 
     @Subscribe(sticky = true)

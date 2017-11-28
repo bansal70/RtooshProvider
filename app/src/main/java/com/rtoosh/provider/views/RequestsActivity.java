@@ -1,5 +1,6 @@
 package com.rtoosh.provider.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -45,9 +46,9 @@ public class RequestsActivity extends AppBaseActivity {
     ApprovedRequestAdapter approvedRequestAdapter;
     CompletedRequestsAdapter completedRequestsAdapter;
 
-    private List<HistoryResponse.Data> pendingRequestsList;
-    private List<HistoryResponse.Data> approvedRequestsList;
-    private List<HistoryResponse.Data> completedRequestsList;
+    List<HistoryResponse.Data> pendingRequestsList;
+    List<HistoryResponse.Data> approvedRequestsList;
+    List<HistoryResponse.Data> completedRequestsList;
 
     String lang, user_id, serverTime;
 
@@ -68,10 +69,6 @@ public class RequestsActivity extends AppBaseActivity {
         lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
         user_id = RPPreferences.readString(mContext, Constants.USER_ID_KEY);
 
-        pendingRequestsList = new ArrayList<>();
-        approvedRequestsList = new ArrayList<>();
-        completedRequestsList = new ArrayList<>();
-
         recyclerNewRequests.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerApprovedRequests.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerCompletedRequests.setLayoutManager(new LinearLayoutManager(mContext));
@@ -80,13 +77,15 @@ public class RequestsActivity extends AppBaseActivity {
         recyclerApprovedRequests.setNestedScrollingEnabled(false);
         recyclerCompletedRequests.setNestedScrollingEnabled(false);
 
-
         showDialog();
         ModelManager.getInstance().getRequestsHistoryManager().historyTask(mContext, HISTORY_TAG,
                 Operations.historyParams(user_id, lang));
     }
 
     private void setHistory(HistoryResponse historyResponse) {
+        pendingRequestsList = new ArrayList<>();
+        approvedRequestsList = new ArrayList<>();
+        completedRequestsList = new ArrayList<>();
         serverTime = historyResponse.serverTime;
 
         List<HistoryResponse.Data> dataList = historyResponse.data;
@@ -132,8 +131,7 @@ public class RequestsActivity extends AppBaseActivity {
         }
 
         approvedRequestAdapter = new ApprovedRequestAdapter(mContext, approvedRequestsList, serverTime);
-        newRequestsAdapter = new NewRequestsAdapter(mContext, pendingRequestsList,
-                approvedRequestsList, approvedRequestAdapter, serverTime);
+        newRequestsAdapter = new NewRequestsAdapter(mContext, pendingRequestsList);
         completedRequestsAdapter = new CompletedRequestsAdapter(mContext, completedRequestsList);
 
         recyclerNewRequests.setAdapter(newRequestsAdapter);
@@ -141,13 +139,27 @@ public class RequestsActivity extends AppBaseActivity {
         recyclerCompletedRequests.setAdapter(completedRequestsAdapter);
 
         newRequestsAdapter.setOnDataChangeListener(size -> {
-            tvNewRequests.setText(String.valueOf(pendingRequestsList.size()));
-            tvApprovedRequests.setText(String.valueOf(approvedRequestsList.size()));
+            showDialog();
+            ModelManager.getInstance().getRequestsHistoryManager().historyTask(mContext, HISTORY_TAG,
+                    Operations.historyParams(user_id, lang));
+        });
+
+        approvedRequestAdapter.setOnDataChangeListener(size -> {
+            showDialog();
+            ModelManager.getInstance().getRequestsHistoryManager().historyTask(mContext, HISTORY_TAG,
+                    Operations.historyParams(user_id, lang));
         });
 
         tvNewRequests.setText(String.valueOf(pendingRequestsList.size()));
         tvApprovedRequests.setText(String.valueOf(approvedRequestsList.size()));
         tvCompletedRequests.setText(String.valueOf(completedRequestsList.size()));
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        ModelManager.getInstance().getRequestsHistoryManager().historyTask(mContext, HISTORY_TAG,
+                Operations.historyParams(user_id, lang));
     }
 
     @Subscribe(sticky = true)
@@ -156,7 +168,7 @@ public class RequestsActivity extends AppBaseActivity {
         dismissDialog();
         switch (historyResponse.getRequestTag()) {
             case HISTORY_TAG:
-                showToast(historyResponse.getMessage());
+                //showToast(historyResponse.getMessage());
                 setHistory(historyResponse);
                 break;
 

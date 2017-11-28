@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.rtoosh.provider.R;
@@ -49,7 +50,6 @@ public class RegisterInfoActivity extends AppBaseActivity {
     @BindView(R.id.recyclerWork) RecyclerView recyclerWork;
     @BindView(R.id.cardWork) CardView cardWork;
 
-    private static final int PERMISSION_REQUEST_CODE = 1001;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     String pathBg = "";
     String surname, bio;
@@ -113,7 +113,8 @@ public class RegisterInfoActivity extends AppBaseActivity {
                 myWorkAdapter.notifyDataSetChanged();
             } else {
                 pathBg = finalFile.getAbsolutePath();
-                Glide.with(mContext).asBitmap().load(pathBg).into(imgBg);
+                Glide.with(mContext).asBitmap().load(pathBg)
+                        .apply(new RequestOptions().centerCrop()).into(imgBg);
             }
         }
     }

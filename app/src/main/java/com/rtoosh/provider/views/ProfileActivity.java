@@ -94,8 +94,8 @@ public class ProfileActivity extends AppBaseActivity {
     public void setEnabled(boolean status) {
         editBio.setEnabled(status);
         editSurname.setEnabled(status);
-        layoutChangePic.setEnabled(status);
-        imgCover.setEnabled(status);
+        layoutChangePic.setClickable(status);
+        imgCover.setClickable(status);
     }
 
     public void setProfile(ProfileResponse profileResponse) {

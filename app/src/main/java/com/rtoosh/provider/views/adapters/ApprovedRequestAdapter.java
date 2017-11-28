@@ -2,6 +2,7 @@ package com.rtoosh.provider.views.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,12 +16,13 @@ import com.rtoosh.provider.model.POJO.HistoryResponse;
 import com.rtoosh.provider.model.POJO.RequestDetailsResponse;
 import com.rtoosh.provider.model.custom.DateUtils;
 import com.rtoosh.provider.model.custom.Utils;
-import com.rtoosh.provider.views.MinuteTimer;
+import com.rtoosh.provider.views.OrderDetailsActivity;
 import com.rtoosh.provider.views.RequestsDetailActivity;
 
 import org.parceler.Parcels;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +33,7 @@ public class ApprovedRequestAdapter extends RecyclerView.Adapter<ApprovedRequest
     private Context context;
     private List<HistoryResponse.Data> approvedRequestsList;
     private String orderId, serverTime;
+    private OnDataChangeListener mOnDataChangeListener;
 
     public ApprovedRequestAdapter(Context context, List<HistoryResponse.Data> approvedRequestsList, String serverTime) {
         this.context = context;
@@ -86,9 +89,38 @@ public class ApprovedRequestAdapter extends RecyclerView.Adapter<ApprovedRequest
             } else {
                 totalTime = 60 * 60 * 24 * days + hours * 60 * 60 + minutes * 60 + seconds;
             }
-            MinuteTimer minuteTimer = new MinuteTimer(totalTime * 1000,
+
+            if (holder.countDownTimer != null) {
+                holder.countDownTimer.cancel();
+            }
+            holder.countDownTimer = new CountDownTimer(totalTime * 1000, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    String days = TimeUnit.HOURS.toDays(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)) + "";
+                    String hours = (TimeUnit.MILLISECONDS.toHours(millisUntilFinished) -
+                            TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(millisUntilFinished))) + "";
+                    String minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) -
+                            TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)) + "";
+                    String seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) -
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)) + "";
+
+                    holder.tvTimeRemaining.setText(String.format("%s:%s:%s:%s", days, hours, minutes, seconds));
+                }
+
+                @Override
+                public void onFinish() {
+                    Intent intent = new Intent(context, OrderDetailsActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("request_id", order.id);
+                    context.startActivity(intent);
+                    /*if (mOnDataChangeListener != null) {
+                        mOnDataChangeListener.onDataChanged(approvedRequestsList.size());
+                    }*/
+                }
+            }.start();
+           /* holder.minuteTimer = new MinuteTimer(totalTime * 1000,
                     1000, minutes, seconds, holder.tvTimeRemaining);
-            minuteTimer.start();
+            holder.minuteTimer.start();*/
         }
 
         List<RequestDetailsResponse.OrderItem> orderItemList = approvedRequestsList.get(position).orderItem;
@@ -124,6 +156,7 @@ public class ApprovedRequestAdapter extends RecyclerView.Adapter<ApprovedRequest
         @BindView(R.id.tvOrderDate) TextView tvOrderDate;
         @BindView(R.id.tvOrderTime) TextView tvOrderTime;
         @BindView(R.id.tvTimeRemaining) TextView tvTimeRemaining;
+        CountDownTimer countDownTimer;
 
         private ViewHolder(View itemView) {
             super(itemView);
@@ -140,4 +173,13 @@ public class ApprovedRequestAdapter extends RecyclerView.Adapter<ApprovedRequest
             Utils.gotoNextActivityAnimation(context);
         }
     }
+
+    public interface OnDataChangeListener{
+        void onDataChanged(int size);
+    }
+
+    public void setOnDataChangeListener(ApprovedRequestAdapter.OnDataChangeListener onDataChangeListener){
+        mOnDataChangeListener = onDataChangeListener;
+    }
+
 }

@@ -41,22 +41,16 @@ public class NewRequestsAdapter extends RecyclerView.Adapter<NewRequestsAdapter.
     private final String DECLINED_REQUEST_TAG = "DECLINED_REQUEST";
 
     private Context context;
-    private List<HistoryResponse.Data> pendingRequestsList, approvedRequestsList;
-    private String lang, serverTime;
+    private List<HistoryResponse.Data> pendingRequestsList;
+    private String lang;
     private Dialog dialogDecline, dialog;
     private EditText editReason;
-    private ApprovedRequestAdapter approvedRequestAdapter;
     private int pos;
     private OnDataChangeListener mOnDataChangeListener;
 
-    public NewRequestsAdapter(Context context, List<HistoryResponse.Data> pendingRequestsList,
-                              List<HistoryResponse.Data> approvedRequestsList,
-                              ApprovedRequestAdapter approvedRequestAdapter, String serverTime) {
+    public NewRequestsAdapter(Context context, List<HistoryResponse.Data> pendingRequestsList) {
         this.context = context;
         this.pendingRequestsList = pendingRequestsList;
-        this.approvedRequestsList = approvedRequestsList;
-        this.approvedRequestAdapter = approvedRequestAdapter;
-        this.serverTime = serverTime;
 
         lang = RPPreferences.readString(context, Constants.LANGUAGE_KEY);
         dialog = Utils.showDialog(context);
@@ -76,7 +70,7 @@ public class NewRequestsAdapter extends RecyclerView.Adapter<NewRequestsAdapter.
         if (order.orderType.equals(Constants.ORDER_ONLINE)) {
             holder.tvOrderDate.setText(DateUtils.getDateFormat(order.created));
             holder.tvOrderTime.setText(DateUtils.getTimeFormat(order.created));
-        } else  {
+        } else {
             holder.tvOrderDate.setText(DateUtils.getDateFormat(order.scheduleDate));
             holder.tvOrderTime.setText(DateUtils.getTimeFormat(order.scheduleDate));
         }
@@ -90,7 +84,7 @@ public class NewRequestsAdapter extends RecyclerView.Adapter<NewRequestsAdapter.
         holder.tvTotalPersons.setText(String.valueOf(persons));
         holder.tvTotalRequests.setText(totalRequests);
 
-        String time = "", timeOut = "";
+        String timeOut = "";
         int seconds, minutes, hours, days;
         long totalTime;
 
@@ -99,9 +93,9 @@ public class NewRequestsAdapter extends RecyclerView.Adapter<NewRequestsAdapter.
             /*time = DateUtils.twoDatesBetweenTime(order.created, serverTime);
             timeOut = DateUtils.getTimeout(time);*/
             String[] split = timeOut.split(":");
-            minutes = Integer.parseInt(split[2]);
-            seconds = Integer.parseInt(split[3]);
-            totalTime = minutes *60 + seconds;
+            minutes = Integer.parseInt(split[0]);
+            seconds = Integer.parseInt(split[1]);
+            totalTime = minutes * 60 + seconds;
         } else {
             /*timeOut = DateUtils.printDifference(order.scheduleDate, serverTime);
             Timber.e("timeout- "+timeOut);*/
@@ -118,25 +112,30 @@ public class NewRequestsAdapter extends RecyclerView.Adapter<NewRequestsAdapter.
             }
         }
 
-        new CountDownTimer(totalTime*1000, 1000) {
+        if (holder.countDownTimer != null) {
+            holder.countDownTimer.cancel();
+        }
 
+        holder.countDownTimer = new CountDownTimer(totalTime * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
 
-                String days = TimeUnit.HOURS.toDays(TimeUnit.MILLISECONDS.toHours(millisUntilFinished))+"";
+                String days = TimeUnit.HOURS.toDays(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)) + "";
                 String hours = (TimeUnit.MILLISECONDS.toHours(millisUntilFinished) -
-                        TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(millisUntilFinished)))+"";
+                        TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(millisUntilFinished))) + "";
                 String minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) -
-                        TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished))+"";
+                        TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)) + "";
                 String seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) -
-                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))+"";
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)) + "";
 
                 holder.tvTimeRemaining.setText(String.format("%s:%s:%s:%s", days, hours, minutes, seconds));
             }
 
             @Override
             public void onFinish() {
-
+                if (mOnDataChangeListener != null) {
+                    mOnDataChangeListener.onDataChanged(pendingRequestsList.size());
+                }
             }
         }.start();
 
@@ -144,34 +143,6 @@ public class NewRequestsAdapter extends RecyclerView.Adapter<NewRequestsAdapter.
                 1000, minutes, seconds, holder.tvTimeRemaining);
         minuteTimer.start();*/
 
-       /* MyCountDownTimer myCountDownTimer = new MyCountDownTimer(totalTime * 1000,
-                1000, days, hours, minutes, seconds, holder.tvTimeRemaining);
-        myCountDownTimer.start();*/
-
-       /* new CountDownTimer(minutes * 60 * 1000 + seconds * 1000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                String sec = String.valueOf(--seconds);
-
-                if (seconds < 10)
-                    sec = "0" + sec;
-
-                holder.tvTimeRemaining.setText(String.format("%s:%s", String.valueOf(minutes), sec));
-
-                if (seconds < 1) {
-                    seconds = 60;
-                    if (minutes > 0) {
-                        String min = String.valueOf(minutes--);
-                        holder.tvTimeRemaining.setText(String.format("%s:%s", min, sec));
-                    }
-                }
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        }.start();*/
     }
 
     @Override
@@ -185,6 +156,7 @@ public class NewRequestsAdapter extends RecyclerView.Adapter<NewRequestsAdapter.
         @BindView(R.id.tvOrderDate) TextView tvOrderDate;
         @BindView(R.id.tvOrderTime) TextView tvOrderTime;
         @BindView(R.id.tvTimeRemaining) TextView tvTimeRemaining;
+        CountDownTimer countDownTimer;
 
         private ViewHolder(View itemView) {
             super(itemView);
@@ -243,26 +215,25 @@ public class NewRequestsAdapter extends RecyclerView.Adapter<NewRequestsAdapter.
         dialog.dismiss();
         switch (detailsResponse.getRequestTag()) {
             case ACCEPTED_REQUEST_TAG:
-                approvedRequestsList.add(pendingRequestsList.get(pos));
-                approvedRequestAdapter.notifyDataSetChanged();
+               /* approvedRequestsList.add(pendingRequestsList.get(pos));
+                approvedRequestAdapter.notifyDataSetChanged();*/
 
                 HistoryResponse.Data data = pendingRequestsList.get(pos);
                 RequestDetailsResponse.Order order = data.order;
 
-                Timber.e("Order type-- "+order.orderType);
+                Timber.e("Order type-- " + order.orderType);
                 if (order.orderType.equals(Constants.ORDER_ONLINE)) {
                     context.startActivity(new Intent(context, OrderDetailsActivity.class)
                             .putExtra("requestDetails", detailsResponse)
                             .putExtra("request_id", order.id));
-                }
+                } else {
 
-                pendingRequestsList.remove(pos);
-                //notifyItemRemoved(pos);
-                //notifyItemRangeChanged(pos, pendingRequestsList.size());
-                notifyDataSetChanged();
-    //            Utils.showToast(context, detailsResponse.getMessage());
-                if(mOnDataChangeListener != null){
-                    mOnDataChangeListener.onDataChanged(pendingRequestsList.size());
+               /* pendingRequestsList.remove(pos);
+                notifyDataSetChanged();*/
+                    //            Utils.showToast(context, detailsResponse.getMessage());
+                    if (mOnDataChangeListener != null) {
+                        mOnDataChangeListener.onDataChanged(pendingRequestsList.size());
+                    }
                 }
 
                 break;
@@ -276,11 +247,14 @@ public class NewRequestsAdapter extends RecyclerView.Adapter<NewRequestsAdapter.
 
         switch (apiResponse.getRequestTag()) {
             case DECLINED_REQUEST_TAG:
-                pendingRequestsList.remove(pos);
-                notifyDataSetChanged();
+               /* pendingRequestsList.remove(pos);
+                notifyDataSetChanged();*/
 
        //         Utils.showToast(context, apiResponse.getMessage());
-                dialogDecline.dismiss();
+
+                if (dialogDecline != null && dialogDecline.isShowing())
+                    dialogDecline.dismiss();
+
                 if(mOnDataChangeListener != null){
                     mOnDataChangeListener.onDataChanged(pendingRequestsList.size());
                 }

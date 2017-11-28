@@ -222,7 +222,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@mipmap/ic_upload_image"
-                        android:scaleType="fitCenter"
                         android:contentDescription="@string/upload"
                         android:foreground="@drawable/ripple"
                         android:background="@drawable/custom_basic_gradient"/>

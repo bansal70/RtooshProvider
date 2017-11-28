@@ -22,6 +22,7 @@ import com.rtoosh.provider.R;
 import com.rtoosh.provider.model.Constants;
 import com.rtoosh.provider.model.RPPreferences;
 import com.rtoosh.provider.views.MainActivity;
+import com.rtoosh.provider.views.OrderDetailsActivity;
 import com.rtoosh.provider.views.RequestsActivity;
 
 import java.util.List;
@@ -36,6 +37,9 @@ public class NotificationController extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
         Log.e(TAG, "Notification -->>>>> "+remoteMessage.getData().toString());
+        String notify_type = remoteMessage.getData().get("notify_type");
+
+
         String message = remoteMessage.getData().get("message");
         String orderId = remoteMessage.getData().get("orderID");
         String payment_mode = remoteMessage.getData().get("payment_mode");
@@ -47,24 +51,34 @@ public class NotificationController extends FirebaseMessagingService {
 
         String user_id = RPPreferences.readString(this, Constants.USER_ID_KEY);
         if (!user_id.isEmpty()) {
+            if (notify_type.equals(Constants.NOTIFY_SERVICE_STARTED)) {
+                startService(message, orderId, orderType);
+                return;
+            }
             sendNotification(message, orderId, orderType);
         }
     }
 
+    private void startService(String messageBody, String requestId, String orderType) {
+        Intent intent = new Intent(getApplicationContext(), OrderDetailsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("request_id", requestId);
+        startActivity(intent);
+    }
+
     private void sendNotification(String messageBody, String requestId, String orderType) {
-        if (orderType.equals(Constants.ORDER_ONLINE)) {
+        if (orderType != null && orderType.equals(Constants.ORDER_ONLINE)) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            // RPPreferences.putString(getApplicationContext(), "request_id", requestId);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("service_request", true);
             intent.putExtra("order_id", requestId);
             startActivity(intent);
         } else {
+            int code = (int) System.currentTimeMillis();
             Intent intent = new Intent(getApplicationContext(), RequestsActivity.class);
-            // RPPreferences.putString(getApplicationContext(), "request_id", requestId);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            final PendingIntent resultPendingIntent =
-                    PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+            final PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(),
+                    code, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext());
 
@@ -77,14 +91,15 @@ public class NotificationController extends FirebaseMessagingService {
 
     private void showSmallNotification(NotificationCompat.Builder mBuilder, int icon, String title,
                                        String message,PendingIntent resultPendingIntent) {
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager mNotificationManager = (NotificationManager)
+                getSystemService(Context.NOTIFICATION_SERVICE);
         // The id of the channel.
-        String id = "my_channel_01";
+        String id = "rtoosh_provider";
         // The user-visible name of the channel.
         CharSequence name = getString(R.string.service_requests);
         // The user-visible description of the channel.
         String description = getString(R.string.customer_service_request);
-        NotificationChannel mChannel = null;
+        NotificationChannel mChannel;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_LOW;
             mChannel = new NotificationChannel(id, name, importance);
