@@ -45,6 +45,7 @@ public class ProfileActivity extends AppBaseActivity {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
+    @BindView(R.id.tvAccountStatus) TextView tvAccountStatus;
     @BindView(R.id.tvName) TextView tvName;
     @BindView(R.id.tvPhone) TextView tvPhone;
     @BindView(R.id.tvEmail) TextView tvEmail;
@@ -105,6 +106,22 @@ public class ProfileActivity extends AppBaseActivity {
         tvName.setText(user.fullName);
         tvPhone.setText(user.phone);
         tvEmail.setText(user.email);
+
+        switch (user.status) {
+            case Constants.ACCOUNT_ACTIVE:
+                tvAccountStatus.setText(R.string.account_active);
+                break;
+            case Constants.ACCOUNT_INACTIVE:
+                tvAccountStatus.setText(R.string.account_under_review);
+                break;
+            case Constants.ACCOUNT_REVIEWING:
+                tvAccountStatus.setText(R.string.account_under_review);
+                break;
+            case Constants.ACCOUNT_SUSPENDED:
+                tvAccountStatus.setText(R.string.account_suspended);
+                break;
+        }
+
 
         editSurname.setText(user.surname);
         editBio.setText(user.bio);
@@ -256,6 +273,12 @@ public class ProfileActivity extends AppBaseActivity {
         Utils.gotoNextActivityAnimation(mContext);
     }
 
+    @OnClick(R.id.tvSpecialOffers)
+    public void specialOffers() {
+        startActivity(new Intent(mContext, SpecialOffersActivity.class));
+        Utils.gotoNextActivityAnimation(mContext);
+    }
+
     @Subscribe(sticky = true)
     public void onEvent(ProfileResponse profileResponse) {
         EventBus.getDefault().removeAllStickyEvents();
@@ -292,6 +315,16 @@ public class ProfileActivity extends AppBaseActivity {
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     @Subscribe(sticky = true)

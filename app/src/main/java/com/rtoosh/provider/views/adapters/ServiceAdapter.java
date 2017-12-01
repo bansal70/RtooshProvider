@@ -2,27 +2,26 @@ package com.rtoosh.provider.views.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.Toast;
 
 import com.rtoosh.provider.R;
 import com.rtoosh.provider.model.POJO.Services;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHolder>{
     private Context mContext;
-    private List<Services> listServices;
+  //  private List<Services> listServices;
+    private SparseArray<Services> servicesArray;
 
-    public ServiceAdapter(Context mContext, List<Services> listServices) {
+    public ServiceAdapter(Context mContext, SparseArray<Services> servicesArray) {
         this.mContext = mContext;
-        this.listServices = listServices;
+        this.servicesArray = servicesArray;
     }
 
     @Override
@@ -33,7 +32,8 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(final ServiceAdapter.ViewHolder holder, int position) {
-        final Services services = listServices.get(position);
+        int key = servicesArray.keyAt(position);
+        final Services services = servicesArray.get(key);
         holder.cbServices.setText(services.getName());
         holder.cbServices.setId(position);
 
@@ -44,15 +44,28 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHold
         }
 
         holder.cbServices.setOnClickListener(view -> {
-            if (holder.getAdapterPosition() == listServices.size() - 1) {
+            if (services.isSelected()) {
+                for (int i=0; i<servicesArray.size(); i++) {
+                    servicesArray.get(key).setSelected(false);
+                }
+            }
+            else {
+                for (int i=0; i<servicesArray.size(); i++) {
+                    servicesArray.get(key).setSelected(true);
+                }
+            }
+            //notifyDataSetChanged();
+
+
+            /*if (holder.getAdapterPosition() == servicesArray.size() - 1) {
                 if (services.isSelected()) {
-                    for (int i=0; i<listServices.size(); i++) {
-                        listServices.get(i).setSelected(false);
+                    for (int i=0; i<servicesArray.size(); i++) {
+                        servicesArray.get(i).setSelected(false);
                     }
                 }
                 else {
-                    for (int i=0; i<listServices.size(); i++) {
-                        listServices.get(i).setSelected(true);
+                    for (int i=0; i<servicesArray.size(); i++) {
+                        servicesArray.get(i).setSelected(true);
                     }
                 }
                 Toast.makeText(mContext, "" + services.getName(), Toast.LENGTH_SHORT).show();
@@ -60,14 +73,14 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHold
 
             } else {
                 if (services.isSelected()) {
-                    listServices.get(listServices.size()-1).setSelected(false);
+                    servicesArray.get(servicesArray.size()-1).setSelected(false);
                     services.setSelected(false);
                 }
                 else {
                     services.setSelected(true);
                 }
                 notifyDataSetChanged();
-            }
+            }*/
 
         });
 
@@ -75,7 +88,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return listServices.size();
+        return servicesArray.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

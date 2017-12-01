@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/rlDiscount"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginLeft="@dimen/_5sdp"
+    android:layout_marginRight="@dimen/_5sdp"
+    android:layout_marginStart="@dimen/_5sdp"
+    android:layout_marginEnd="@dimen/_5sdp"
+    android:visibility="gone"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/tvService"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/discount"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/_12sdp"
+        android:drawableLeft="@mipmap/ic_ticket_grey"
+        android:drawableStart="@mipmap/ic_ticket_grey"
+        android:drawablePadding="@dimen/_10sdp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/discountLayout"
+        android:layout_toStartOf="@+id/discountLayout"
+        android:textAppearance="@style/TextAppearance.FontMedium"
+        android:gravity="center|start"/>
+
+    <LinearLayout
+        android:id="@+id/discountLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+        <TextView
+            android:id="@+id/tvDiscount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/black"
+            android:textAppearance="@style/TextAppearance.FontMedium"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/currency"
+            android:layout_marginLeft="@dimen/_2sdp"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            android:textAppearance="@style/TextAppearance.FontMedium"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

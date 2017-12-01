@@ -259,4 +259,17 @@
     <string name="hours">Hours</string>
     <string name="customer_service_request">Customers Service Requests</string>
     <string name="service_requests">Service Requests</string>
+    <string name="notification_account_status">Account Status Notification</string>
+    <string name="account_active">Active</string>
+    <string name="account_under_review">Under Review</string>
+    <string name="account_suspended">Suspended</string>
+    <string name="message_completed">Completed</string>
+    <string name="special_offers">Special Offers</string>
+    <string name="text_your_price">Your price</string>
+    <string name="special_price_in_sar">Special Price (In SAR)</string>
+    <string name="text_add_special">Add Special</string>
+    <string name="text_remove_special">Remove Special</string>
+    <string name="discount">Discount</string>
+    <string name="note_special_offers">Please note you can add maximum one service to your special offers.</string>
+    <string name="error_account_suspended">Your account has been suspended by admin. Please contact administration for further queries.</string>
 </resources>

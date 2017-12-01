@@ -23,6 +23,7 @@ import com.rtoosh.provider.model.Constants;
 import com.rtoosh.provider.model.RPPreferences;
 import com.rtoosh.provider.views.MainActivity;
 import com.rtoosh.provider.views.OrderDetailsActivity;
+import com.rtoosh.provider.views.PhoneVerificationActivity;
 import com.rtoosh.provider.views.RequestsActivity;
 
 import java.util.List;
@@ -32,14 +33,14 @@ import timber.log.Timber;
 public class NotificationController extends FirebaseMessagingService {
 
     private static final String TAG = NotificationController.class.getSimpleName();
+    NotificationManager mNotificationManager;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
         Log.e(TAG, "Notification -->>>>> "+remoteMessage.getData().toString());
         String notify_type = remoteMessage.getData().get("notify_type");
-
-
+        String accountStatus = remoteMessage.getData().get("account_status");
         String message = remoteMessage.getData().get("message");
         String orderId = remoteMessage.getData().get("orderID");
         String payment_mode = remoteMessage.getData().get("payment_mode");
@@ -51,12 +52,59 @@ public class NotificationController extends FirebaseMessagingService {
 
         String user_id = RPPreferences.readString(this, Constants.USER_ID_KEY);
         if (!user_id.isEmpty()) {
-            if (notify_type.equals(Constants.NOTIFY_SERVICE_STARTED)) {
-                startService(message, orderId, orderType);
-                return;
+            if (notify_type.equals(Constants.NOTIFY_ACCOUNT_STATUS)) {
+                RPPreferences.putString(getApplicationContext(), Constants.ACCOUNT_STATUS_KEY, accountStatus);
+                switch (accountStatus) {
+                    case Constants.ACCOUNT_ACTIVE:
+                        accountNotification(Constants.ACCOUNT_ACTIVE, message);
+                        break;
+                    case Constants.ACCOUNT_REVIEWING:
+                        accountNotification(Constants.ACCOUNT_REVIEWING, message);
+                        break;
+                    case Constants.ACCOUNT_SUSPENDED:
+                        accountNotification(Constants.ACCOUNT_SUSPENDED, message);
+                        break;
+
+                    case Constants.ACCOUNT_INACTIVE:
+                        break;
+                }
+            } else {
+                if (notify_type.equals(Constants.NOTIFY_SERVICE_STARTED)) {
+                    startService(message, orderId, orderType);
+                    return;
+                }
+                sendNotification(message, orderId, orderType);
             }
-            sendNotification(message, orderId, orderType);
         }
+    }
+
+    private void accountNotification(String status, String messageBody) {
+        int code = (int) System.currentTimeMillis();
+        PendingIntent resultPendingIntent;
+        Intent intent;
+
+        if (status.equals(Constants.ACCOUNT_SUSPENDED)) {
+            intent = new Intent(getApplicationContext(), PhoneVerificationActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            resultPendingIntent = PendingIntent.getActivity(getApplicationContext(),
+                    code, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+            RPPreferences.clearPref(getApplicationContext());
+            startActivity(intent);
+        } else {
+            intent = new Intent();
+            resultPendingIntent = PendingIntent.getActivity(getApplicationContext(),
+                    code, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        }
+
+        final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext());
+        // The user-visible name of the channel.
+        CharSequence name = getString(R.string.account_status);
+        // The user-visible description of the channel.
+        String description = getString(R.string.notification_account_status);
+           /* final Uri alarmSound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
+                    + "://" + getApplicationContext().getPackageName() + "/raw/notification");*/
+        showSmallNotification(mBuilder, R.mipmap.ic_launcher, getString(R.string.app_name),
+                messageBody, resultPendingIntent, name, description);
     }
 
     private void startService(String messageBody, String requestId, String orderType) {
@@ -80,28 +128,29 @@ public class NotificationController extends FirebaseMessagingService {
             final PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(),
                     code, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+
             final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext());
 
+
+            // The user-visible name of the channel.
+            CharSequence name = getString(R.string.service_requests);
+            // The user-visible description of the channel.
+            String description = getString(R.string.customer_service_request);
            /* final Uri alarmSound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
                     + "://" + getApplicationContext().getPackageName() + "/raw/notification");*/
             showSmallNotification(mBuilder, R.mipmap.ic_launcher, getString(R.string.app_name),
-                    messageBody, resultPendingIntent);
+                    messageBody, resultPendingIntent, name, description);
         }
     }
 
-    private void showSmallNotification(NotificationCompat.Builder mBuilder, int icon, String title,
-                                       String message,PendingIntent resultPendingIntent) {
-        NotificationManager mNotificationManager = (NotificationManager)
-                getSystemService(Context.NOTIFICATION_SERVICE);
+    private void showSmallNotification(NotificationCompat.Builder mBuilder, int icon, String title, String message,
+                                       PendingIntent resultPendingIntent, CharSequence name, String description) {
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         // The id of the channel.
         String id = "rtoosh_provider";
-        // The user-visible name of the channel.
-        CharSequence name = getString(R.string.service_requests);
-        // The user-visible description of the channel.
-        String description = getString(R.string.customer_service_request);
         NotificationChannel mChannel;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            int importance = NotificationManager.IMPORTANCE_LOW;
+            int importance = NotificationManager.IMPORTANCE_HIGH;
             mChannel = new NotificationChannel(id, name, importance);
 
             // Configure the notification channel.
@@ -130,6 +179,7 @@ public class NotificationController extends FirebaseMessagingService {
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentText(message)
                 .setChannelId(id)
+                //.setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400})
                 .build();
 
         if (mNotificationManager != null)

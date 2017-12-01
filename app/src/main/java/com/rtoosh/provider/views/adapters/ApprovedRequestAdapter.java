@@ -55,7 +55,7 @@ public class ApprovedRequestAdapter extends RecyclerView.Adapter<ApprovedRequest
         if (order.orderType.equals(Constants.ORDER_ONLINE)) {
             holder.tvOrderDate.setText(DateUtils.getDateFormat(order.created));
             holder.tvOrderTime.setText(DateUtils.getTimeFormat(order.created));
-        } else  {
+        } else {
             holder.tvOrderDate.setText(DateUtils.getDateFormat(order.scheduleDate));
             holder.tvOrderTime.setText(DateUtils.getTimeFormat(order.scheduleDate));
         }
@@ -78,7 +78,7 @@ public class ApprovedRequestAdapter extends RecyclerView.Adapter<ApprovedRequest
             }
         } else {
             timeOut = DateUtils.printDifference(order.scheduleDate, serverTime);
-            Timber.e("timeout- "+timeOut);
+            Timber.e("timeout- " + timeOut);
             String[] split = timeOut.split(":");
             days = Integer.parseInt(split[0]);
             hours = Integer.parseInt(split[1]);
@@ -124,16 +124,18 @@ public class ApprovedRequestAdapter extends RecyclerView.Adapter<ApprovedRequest
         }
 
         List<RequestDetailsResponse.OrderItem> orderItemList = approvedRequestsList.get(position).orderItem;
-        int persons = 0, price = 0;
+        int persons = 0;
+        float price = 0;
+
         for (RequestDetailsResponse.OrderItem orderItem : orderItemList) {
 
             persons += Integer.parseInt(orderItem.noOfPerson);
             orderId = orderItem.orderId;
 
-            RequestDetailsResponse.Service service = orderItem.service;
-            if (service.price != null)
-                price += Integer.parseInt(service.price);
+            price += (Float.parseFloat(orderItem.amount) * Integer.parseInt(orderItem.noOfPerson));
         }
+
+        price -= Integer.parseInt(order.discount);
 
         holder.tvTotalPersons.setText(String.valueOf(persons));
         holder.tvOrderId.setText(String.format("#%s", orderId));

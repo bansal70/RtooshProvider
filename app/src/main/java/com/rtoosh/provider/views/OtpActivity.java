@@ -7,9 +7,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.gson.Gson;
 import com.rtoosh.provider.R;
 import com.rtoosh.provider.controller.ModelManager;
 import com.rtoosh.provider.model.Constants;
+import com.rtoosh.provider.model.POJO.LoginResponse;
 import com.rtoosh.provider.model.POJO.OtpResponse;
 import com.rtoosh.provider.model.RPPreferences;
 import com.rtoosh.provider.model.custom.Utils;
@@ -31,7 +33,7 @@ public class OtpActivity extends AppBaseActivity {
     @BindView(R.id.edit3) EditText edit3;
     @BindView(R.id.edit4) EditText edit4;
 
-    String deviceToken, lang, phone;
+    String deviceToken, lang, phone, idNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class OtpActivity extends AppBaseActivity {
         deviceToken = FirebaseInstanceId.getInstance().getToken();
         lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
         phone = RPPreferences.readString(mContext, Constants.PHONE_KEY);
+        idNumber = getIntent().getStringExtra("id_number");
 
         Utils.setTextWatcherMoveFocus(edit1, edit2);
         Utils.setTextWatcherMoveFocus(edit2, edit3);
@@ -71,12 +74,34 @@ public class OtpActivity extends AppBaseActivity {
             case OTP_TAG:
                 dismissDialog();
                 showToast(otpResponse.getMessage());
-                String id_number = RPPreferences.readString(mContext, Constants.ID_NUMBER_KEY);
-                if (!id_number.equals("0") && !id_number.isEmpty()) {
-                    RPPreferences.putBoolean(mContext, Constants.REGISTERED_KEY, true);
-                    startActivity(new Intent(mContext, MainActivity.class)
-                            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                    Utils.gotoNextActivityAnimation(this);
+
+                if (idNumber !=null && !idNumber.equals("0") && !idNumber.isEmpty()) {
+
+                    String loginData = getIntent().getStringExtra("loginData");
+                    LoginResponse loginResponse = new Gson().fromJson(loginData, LoginResponse.class);
+                    LoginResponse.Data data = loginResponse.data;
+
+                    if (data != null) {
+                        if (data.accountStatus.equals(Constants.ACCOUNT_SUSPENDED)) {
+                            showToast(getString(R.string.error_account_suspended));
+                            return;
+                        }
+                        RPPreferences.putString(mContext, Constants.USER_ID_KEY, data.id);
+                        RPPreferences.putString(mContext, Constants.ACCOUNT_STATUS_KEY, data.accountStatus);
+                        RPPreferences.putString(mContext, Constants.ID_NUMBER_KEY, data.idNumber);
+                        RPPreferences.putString(mContext, Constants.COUNTRY_CODE_KEY, data.countryCode);
+                        RPPreferences.putString(mContext, Constants.EMAIL_KEY, data.email);
+                        RPPreferences.putString(mContext, Constants.FULL_NAME_KEY, data.fullName);
+                        RPPreferences.putString(mContext, Constants.PROFILE_PIC_KEY, data.profilePic);
+                        RPPreferences.putString(mContext, Constants.WORK_ONLINE_KEY, data.workOnline);
+                        RPPreferences.putString(mContext, Constants.WORK_SCHEDULE_KEY, data.workSchedule);
+                        RPPreferences.putString(mContext, Constants.VACATION_MODE_KEY, data.vacationMode);
+                        RPPreferences.putString(mContext, Constants.USER_STATUS_KEY, data.online);
+                        RPPreferences.putBoolean(mContext, Constants.REGISTERED_KEY, true);
+                        startActivity(new Intent(mContext, MainActivity.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        Utils.gotoNextActivityAnimation(this);
+                    }
                     return;
                 }
 

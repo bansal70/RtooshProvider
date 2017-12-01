@@ -28,8 +28,7 @@
                 android:background="@drawable/custom_basic_gradient"
                 android:contentDescription="@string/hair_cut"
                 android:visibility="visible"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_profile_hair" />
+                android:scaleType="centerCrop"/>
 
             <TextView
                 android:id="@+id/tvService"

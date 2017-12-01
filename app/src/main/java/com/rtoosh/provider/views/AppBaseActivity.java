@@ -26,8 +26,10 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
@@ -36,6 +38,7 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.rtoosh.provider.R;
 import com.rtoosh.provider.model.Constants;
 import com.rtoosh.provider.model.Event;
+import com.rtoosh.provider.model.RPPreferences;
 import com.rtoosh.provider.model.custom.ImagePicker;
 import com.rtoosh.provider.model.custom.Utils;
 
@@ -60,6 +63,7 @@ public abstract class AppBaseActivity extends AppCompatActivity implements Locat
     LocationRequest mLocationRequest;
     FusedLocationProviderClient mFusedLocationClient;
     LocationManager manager;
+    LocationCallback mLocationCallback;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,14 +80,24 @@ public abstract class AppBaseActivity extends AppCompatActivity implements Locat
         }
 
         dialog = Utils.showDialog(mContext);
-        dialog.setCancelable(false);
+        //dialog.setCancelable(false);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(Constants.TIME_INTERVAL);    // 10 seconds, in milliseconds
-        mLocationRequest.setFastestInterval(Constants.FASTEST_TIME_INTERVAL);   // 1 second, in milliseconds
+        mLocationRequest.setInterval(Constants.TIME_INTERVAL);
+        mLocationRequest.setFastestInterval(Constants.FASTEST_TIME_INTERVAL);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        mLocationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+               /* for (Location location : locationResult.getLocations()) {
+                    // Update UI with location data
+                    // ...
+                }*/
+            };
+        };
     }
 
     @Override
@@ -148,7 +162,7 @@ public abstract class AppBaseActivity extends AppCompatActivity implements Locat
         return true;
     }
 
-    @Override
+    /*@Override
     public void onStart() {
         super.onStart();
         if (!mEventBus.isRegistered(this)) {
@@ -158,8 +172,16 @@ public abstract class AppBaseActivity extends AppCompatActivity implements Locat
 
     @Override
     public void onStop() {
-        mEventBus.unregister(this);
         super.onStop();
+        mEventBus.unregister(this);
+    }*/
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (!mEventBus.isRegistered(this)) {
+            mEventBus.register(this);
+        }
     }
 
     @Override
@@ -198,6 +220,10 @@ public abstract class AppBaseActivity extends AppCompatActivity implements Locat
     @Subscribe
     public void onEventMainThread(Event event) {
 
+    }
+
+    public boolean isAccountActive() {
+        return RPPreferences.readString(mContext, Constants.ACCOUNT_STATUS_KEY).equals(Constants.ACCOUNT_ACTIVE);
     }
 
     public void fetchLocation() {
@@ -239,7 +265,7 @@ public abstract class AppBaseActivity extends AppCompatActivity implements Locat
                     try {
                         // Show the dialog by calling startResolutionForResult(),
                         // and check the result in onActivityResult().
-                        status.startResolutionForResult((Activity)mContext, 1000);
+                        status.startResolutionForResult((Activity)mContext, 10213);
                     } catch (IntentSender.SendIntentException e) {
                         // Ignore the error.
                     }
@@ -250,6 +276,16 @@ public abstract class AppBaseActivity extends AppCompatActivity implements Locat
                     break;
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 10213) {
+            if (resultCode == RESULT_OK) {
+                getLocation();
+            }
+        }
     }
 
     public void getLocation() {
@@ -270,27 +306,34 @@ public abstract class AppBaseActivity extends AppCompatActivity implements Locat
             if (location != null) {
                 // Logic to handle location object
                 mLastLocation = location;
-                Timber.e("Last location:: "
-                        + "latitude-- "+mLastLocation.getLatitude()
-                        + "\nlongitude-- "+mLastLocation.getLongitude());
+
+                mFusedLocationClient.requestLocationUpdates(mLocationRequest,
+                        mLocationCallback, null /* Looper */);
+
+                /*Timber.e("Last location:: "
+                        + "latitude-- " + mLastLocation.getLatitude()
+                        + "\nlongitude-- " + mLastLocation.getLongitude());
                 if (mGoogleApiClient.isConnected())
-                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
-                        mLocationRequest, this);
+                    LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
+                            mLocationRequest, this);*/
             } else {
                     /*if there is no last known location. Which means the device has no data for the location currently.
                     * So we will get the current location.
                     * For this we'll implement Location Listener and override onLocationChanged*/
                 Timber.e("no data for current location");
 
-                if (mGoogleApiClient != null && !mGoogleApiClient.isConnected()) {
-                    mGoogleApiClient.connect();
-
+               /* if (mGoogleApiClient.isConnected())
                     LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
-                            mLocationRequest, this);
-                }
+                            mLocationRequest, this);*/
+                mFusedLocationClient.requestLocationUpdates(mLocationRequest,
+                        mLocationCallback, null /* Looper */);
             }
         });
 
+    }
+
+    public void removeLocationUpdates() {
+        mFusedLocationClient.removeLocationUpdates(mLocationCallback);
     }
 
     @Override

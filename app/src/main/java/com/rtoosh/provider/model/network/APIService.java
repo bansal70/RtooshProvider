@@ -6,6 +6,7 @@ package com.rtoosh.provider.model.network;
 
 import com.rtoosh.provider.model.POJO.HistoryResponse;
 import com.rtoosh.provider.model.POJO.LoginResponse;
+import com.rtoosh.provider.model.POJO.OngoingRequestResponse;
 import com.rtoosh.provider.model.POJO.OtpResponse;
 import com.rtoosh.provider.model.POJO.ProfileResponse;
 import com.rtoosh.provider.model.POJO.RatingsResponse;
@@ -195,5 +196,14 @@ public interface APIService {
 
     @POST("apis/updateProfile")
     Call<AbstractApiResponse> updateDocResponse(@QueryMap HashMap<String, String> mapParams);
+
+    @POST("apis/ongoingRequest")
+    Call<OngoingRequestResponse> ongoingRequestResponse(@QueryMap HashMap<String, String> mapParams);
+
+    @POST("customers/orderDetail")
+    Call<RequestDetailsResponse> requestDetailsResponse(@QueryMap HashMap<String, String> mapParams);
+
+    @POST("apis/addSpecial")
+    Call<AbstractApiResponse> specialOffersResponse(@QueryMap HashMap<String, String> mapParams);
 
 }

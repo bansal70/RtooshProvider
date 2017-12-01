@@ -2,6 +2,7 @@ package com.rtoosh.provider.views;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -16,6 +17,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.util.SparseArray;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -29,18 +32,22 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.rtoosh.provider.R;
 import com.rtoosh.provider.controller.ModelManager;
 import com.rtoosh.provider.model.Constants;
 import com.rtoosh.provider.model.Operations;
 import com.rtoosh.provider.model.POJO.HistoryResponse;
+import com.rtoosh.provider.model.POJO.ProfileResponse;
 import com.rtoosh.provider.model.POJO.RequestDetailsResponse;
 import com.rtoosh.provider.model.POJO.Services;
 import com.rtoosh.provider.model.RPPreferences;
@@ -72,6 +79,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
     private final String DECLINE_REQUEST_TAG = "DeclineRequest";
     final String UPDATE_LOCATION_TAG = "UpdateLocation";
     private final String HISTORY_TAG = "TOTAL_REQUESTS";
+    private final String PROFILE_TAG = "PROVIDER_PROFILE";
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
@@ -111,7 +119,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
                 .findFragmentById(R.id.map);
         supportMapFragment.getMapAsync(this);
 
-        initServiceDialog();
+      //  initServiceDialog();
         initTermsDialog();
         initRequestDialog();
         initDeclineDialog();
@@ -126,6 +134,24 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         mGoogleApiClient.connect();
 
         fetchLocation();
+
+        mLocationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                for (Location location : locationResult.getLocations()) {
+                    mLastLocation = location;
+                    Timber.e("Updated location:: "
+                            + "latitude-- "+mLastLocation.getLatitude()
+                            + "\nlongitude-- "+mLastLocation.getLongitude());
+                    LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+                    if (mGoogleMap != null)
+                        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+
+                    ModelManager.getInstance().getUpdateLocationManager().updateLocationTask(mContext, UPDATE_LOCATION_TAG,
+                            Operations.updateLocationParams(user_id, latLng.latitude, latLng.longitude, lang));
+                }
+            };
+        };
     }
 
     private void initViews() {
@@ -170,12 +196,20 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
 
     @OnTouch(R.id.switchOnline)
     boolean changeStatus() {
+        if (!isAccountActive()) {
+            showToast("Please wait for your account activation to provide any services.");
+            return false;
+        }
 
         if (!Utility.checkStatus(mContext)) {
             return false;
         }
         if (!switchOnline.isChecked()) {
-            dialogServices.show();
+           /* showDialog();
+            ModelManager.getInstance().getProfileManager().profileTask(mContext, PROFILE_TAG, user_id, lang);*/
+            dialogTerms.show();
+            // dialogServices.show();
+
             online = true;
         } else {
             online = false;
@@ -185,37 +219,53 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         return false;
     }
 
-    private void initServiceDialog() {
+    private void initServiceDialog(ProfileResponse profileResponse) {
+        SparseArray<Services> servicesArray = new SparseArray<>();
+
+        //listServices = new ArrayList<>();
+        ProfileResponse.Data data = profileResponse.data;
+        List<ProfileResponse.Service> serviceList = data.service;
+
+        for (ProfileResponse.Service service : serviceList) {
+            ProfileResponse.Category category = service.category;
+
+            servicesArray.put(Integer.parseInt(category.id), new Services(category.catName, false));
+           /* if (listServices.size() < 1) {
+                listServices.add(new Services(category.catName, false));
+            } else {
+                for (Services services : listServices) {
+                    if (!services.getName().equals(category.catName))
+                        listServices.add(new Services(category.catName, false));
+                }
+            }*/
+        }
+
         dialogServices = Utils.createDialog(mContext, R.layout.dialog_services);
-        listServices = new ArrayList<>();
-        listServices.add(new Services("Make Up", false));
+
+        /*listServices.add(new Services("Make Up", false));
         listServices.add(new Services("Hairs", false));
         listServices.add(new Services("Nails", false));
         listServices.add(new Services("Henna & Tattoos", false));
-        listServices.add(new Services("All", false));
+        listServices.add(new Services("All", false));*/
 
         RecyclerView recyclerView = dialogServices.findViewById(R.id.recyclerServices);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 
-        ServiceAdapter serviceAdapter = new ServiceAdapter(mContext, listServices);
+        ServiceAdapter serviceAdapter = new ServiceAdapter(mContext, servicesArray);
         recyclerView.setAdapter(serviceAdapter);
 
         dialogServices.findViewById(R.id.tvNext).setOnClickListener(view -> {
             dialogServices.dismiss();
-            if (RPPreferences.readBoolean(mContext, Constants.TERMS_ACCEPTED_KEY)) {
-                showDialog();
-                ModelManager.getInstance().getStatusManager().statusTask(mContext, TAG, user_id,
-                        true, lang);
-                return;
-            }
             dialogTerms.show();
         });
+
+        dialogServices.show();
     }
 
     private void initTermsDialog() {
         dialogTerms = Utils.createDialog(mContext, R.layout.dialog_terms);
         dialogTerms.findViewById(R.id.tvAgree).setOnClickListener(view -> {
-            RPPreferences.putBoolean(mContext, Constants.TERMS_ACCEPTED_KEY, true);
+         //   RPPreferences.putBoolean(mContext, Constants.TERMS_ACCEPTED_KEY, true);
             showDialog();
             ModelManager.getInstance().getStatusManager().statusTask(mContext, TAG, user_id,
                     true, lang);
@@ -314,6 +364,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
                 dialogDecline.dismiss();
                 RPPreferences.removeKey(mContext, Constants.REQUEST_ID_KEY);
                 myCountDownTimer.cancel();
+                setOffline();
                 break;
         }
     }
@@ -326,10 +377,14 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
             case ACCEPT_REQUEST_TAG:
                 dialogRequest.dismiss();
                 startActivity(new Intent(mContext, OrderDetailsActivity.class)
-                        .putExtra("requestDetails", detailsResponse)
+                    //    .putExtra("requestDetails", detailsResponse)
                         .putExtra("request_id", request_id));
                 myCountDownTimer.cancel();
+                finish();
                 Utils.gotoNextActivityAnimation(mContext);
+                removeLocationUpdates();
+
+                setOffline();
 
                 break;
         }
@@ -401,10 +456,36 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
     }
 
     @Subscribe(sticky = true)
+    public void onEvent(ProfileResponse profileResponse) {
+        EventBus.getDefault().removeAllStickyEvents();
+        dismissDialog();
+        switch (profileResponse.getRequestTag()) {
+            case PROFILE_TAG:
+                //showToast(profileResponse.getMessage());
+              //  initServiceDialog(profileResponse);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    @Subscribe(sticky = true)
     public void onEventMainThread(ApiErrorWithMessageEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
-        showToast(event.getResultMsgUser());
+        switch (event.getRequestTag()) {
+            case HISTORY_TAG:
+                tvRecentDate.setVisibility(View.GONE);
+                tvRecentTime.setVisibility(View.GONE);
+                tvNewRequests.setText("0");
+                tvApprovedRequests.setText("0");
+                break;
+
+            default:
+                showToast(event.getResultMsgUser());
+                break;
+        }
     }
 
     @Subscribe(sticky = true)
@@ -420,6 +501,10 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
 
         if (Utility.onVacationMode(mContext) || !Utility.workOnline(mContext)) {
             switchOnline.setChecked(false);
+            setOffline();
+        }
+
+        if (!isAccountActive()) {
             setOffline();
         }
 
@@ -443,6 +528,10 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
             linearRequest.setVisibility(View.GONE);
             dialogRequest.show();
             tvMinutes.setText(Constants.TIMEOUT_MINUTES);
+
+            if (myCountDownTimer != null)
+                myCountDownTimer.cancel();
+
             myCountDownTimer = new MyCountDownTimer(Constants.COUNTDOWN_TIME, 1000);
             myCountDownTimer.start();
         }
@@ -451,7 +540,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
-        /*try {
+        try {
 
             boolean success = mGoogleMap.setMapStyle(
                     MapStyleOptions.loadRawResourceStyle(
@@ -461,7 +550,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
             }
         }catch (Resources.NotFoundException e){
             e.printStackTrace();
-        }*/
+        }
 
        /* LatLng mohali = new LatLng(30.706326, 76.704865);
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mohali, 15));*/
@@ -525,7 +614,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
     @Override
     public void onLocationChanged(Location location) {
 
-        mLastLocation = location;
+      /*  mLastLocation = location;
         Timber.e("Updated location:: "
                 + "latitude-- "+mLastLocation.getLatitude()
                 + "\nlongitude-- "+mLastLocation.getLongitude());
@@ -534,7 +623,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
             mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
 
         ModelManager.getInstance().getUpdateLocationManager().updateLocationTask(mContext, UPDATE_LOCATION_TAG,
-                Operations.updateLocationParams(user_id, latLng.latitude, latLng.longitude, lang));
+                Operations.updateLocationParams(user_id, latLng.latitude, latLng.longitude, lang));*/
     }
 
     @Override

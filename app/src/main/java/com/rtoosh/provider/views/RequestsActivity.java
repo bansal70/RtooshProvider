@@ -139,15 +139,19 @@ public class RequestsActivity extends AppBaseActivity {
         recyclerCompletedRequests.setAdapter(completedRequestsAdapter);
 
         newRequestsAdapter.setOnDataChangeListener(size -> {
-            showDialog();
-            ModelManager.getInstance().getRequestsHistoryManager().historyTask(mContext, HISTORY_TAG,
-                    Operations.historyParams(user_id, lang));
+            if (!isFinishing()) {
+                showDialog();
+                ModelManager.getInstance().getRequestsHistoryManager().historyTask(mContext, HISTORY_TAG,
+                        Operations.historyParams(user_id, lang));
+            }
         });
 
         approvedRequestAdapter.setOnDataChangeListener(size -> {
-            showDialog();
-            ModelManager.getInstance().getRequestsHistoryManager().historyTask(mContext, HISTORY_TAG,
-                    Operations.historyParams(user_id, lang));
+            if (!isFinishing()) {
+                showDialog();
+                ModelManager.getInstance().getRequestsHistoryManager().historyTask(mContext, HISTORY_TAG,
+                        Operations.historyParams(user_id, lang));
+            }
         });
 
         tvNewRequests.setText(String.valueOf(pendingRequestsList.size()));

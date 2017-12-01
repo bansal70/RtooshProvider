@@ -84,7 +84,7 @@ public class NewRequestsAdapter extends RecyclerView.Adapter<NewRequestsAdapter.
         holder.tvTotalPersons.setText(String.valueOf(persons));
         holder.tvTotalRequests.setText(totalRequests);
 
-        String timeOut = "";
+        String timeOut;
         int seconds, minutes, hours, days;
         long totalTime;
 
@@ -156,7 +156,7 @@ public class NewRequestsAdapter extends RecyclerView.Adapter<NewRequestsAdapter.
         @BindView(R.id.tvOrderDate) TextView tvOrderDate;
         @BindView(R.id.tvOrderTime) TextView tvOrderTime;
         @BindView(R.id.tvTimeRemaining) TextView tvTimeRemaining;
-        CountDownTimer countDownTimer;
+        private CountDownTimer countDownTimer;
 
         private ViewHolder(View itemView) {
             super(itemView);
@@ -224,7 +224,7 @@ public class NewRequestsAdapter extends RecyclerView.Adapter<NewRequestsAdapter.
                 Timber.e("Order type-- " + order.orderType);
                 if (order.orderType.equals(Constants.ORDER_ONLINE)) {
                     context.startActivity(new Intent(context, OrderDetailsActivity.class)
-                            .putExtra("requestDetails", detailsResponse)
+                            //.putExtra("requestDetails", detailsResponse)
                             .putExtra("request_id", order.id));
                 } else {
 

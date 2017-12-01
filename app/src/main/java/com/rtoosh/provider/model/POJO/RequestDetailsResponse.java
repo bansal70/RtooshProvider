@@ -24,6 +24,19 @@ public class RequestDetailsResponse extends AbstractApiResponse{
         public Provider provider;
         @SerializedName("OrderItem")
         public List<OrderItem> orderItem = null;
+        @SerializedName("Order")
+        public OrderDetails order;
+    }
+
+    public class OrderDetails {
+        @SerializedName("id")
+        public String id;
+        @SerializedName("lat")
+        public String lat;
+        @SerializedName("lng")
+        public String lng;
+        @SerializedName("discount")
+        public String discount;
     }
 
     public class Provider implements Serializable{
@@ -124,6 +137,9 @@ public class RequestDetailsResponse extends AbstractApiResponse{
         public String status;
         @SerializedName("order_type")
         public String orderType;
+        @SerializedName("discount")
+        public String discount;
+
         public String timeRemains;
     }
 }

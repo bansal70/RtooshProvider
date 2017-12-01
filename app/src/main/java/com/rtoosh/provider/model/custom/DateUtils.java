@@ -70,7 +70,6 @@ public class DateUtils {
         Date dt = null;
         try {
             dt = sdf.parse(date);
-            System.out.println("Time Display: " + sdfs.format(dt));
         } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -210,9 +209,9 @@ public class DateUtils {
             //milliseconds
             long different = date2.getTime() - date1.getTime();
 
-            System.out.println("startDate : " + orderTime);
-            System.out.println("endDate : " + serverTime);
-            System.out.println("different : " + different);
+           // System.out.println("startDate : " + orderTime);
+           // System.out.println("endDate : " + serverTime);
+           // System.out.println("different : " + different);
 
             long secondsInMilli = 1000;
             long minutesInMilli = secondsInMilli * 60;
@@ -231,9 +230,7 @@ public class DateUtils {
             long elapsedSeconds = different / secondsInMilli;
 
             time = elapsedDays + ":" + elapsedHours + ":" + elapsedMinutes + ":" +  elapsedSeconds;
-            System.out.printf(
-                    "%d :, %d :, %d :, %d :",
-                    elapsedDays, elapsedHours, elapsedMinutes, elapsedSeconds);
+         //   System.out.printf("%d :, %d :, %d :, %d :", elapsedDays, elapsedHours, elapsedMinutes, elapsedSeconds);
         }
 
         return time;

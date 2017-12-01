@@ -46,9 +46,9 @@
     </style>
 
     <style name="CustomRatingBar" parent="@android:style/Widget.RatingBar">
-        <item name="android:progressDrawable">@drawable/custom_rating_bar</item>
-        <item name="android:minHeight">@dimen/_60sdp</item>
-        <item name="android:maxHeight">@dimen/_60sdp</item>
+        <item name="android:progressDrawable">@drawable/custom_rating_bar_reviews</item>
+        <item name="android:minHeight">@dimen/_20sdp</item>
+        <item name="android:maxHeight">@dimen/_20sdp</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

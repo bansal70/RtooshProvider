@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.NotificationManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -65,7 +66,7 @@ public class Utils {
         Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.progress_dialog);
-        dialog.setCancelable(true);
+        dialog.setCancelable(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
         return dialog;
@@ -247,6 +248,11 @@ public class Utils {
             context.startActivity(new Intent(context, PhoneVerificationActivity.class));
             context.finish();
             Toast.makeText(context, R.string.logged_out, Toast.LENGTH_SHORT).show();
+            NotificationManager notificationManager = (NotificationManager)
+                    context.getSystemService(Context.NOTIFICATION_SERVICE);
+            if (notificationManager != null) {
+                notificationManager.cancelAll();
+            }
         });
         alertBuilder.setNegativeButton(R.string.no, (dialogInterface, i) -> dialogInterface.dismiss());
 
@@ -264,6 +270,13 @@ public class Utils {
     public static void callIntent(Context mContext, String number) {
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", number, null));
         mContext.startActivity(intent);
+    }
+
+    public static void mapIntent(Context mContext, double lat1, double lat2, double lat3, double lat4) {
+        Intent i = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(
+                "http://maps.google.com/maps?saddr="+lat1+ ", "+ lat2+
+                        "&daddr="+lat3 + ", "+lat4));
+        mContext.startActivity(i);
     }
 
     public static void showToast(Context context, String msg) {

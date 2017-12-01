@@ -6,6 +6,12 @@ package com.rtoosh.provider.model;
 
 public class Constants {
 
+    /* Account Status Keys */
+    public static final String ACCOUNT_ACTIVE = "1";
+    public static final String ACCOUNT_INACTIVE = "2";
+    public static final String ACCOUNT_REVIEWING = "3";
+    public static final String ACCOUNT_SUSPENDED = "4";
+
     /* Preferences Keys */
     public static final String USER_STATUS_KEY = "user_status";
     public static final String VACATION_MODE_KEY = "vacation_mode";
@@ -21,7 +27,7 @@ public class Constants {
     public static final String REGISTERED_KEY = "registered";
     public static final String COUNTRY_CODE_KEY = "country_code";
     public static final String FULL_NAME_KEY = "full_name";
-    public static final String ACTIVE_KEY = "active";
+    public static final String ACCOUNT_STATUS_KEY = "active";
     public static final String REQUEST_ID_KEY = "request_id";
     public static final String TERMS_ACCEPTED_KEY = "terms_accepted";
 
@@ -71,6 +77,6 @@ public class Constants {
     public static final int REGISTER_SUCCESS = 1003;
     public static final int REGISTER_ERROR = 1004;
 
-    public static final long FASTEST_TIME_INTERVAL = 3*60*1000; // 3 minutes
-    public static final long TIME_INTERVAL = 5*60*1000; // 5 minutes
+    public static final long FASTEST_TIME_INTERVAL = 1000; // 3 minutes
+    public static final long TIME_INTERVAL = 10000; // 5 minutes
 }

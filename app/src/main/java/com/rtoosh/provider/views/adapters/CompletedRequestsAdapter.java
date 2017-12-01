@@ -51,16 +51,18 @@ public class CompletedRequestsAdapter extends RecyclerView.Adapter<CompletedRequ
 
         List<RequestDetailsResponse.OrderItem> orderItemList = approvedRequestsList.get(position).orderItem;
 
-        int persons = 0, price = 0;
+        int persons = 0;
+        float price = 0;
+
         for (RequestDetailsResponse.OrderItem orderItem : orderItemList) {
 
             persons += Integer.parseInt(orderItem.noOfPerson);
             orderId = orderItem.orderId;
 
-            RequestDetailsResponse.Service service = orderItem.service;
-            if (service.price != null)
-                price += Integer.parseInt(service.price);
+            price += (Float.parseFloat(orderItem.amount) * Integer.parseInt(orderItem.noOfPerson));
         }
+
+        price -= Integer.parseInt(order.discount);
 
         holder.tvCustomer.setText(client.fullName);
         holder.tvTotalPersons.setText(String.valueOf(persons));

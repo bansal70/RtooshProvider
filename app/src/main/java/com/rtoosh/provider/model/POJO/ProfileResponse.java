@@ -92,6 +92,41 @@ public class ProfileResponse extends AbstractApiResponse implements Serializable
         public String price;
         @SerializedName("duration")
         public String duration;
+        @SerializedName("Category")
+        public Category category;
+        @SerializedName("special")
+        public String special;
+        boolean isSelected;
+
+        public boolean isSelected() {
+            return isSelected;
+        }
+
+        public void setSelected(boolean selected) {
+            isSelected = selected;
+        }
+
+        public String getSpecial() {
+            return special;
+        }
+
+        public void setSpecial(String special) {
+            this.special = special;
+        }
+
+        public void setPrice(String price) {
+            this.price = price;
+        }
+    }
+
+    public class Category {
+        @SerializedName("id")
+        public String id;
+        @SerializedName("cat_name")
+        public String catName;
+        @SerializedName("image")
+        public String image;
+        public boolean isSelected;
     }
 
     public class User {

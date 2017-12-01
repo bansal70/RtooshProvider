@@ -85,10 +85,11 @@ public class Operations {
         return hashMap;
     }
 
-    public static HashMap<String, String> feedbackParams(String provider_id, String user_id, float rating,
-                                                         String comment, String lang) {
+    public static HashMap<String, String> feedbackParams(String provider_id, String request_id, String user_id,
+                                                         float rating, String comment, String lang) {
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("provider_id", provider_id);
+        hashMap.put("request_id", request_id);
         hashMap.put("user_id", user_id);
         hashMap.put("rating", String.valueOf(rating));
         hashMap.put("comment", comment);
@@ -189,6 +190,38 @@ public class Operations {
         hashMap.put("id_number", id_number);
         hashMap.put("issue_date", issue_date);
         hashMap.put("id_type", id_type);
+        hashMap.put("lang", lang);
+
+        return hashMap;
+    }
+
+    public static HashMap<String, String> ongoingRequestParams(String user_id, String lang) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("user_id", user_id);
+        hashMap.put("lang", lang);
+
+        return hashMap;
+    }
+
+    public static HashMap<String, String> requestDetailsParams(String order_id, String lang) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("order_id", order_id);
+        hashMap.put("lang", lang);
+
+        return hashMap;
+    }
+
+    public static HashMap<String, String> specialOfferParams(String user_id, String service_id, String price,
+                                                             boolean special, String lang) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("user_id", user_id);
+        hashMap.put("service_id", service_id);
+        hashMap.put("price", price);
+
+        if (special)
+            hashMap.put("special", "1");
+        else
+            hashMap.put("special", "0");
         hashMap.put("lang", lang);
 
         return hashMap;

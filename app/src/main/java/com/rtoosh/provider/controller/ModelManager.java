@@ -29,6 +29,9 @@ public class ModelManager {
     private CalendarManager calendarManager;
     private UpdateInfoManager updateInfoManager;
     private RatingsManager ratingsManager;
+    private OngoingRequestManager ongoingRequestManager;
+    private OrderDetailsManager orderDetailsManager;
+    private SpecialOffersManager specialOffersManager;
 
     public static ModelManager getInstance() {
         if (modelManager != null)
@@ -61,6 +64,9 @@ public class ModelManager {
         calendarManager = new CalendarManager();
         updateInfoManager = new UpdateInfoManager();
         ratingsManager = new RatingsManager();
+        ongoingRequestManager = new OngoingRequestManager();
+        orderDetailsManager = new OrderDetailsManager();
+        specialOffersManager = new SpecialOffersManager();
     }
 
     public PhoneVerificationManager getPhoneVerificationManager() {
@@ -153,5 +159,17 @@ public class ModelManager {
 
     public RatingsManager getRatingsManager() {
         return ratingsManager;
+    }
+
+    public OngoingRequestManager getOngoingRequestManager() {
+        return ongoingRequestManager;
+    }
+
+    public OrderDetailsManager getOrderDetailsManager() {
+        return orderDetailsManager;
+    }
+
+    public SpecialOffersManager getSpecialOffersManager() {
+        return specialOffersManager;
     }
 }

@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.gson.Gson;
 import com.rtoosh.provider.R;
 import com.rtoosh.provider.controller.ModelManager;
 import com.rtoosh.provider.model.Constants;
@@ -68,9 +69,9 @@ public class PhoneVerificationActivity extends AppBaseActivity {
                 dismissDialog();
                 showToast(loginResponse.getMessage());
                 LoginResponse.Data data = loginResponse.data;
-                if (data != null) {
+                /* if (data != null) {
                     RPPreferences.putString(mContext, Constants.USER_ID_KEY, data.id);
-                    RPPreferences.putString(mContext, Constants.ACTIVE_KEY, data.accountStatus);
+                    RPPreferences.putString(mContext, Constants.ACCOUNT_STATUS_KEY, data.accountStatus);
                     RPPreferences.putString(mContext, Constants.ID_NUMBER_KEY, data.idNumber);
                     RPPreferences.putString(mContext, Constants.COUNTRY_CODE_KEY, tvCode.getText().toString());
                     RPPreferences.putString(mContext, Constants.EMAIL_KEY, data.email);
@@ -80,10 +81,12 @@ public class PhoneVerificationActivity extends AppBaseActivity {
                     RPPreferences.putString(mContext, Constants.WORK_SCHEDULE_KEY, data.workSchedule);
                     RPPreferences.putString(mContext, Constants.VACATION_MODE_KEY, data.vacationMode);
                     RPPreferences.putString(mContext, Constants.USER_STATUS_KEY, data.online);
-                }
+                }*/
 
                 RPPreferences.putString(mContext, Constants.PHONE_KEY, editPhone.getText().toString().trim());
-                startActivity(new Intent(this, OtpActivity.class));
+                startActivity(new Intent(this, OtpActivity.class)
+                    .putExtra("loginData", new Gson().toJson(loginResponse))
+                    .putExtra("id_number", data.idNumber));
                 Utils.gotoNextActivityAnimation(this);
                 break;
 

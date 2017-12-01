@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.rtoosh.provider.views.SpecialOffersActivity">
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        android:textAppearance="@style/TextAppearance.FontMedium"
+        android:textColor="@color/colorAccent"
+        android:text="@string/note_special_offers"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/your_service_list"
+        android:textSize="@dimen/_15sdp"
+        android:visibility="gone"
+        android:textAppearance="@style/TextAppearance.FontMedium"
+        android:layout_gravity="center"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerOffers"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

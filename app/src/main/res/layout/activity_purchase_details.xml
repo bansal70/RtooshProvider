@@ -60,7 +60,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="$305"
                             android:textAppearance="@style/TextAppearance.FontBold"
                             android:textColor="@color/colorAccent"
                             android:textSize="@dimen/_20sdp" />
@@ -91,6 +90,8 @@
                             android:paddingRight="@dimen/_5sdp"
                             android:paddingStart="@dimen/_5sdp"
                             android:paddingEnd="@dimen/_5sdp"/>
+
+                        <include layout="@layout/discount_layout"/>
 
                         <RelativeLayout
                             android:layout_width="match_parent"

@@ -27,5 +27,7 @@ public class RatingsResponse extends AbstractApiResponse{
         public String ratingQuality;
         @SerializedName("rating_arrival")
         public String ratingArrival;
+        @SerializedName("modified")
+        public String modified;
     }
 }

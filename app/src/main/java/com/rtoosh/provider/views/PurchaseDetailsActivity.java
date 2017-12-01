@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ import butterknife.OnClick;
 
 public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnClickListener {
 
+    private final String PURCHASE_ORDER_TAG = "ORDER_PURCHASE";
     private final String ADDITIONAL_SERVICES_TAG = "AdditionalServices";
     private final String FEEDBACK_TAG = "Feedback";
 
@@ -49,14 +51,15 @@ public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnC
     @BindView(R.id.tvCustomerName) TextView tvCustomerName;
     @BindView(R.id.tvCommission) TextView tvCommission;
     @BindView(R.id.tvActualPrice) TextView tvActualPrice;
+    @BindView(R.id.rlDiscount) RelativeLayout rlDiscount;
+    @BindView(R.id.tvDiscount) TextView tvDiscount;
 
     OrdersAdapter ordersAdapter;
     private Dialog dialogService, dialogFeedback;
     boolean isService = false;
-    private RequestDetailsResponse requestDetailsResponse;
 
     int totalPersons = 0;
-    double amount = 0, price = 0;
+    float amount = 0, price = 0;
     String user_id, lang, request_id;
     String totalServices = "", totalPaid = "", note = "", comment="", provider_id;
     float ratings = 0;
@@ -81,35 +84,51 @@ public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnC
         user_id = RPPreferences.readString(mContext, Constants.USER_ID_KEY);
         request_id = getIntent().getStringExtra("request_id");
 
-        requestDetailsResponse = (RequestDetailsResponse) getIntent().getSerializableExtra("requestDetails");
-
         cardPurchase.setBackgroundResource(R.mipmap.ic_purchase_bg);
 
-        setData();
         initServiceDialog();
         initFeedbackDialog();
+
+        showDialog();
+        ModelManager.getInstance().getOrderDetailsManager().requestDetailsTask(mContext, PURCHASE_ORDER_TAG,
+                Operations.requestDetailsParams(request_id, lang));
     }
 
-    private void setData() {
+    private void setData(RequestDetailsResponse requestDetailsResponse) {
         RequestDetailsResponse.Data data = requestDetailsResponse.data;
         RequestDetailsResponse.Client client = data.client;
-        List<RequestDetailsResponse.OrderItem> listOrders = data.orderItem;
-        tvCustomerName.setText(client.fullName);
+        RequestDetailsResponse.OrderDetails order = data.order;
+
         provider_id = client.id;
 
+        if (order.discount.equals("0") || order.discount.isEmpty()) {
+            rlDiscount.setVisibility(View.GONE);
+        }
+        else {
+            rlDiscount.setVisibility(View.VISIBLE);
+        }
+
+        List<RequestDetailsResponse.OrderItem> listOrders = data.orderItem;
         for (int i=0; i<listOrders.size(); i++) {
             int persons = Integer.parseInt(listOrders.get(i).noOfPerson);
             totalPersons += persons;
 
-            amount = Double.parseDouble(listOrders.get(i).amount);
+            amount = Float.parseFloat(listOrders.get(i).amount);
             price += persons * amount;
         }
+
+        price -= Integer.parseInt(order.discount);
+
+        tvCustomerName.setText(client.fullName);
+        tvDiscount.setText(order.discount);
+
 
         recyclerOrders.setLayoutManager(new LinearLayoutManager(mContext));
         ordersAdapter = new OrdersAdapter(mContext, listOrders);
         recyclerOrders.setAdapter(ordersAdapter);
         ordersAdapter.notifyDataSetChanged();
-        double commission = (price / 100.0f) * 20;
+
+        int commission = (int)(price / 100.0f) * 20;
         tvCommission.setText(String.valueOf(commission));
         tvActualPrice.setText(String.format("%s %s", String.valueOf(price), Constants.CURRENCY));
 
@@ -192,7 +211,18 @@ public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnC
         } else {
             showDialog();
             ModelManager.getInstance().getFeedbackManager().feedbackTask(mContext, FEEDBACK_TAG,
-                    Operations.feedbackParams(provider_id, user_id, ratings, comment, lang));
+                    Operations.feedbackParams(provider_id, request_id, user_id, ratings, comment, lang));
+        }
+    }
+
+    @Subscribe(sticky = true)
+    public void onEvent(RequestDetailsResponse detailsResponse) {
+        EventBus.getDefault().removeAllStickyEvents();
+        dismissDialog();
+        switch (detailsResponse.getRequestTag()) {
+            case PURCHASE_ORDER_TAG:
+                setData(detailsResponse);
+                break;
         }
     }
 

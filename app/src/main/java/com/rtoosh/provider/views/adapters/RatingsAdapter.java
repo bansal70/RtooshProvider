@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.rtoosh.provider.R;
 import com.rtoosh.provider.model.POJO.RatingsResponse;
+import com.rtoosh.provider.model.custom.DateUtils;
 
 import java.util.List;
 
@@ -51,6 +52,8 @@ public class RatingsAdapter extends RecyclerView.Adapter<RatingsAdapter.ViewHold
             holder.tvFeedback.setText(review.message);
         else
             holder.tvFeedback.setText(mContext.getString(R.string.no_feedback));
+
+        holder.tvReviewDate.setText(DateUtils.getDateFormat(review.modified));
     }
 
     @Override
@@ -63,6 +66,7 @@ public class RatingsAdapter extends RecyclerView.Adapter<RatingsAdapter.ViewHold
         @BindView(R.id.rbQuality) RatingBar rbQuality;
         @BindView(R.id.rbArrival) RatingBar rbArrival;
         @BindView(R.id.tvFeedback) TextView tvFeedback;
+        @BindView(R.id.tvReviewDate) TextView tvReviewDate;
 
         public ViewHolder(View itemView) {
             super(itemView);

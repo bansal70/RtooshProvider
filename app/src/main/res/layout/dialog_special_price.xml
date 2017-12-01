@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/_30sdp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_your_price"
+            android:textSize="@dimen/_15sdp"
+            android:textAppearance="@style/TextAppearance.FontMedium"
+            android:textColor="@color/colorBlack"/>
+
+        <EditText
+            android:id="@+id/editPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:gravity="top"
+            android:hint="@string/special_price_in_sar"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textAppearance="@style/TextAppearance.FontMedium"
+            android:background="@drawable/custom_stroke_bg"
+            android:inputType="numberDecimal"/>
+
+        <Button
+            android:id="@+id/btSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/submit"
+            android:textColor="@color/colorAccent"
+            android:textAppearance="@style/TextAppearance.FontMedium"
+            android:textAllCaps="false"
+            android:layout_gravity="end"
+            android:layout_marginTop="@dimen/_5sdp"
+            style="?borderlessButtonStyle"
+            android:foreground="?selectableItemBackground"/>
+
+    </LinearLayout>
+
+
+</android.support.v7.widget.CardView>

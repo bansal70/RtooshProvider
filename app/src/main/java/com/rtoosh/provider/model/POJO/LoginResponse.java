@@ -34,5 +34,7 @@ public class LoginResponse extends AbstractApiResponse{
         public String vacationMode;
         @SerializedName("online")
         public String online;
+        @SerializedName("country_code")
+        public String countryCode;
     }
 }

@@ -165,9 +165,13 @@ public class PortfolioActivity extends AppBaseActivity {
 
     @Subscribe(sticky = true)
     public void onEventMainThread(RequestFinishedEvent event) {
-        EventBus.getDefault().removeAllStickyEvents();
-        dismissDialog();
-        finish();
+        switch (event.getRequestTag()) {
+            case PORTFOLIO_TAG:
+                EventBus.getDefault().removeAllStickyEvents();
+                dismissDialog();
+                finish();
+                break;
+        }
     }
 
     @Subscribe(sticky = true)

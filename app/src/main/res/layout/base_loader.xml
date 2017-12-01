@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.vlonjatg.progressactivity.ProgressRelativeLayout
+    android:id="@+id/progressActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@+id/toolbar"
+    progressActivity:loadingBackgroundColor="#FFFFFF"
+    progressActivity:emptyBackgroundColor="#fbc02d"
+    progressActivity:errorBackgroundColor="#42a5f5"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:progressActivity="http://schemas.android.com/apk/res-auto">
+
+</com.vlonjatg.progressactivity.ProgressRelativeLayout>

@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.rtoosh.provider.R;
@@ -41,8 +42,11 @@ public class RequestsDetailActivity extends AppBaseActivity {
     @BindView(R.id.tvMinutes) TextView tvMinutes;
     @BindView(R.id.tvOrderId) TextView tvOrderId;
     @BindView(R.id.tvPersons) TextView tvPersons;
+    @BindView(R.id.tvTimeText) TextView tvTimeText;
     @BindView(R.id.tvTimeLeft) TextView tvTimeLeft;
     @BindView(R.id.tvTime) TextView tvTime;
+    @BindView(R.id.rlDiscount) RelativeLayout rlDiscount;
+    @BindView(R.id.tvDiscount) TextView tvDiscount;
 
     OrdersAdapter ordersAdapter;
     HistoryResponse.Data data;
@@ -74,7 +78,6 @@ public class RequestsDetailActivity extends AppBaseActivity {
     private void setData() {
         RequestDetailsResponse.Order order = data.order;
         RequestDetailsResponse.Client client = data.client;
-        List<RequestDetailsResponse.OrderItem> listOrders = data.orderItem;
 
         phone = client.phone;
         if (phone.isEmpty()) {
@@ -82,6 +85,14 @@ public class RequestsDetailActivity extends AppBaseActivity {
             tvSms.setVisibility(View.GONE);
         }
 
+        if (order.discount.equals("0") || order.discount.isEmpty()) {
+            rlDiscount.setVisibility(View.GONE);
+        }
+        else {
+            rlDiscount.setVisibility(View.VISIBLE);
+        }
+
+        List<RequestDetailsResponse.OrderItem> listOrders = data.orderItem;
         for (int i=0; i<listOrders.size(); i++) {
             RequestDetailsResponse.Service service = listOrders.get(i).service;
 
@@ -98,6 +109,8 @@ public class RequestsDetailActivity extends AppBaseActivity {
             price += persons * amount;
         }
 
+        price -= Integer.parseInt(order.discount);
+
         int mHours = minutes / 60;
         int mMinutes = minutes % 60;
         hour += mHours;
@@ -106,9 +119,11 @@ public class RequestsDetailActivity extends AppBaseActivity {
         tvTotalPersons.setText(String.format("%s %s", String.valueOf(totalPersons), getString(R.string.persons)));
         tvHour.setText(String.valueOf(hour));
         tvMinutes.setText(String.valueOf(mMinutes));
+        tvDiscount.setText(order.discount);
         tvPersons.setText(String.valueOf(totalPersons));
         tvOrderId.setText(data.order.id);
         tvTotalPrice.setText(String.format("%s %s", String.valueOf(price), Constants.CURRENCY));
+
         if (data.order.orderType.equals(Constants.ORDER_ONLINE)) {
             tvTime.setText(String.format("%s %s %s",
                     DateUtils.getTimeFormat(order.created),
@@ -149,7 +164,7 @@ public class RequestsDetailActivity extends AppBaseActivity {
             }
         }
 
-        new CountDownTimer(totalTime*1000, 1000) {
+        CountDownTimer countDownTimer = new CountDownTimer(totalTime*1000, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -171,6 +186,14 @@ public class RequestsDetailActivity extends AppBaseActivity {
 
             }
         }.start();
+
+        if (order.status.equals(Constants.ORDER_COMPLETED) || order.status.equals(Constants.ORDER_REVIEWED)) {
+            if (countDownTimer != null)
+                countDownTimer.cancel();
+
+            tvTimeLeft.setText(R.string.message_completed);
+            tvTimeText.setText(String.format("%s:", getString(R.string.status)));
+        }
 
         recyclerOrders.setLayoutManager(new LinearLayoutManager(mContext));
         ordersAdapter = new OrdersAdapter(mContext, listOrders);
