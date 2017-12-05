@@ -109,11 +109,11 @@ public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnC
         }
 
         List<RequestDetailsResponse.OrderItem> listOrders = data.orderItem;
-        for (int i=0; i<listOrders.size(); i++) {
-            int persons = Integer.parseInt(listOrders.get(i).noOfPerson);
+        for (RequestDetailsResponse.OrderItem orderItem : listOrders) {
+            int persons = Integer.parseInt(orderItem.noOfPerson);
             totalPersons += persons;
 
-            amount = Float.parseFloat(listOrders.get(i).amount);
+            amount = Float.parseFloat(orderItem.amount);
             price += persons * amount;
         }
 

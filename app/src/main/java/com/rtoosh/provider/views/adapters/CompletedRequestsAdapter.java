@@ -64,10 +64,12 @@ public class CompletedRequestsAdapter extends RecyclerView.Adapter<CompletedRequ
 
         price -= Integer.parseInt(order.discount);
 
+        String totalPrice = String.valueOf((int) price) + " " + Constants.CURRENCY;
+
         holder.tvCustomer.setText(client.fullName);
         holder.tvTotalPersons.setText(String.valueOf(persons));
         holder.tvOrderId.setText(String.format("#%s", orderId));
-        holder.tvTotalPrice.setText(String.format("%s %s", String.valueOf(price), Constants.CURRENCY));
+        holder.tvTotalPrice.setText(totalPrice);
 
         ApprovedOrdersAdapter ordersAdapter = new ApprovedOrdersAdapter(context, orderItemList);
         holder.recyclerOrders.setAdapter(ordersAdapter);

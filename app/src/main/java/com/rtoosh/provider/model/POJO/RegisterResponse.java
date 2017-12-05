@@ -19,5 +19,25 @@ public class RegisterResponse extends AbstractApiResponse{
     public class User {
         @SerializedName("id")
         public String id;
+        @SerializedName("status")
+        public String accountStatus;
+        @SerializedName("id_number")
+        public String idNumber;
+        @SerializedName("email")
+        public String email;
+        @SerializedName("full_name")
+        public String fullName;
+        @SerializedName("profile_pic")
+        public String profilePic;
+        @SerializedName("work_online")
+        public String workOnline;
+        @SerializedName("work_schedule")
+        public String workSchedule;
+        @SerializedName("vacation_mode")
+        public String vacationMode;
+        @SerializedName("online")
+        public String online;
+        @SerializedName("country_code")
+        public String countryCode;
     }
 }

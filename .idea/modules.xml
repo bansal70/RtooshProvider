@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/RtooshProvider.iml" filepath="$PROJECT_DIR$/RtooshProvider.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/pageIndicatorLib/pageIndicatorLib.iml" filepath="$PROJECT_DIR$/pageIndicatorLib/pageIndicatorLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/slideDateTimePicker/slideDateTimePicker.iml" filepath="$PROJECT_DIR$/slideDateTimePicker/slideDateTimePicker.iml" />
     </modules>
   </component>
 </project>

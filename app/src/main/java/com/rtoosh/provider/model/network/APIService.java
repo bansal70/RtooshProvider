@@ -39,12 +39,19 @@ public interface APIService {
                                       @Query("lang") String lang,
                                       @Query("userType") String userType);
 
+    @POST("customers/validatePassword")
+    Call<LoginResponse> passwordResponse(@QueryMap HashMap<String, String> mapParams);
+
+    @POST("apis/forgetPassword")
+    Call<AbstractApiResponse> forgotPasswordResponse(@QueryMap HashMap<String, String> mapParams);
+
     @POST("customers/verifyOtp")
     Call<OtpResponse> otpResponse(@Query("phone") String phone,
                                   @Query("otp") String otp,
                                   @Query("deviceToken") String deviceToken,
                                   @Query("deviceType") String deviceType,
-                                  @Query("lang") String lang);
+                                  @Query("lang") String lang,
+                                  @Query("userType") String userType);
 
     @POST("apis/Register")
     Call<RegisterResponse> registerResponse(@Query("full_name") String full_name,

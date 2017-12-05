@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_20sdp"
+    android:layout_gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/set_time"
+            android:background="@color/colorAccent"
+            android:textColor="@color/white"
+            android:padding="@dimen/_15sdp"
+            android:textAppearance="@style/TextAppearance.FontRegular"
+            android:textSize="@dimen/_25sdp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:text="@string/type_in_time"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:textAppearance="@style/TextAppearance.FontRegular"
+            android:textSize="@dimen/_15sdp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center|start"
+            android:paddingLeft="@dimen/_15sdp"
+            android:paddingRight="@dimen/_15sdp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <EditText
+                    android:id="@+id/editHours"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:gravity="center"
+                    android:maxLength="2"
+                    android:textSize="@dimen/_20sdp"
+                    android:inputType="number"
+                    android:imeOptions="actionNext"
+                    android:digits="0123456789"
+                    android:hint="@string/hh"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hrs"
+                    android:textAllCaps="false"/>
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/colon"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:textSize="@dimen/_20sdp"
+                android:layout_gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <EditText
+                    android:id="@+id/editMinutes"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:gravity="center"
+                    android:maxLength="2"
+                    android:textSize="@dimen/_20sdp"
+                    android:inputType="number"
+                    android:imeOptions="actionDone"
+                    android:digits="0123456789"
+                    android:hint="@string/mm"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/min"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvInvalidTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/error_invalid_time"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:visibility="invisible"
+            android:textColor="@color/colorRed"
+            android:textSize="@dimen/_12sdp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_gravity="end">
+
+            <Button
+                android:id="@+id/btCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel"
+                android:layout_gravity="end"
+                android:textAllCaps="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:foreground="?selectableItemBackground"
+                android:textAppearance="@style/TextAppearance.FontMedium"
+                android:textColor="@color/colorAccent"
+                android:padding="@dimen/_15sdp"/>
+
+            <Button
+                android:id="@+id/btSet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@android:string/ok"
+                android:layout_gravity="end"
+                android:textAllCaps="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:foreground="?selectableItemBackground"
+                android:textAppearance="@style/TextAppearance.FontMedium"
+                android:textColor="@color/colorAccent"
+                android:padding="@dimen/_15sdp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

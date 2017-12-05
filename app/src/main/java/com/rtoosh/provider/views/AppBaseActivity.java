@@ -22,19 +22,19 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.Status;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResult;
-import com.google.android.gms.location.LocationSettingsStates;
+import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.tasks.Task;
 import com.rtoosh.provider.R;
 import com.rtoosh.provider.model.Constants;
 import com.rtoosh.provider.model.Event;
@@ -50,7 +50,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static android.os.Build.VERSION_CODES.M;
 
-public abstract class AppBaseActivity extends AppCompatActivity implements LocationListener{
+public abstract class AppBaseActivity extends AppCompatActivity {
 
     public Context mContext;
     private EventBus mEventBus;
@@ -58,7 +58,6 @@ public abstract class AppBaseActivity extends AppCompatActivity implements Locat
     public final int PERMISSION_REQUEST_CODE = 1001;
     public final int REQUEST_IMAGE_CAPTURE = 1;
     public final int PERMISSION_LOCATION_CODE = 1021;
-    GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     LocationRequest mLocationRequest;
     FusedLocationProviderClient mFusedLocationClient;
@@ -240,13 +239,45 @@ public abstract class AppBaseActivity extends AppCompatActivity implements Locat
     public void settingRequest() {
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(10000);    // 10 seconds, in milliseconds
-        mLocationRequest.setFastestInterval(1000);   // 1 second, in milliseconds
+        mLocationRequest.setFastestInterval(5000);   // 5 second, in milliseconds
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
                 .addLocationRequest(mLocationRequest);
 
-        PendingResult<LocationSettingsResult> result =
+        SettingsClient client = LocationServices.getSettingsClient(this);
+        Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
+
+        task.addOnSuccessListener(this, locationSettingsResponse -> {
+            // All location settings are satisfied. The client can initialize
+            // location requests here.
+            getLocation();
+        });
+
+        task.addOnFailureListener(this, (Exception e) -> {
+            int statusCode = ((ApiException) e).getStatusCode();
+            switch (statusCode) {
+                case CommonStatusCodes.RESOLUTION_REQUIRED:
+                    // Location settings are not satisfied, but this can be fixed
+                    // by showing the user a dialog.
+                    try {
+                        // Show the dialog by calling startResolutionForResult(),
+                        // and check the result in onActivityResult().
+                        ResolvableApiException resolvable = (ResolvableApiException) e;
+                        resolvable.startResolutionForResult((Activity)mContext,
+                                10213);
+                    } catch (IntentSender.SendIntentException sendEx) {
+                        // Ignore the error.
+                    }
+                    break;
+                case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                    // Location settings are not satisfied. However, we have no way
+                    // to fix the settings so we won't show the dialog.
+                    break;
+            }
+        });
+
+      /*  PendingResult<LocationSettingsResult> result =
                 LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient,
                         builder.build());
 
@@ -275,7 +306,7 @@ public abstract class AppBaseActivity extends AppCompatActivity implements Locat
                     // to fix the settings so we won't show the dialog.
                     break;
             }
-        });
+        });*/
     }
 
     @Override
@@ -300,8 +331,6 @@ public abstract class AppBaseActivity extends AppCompatActivity implements Locat
         }
         /*Getting the location after acquiring location service*/
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, location -> {
-            if (mGoogleApiClient != null && !mGoogleApiClient.isConnected())
-                mGoogleApiClient.connect();
             // Got last known location. In some rare situations this can be null.
             if (location != null) {
                 // Logic to handle location object
@@ -336,8 +365,4 @@ public abstract class AppBaseActivity extends AppCompatActivity implements Locat
         mFusedLocationClient.removeLocationUpdates(mLocationCallback);
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-
-    }
 }

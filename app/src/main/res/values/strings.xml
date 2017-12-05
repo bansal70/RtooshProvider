@@ -272,4 +272,15 @@
     <string name="discount">Discount</string>
     <string name="note_special_offers">Please note you can add maximum one service to your special offers.</string>
     <string name="error_account_suspended">Your account has been suspended by admin. Please contact administration for further queries.</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="enter_password_to_continue">Enter your password to continue</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="text_enter_password">Please enter the password to continue</string>
+    <string name="instructions_forgot_password">We will send your password via SMS to your registered phone number mentioned below</string>
+    <string name="set_time">Set time</string>
+    <string name="set">Set</string>
+    <string name="hh">HH</string>
+    <string name="mm">MM</string>
+    <string name="type_in_time">Type in time</string>
+    <string name="error_invalid_time">Enter a valid time</string>
 </resources>

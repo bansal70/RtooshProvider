@@ -9,6 +9,7 @@ public class ModelManager {
     private PhoneVerificationManager phoneVerificationManager;
     private RegistrationManager registrationManager;
     private OtpManager otpManager;
+    private PasswordManager passwordManager;
     private ServicesListManager servicesListManager;
     private ProviderInfoManager providerInfoManager;
     private UploadIDManager uploadIDManager;
@@ -67,6 +68,7 @@ public class ModelManager {
         ongoingRequestManager = new OngoingRequestManager();
         orderDetailsManager = new OrderDetailsManager();
         specialOffersManager = new SpecialOffersManager();
+        passwordManager = new PasswordManager();
     }
 
     public PhoneVerificationManager getPhoneVerificationManager() {
@@ -171,5 +173,9 @@ public class ModelManager {
 
     public SpecialOffersManager getSpecialOffersManager() {
         return specialOffersManager;
+    }
+
+    public PasswordManager getPasswordManager() {
+        return passwordManager;
     }
 }

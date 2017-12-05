@@ -202,7 +202,7 @@ public class CalendarActivity extends AppBaseActivity {
         recyclerSchedule.setNestedScrollingEnabled(false);
         recyclerSchedule.setLayoutManager(new LinearLayoutManager(mContext));
 
-        scheduleHoursAdapter = new ScheduleHoursAdapter(mContext, openingHoursList);
+        scheduleHoursAdapter = new ScheduleHoursAdapter(mContext, openingHoursList, getSupportFragmentManager());
         recyclerSchedule.setAdapter(scheduleHoursAdapter);
         scheduleHoursAdapter.notifyDataSetChanged();
     }

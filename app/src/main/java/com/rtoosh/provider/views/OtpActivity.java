@@ -86,20 +86,10 @@ public class OtpActivity extends AppBaseActivity {
                             showToast(getString(R.string.error_account_suspended));
                             return;
                         }
-                        RPPreferences.putString(mContext, Constants.USER_ID_KEY, data.id);
-                        RPPreferences.putString(mContext, Constants.ACCOUNT_STATUS_KEY, data.accountStatus);
-                        RPPreferences.putString(mContext, Constants.ID_NUMBER_KEY, data.idNumber);
-                        RPPreferences.putString(mContext, Constants.COUNTRY_CODE_KEY, data.countryCode);
-                        RPPreferences.putString(mContext, Constants.EMAIL_KEY, data.email);
+
                         RPPreferences.putString(mContext, Constants.FULL_NAME_KEY, data.fullName);
-                        RPPreferences.putString(mContext, Constants.PROFILE_PIC_KEY, data.profilePic);
-                        RPPreferences.putString(mContext, Constants.WORK_ONLINE_KEY, data.workOnline);
-                        RPPreferences.putString(mContext, Constants.WORK_SCHEDULE_KEY, data.workSchedule);
-                        RPPreferences.putString(mContext, Constants.VACATION_MODE_KEY, data.vacationMode);
-                        RPPreferences.putString(mContext, Constants.USER_STATUS_KEY, data.online);
-                        RPPreferences.putBoolean(mContext, Constants.REGISTERED_KEY, true);
-                        startActivity(new Intent(mContext, MainActivity.class)
-                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+
+                        startActivity(new Intent(mContext, PasswordActivity.class));
                         Utils.gotoNextActivityAnimation(this);
                     }
                     return;

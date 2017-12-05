@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ public class RegisterServiceAdapter extends RecyclerView.Adapter<RegisterService
     private List<RegisterServiceData> listData;
     private int position;
     private String id, name, image;
+    TextView tvServiceDuration;
 
     public RegisterServiceAdapter(Context context, List<RegisterServiceData> listData, List<AddService> listAddServices) {
         this.context = context;
@@ -92,16 +94,16 @@ public class RegisterServiceAdapter extends RecyclerView.Adapter<RegisterService
         final EditText editServiceName = dialogSelection.findViewById(R.id.editServiceName);
         final EditText editServiceContent = dialogSelection.findViewById(R.id.editServiceContent);
         final EditText editServicePrice = dialogSelection.findViewById(R.id.editServicePrice);
-        final TextView editServiceDuration = dialogSelection.findViewById(R.id.editServiceDuration);
+        tvServiceDuration = dialogSelection.findViewById(R.id.editServiceDuration);
        // editServiceDuration.addTextChangedListener(new MaskWatcher("##:##"));
 
-        editServiceDuration.setOnClickListener(v -> Utils.setTimePicker24Hours(context, editServiceDuration));
+        tvServiceDuration.setOnClickListener(v -> initTimeDialog());
 
         dialogSelection.findViewById(R.id.tvDoneSelection).setOnClickListener(view -> {
             String serviceName = editServiceName.getText().toString().trim();
             String description = editServiceContent.getText().toString().trim();
             String price = editServicePrice.getText().toString().trim();
-            String duration = editServiceDuration.getText().toString().trim();
+            String duration = tvServiceDuration.getText().toString().trim();
            /* int hours =0, min = 0;
             if (duration.contains(":")) {
                 String[] split = duration.split(":");
@@ -134,6 +136,37 @@ public class RegisterServiceAdapter extends RecyclerView.Adapter<RegisterService
         });
 
         dialogSelection.show();
+    }
+
+    private void initTimeDialog() {
+        Dialog timeDialog = Utils.createDialog(context, R.layout.dialog_time_picker);
+        EditText editHours = timeDialog.findViewById(R.id.editHours);
+        EditText editMinutes = timeDialog.findViewById(R.id.editMinutes);
+        Button btSet = timeDialog.findViewById(R.id.btSet);
+        Button btCancel = timeDialog.findViewById(R.id.btCancel);
+        TextView tvInvalidTime = timeDialog.findViewById(R.id.tvInvalidTime);
+
+        btSet.setOnClickListener(view -> {
+            if (editHours.getText().toString().isEmpty() || editMinutes.getText().toString().isEmpty()) {
+                tvInvalidTime.setVisibility(View.VISIBLE);
+                return;
+            }
+
+          //  int hours = Integer.parseInt(editHours.getText().toString());
+            int minutes = Integer.parseInt(editMinutes.getText().toString());
+
+            if (minutes > 59) {
+                tvInvalidTime.setVisibility(View.VISIBLE);
+                return;
+            }
+
+            timeDialog.dismiss();
+            tvServiceDuration.setText(String.format("%s:%s", editHours.getText().toString(), editMinutes.getText().toString()));
+        });
+
+        btCancel.setOnClickListener(view -> timeDialog.cancel());
+
+        timeDialog.show();
     }
 
 }

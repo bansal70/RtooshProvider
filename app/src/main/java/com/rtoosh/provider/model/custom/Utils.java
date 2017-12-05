@@ -170,6 +170,7 @@ public class Utils {
         });
     }
 
+
     public static void setTimePicker(Context mContext, TextView textView) {
         final Calendar c = Calendar.getInstance();
         int hour = c.get(Calendar.HOUR_OF_DAY);
@@ -277,6 +278,15 @@ public class Utils {
                 "http://maps.google.com/maps?saddr="+lat1+ ", "+ lat2+
                         "&daddr="+lat3 + ", "+lat4));
         mContext.startActivity(i);
+    }
+
+    public static void shareIntent(Context mContext, double lat1, double lat2, double lat3, double lat4) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT,
+                "http://maps.google.com/maps?q="+lat3 + ","+lat4 + "&iwloc=A&hl=es");
+        sendIntent.setType("text/plain");
+        mContext.startActivity(sendIntent);
     }
 
     public static void showToast(Context context, String msg) {

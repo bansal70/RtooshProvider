@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -30,12 +29,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -71,15 +66,14 @@ import butterknife.OnTouch;
 import timber.log.Timber;
 
 public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
-        View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, LocationListener {
+        View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     private final String TAG = "MainActivity";
     private final String ACCEPT_REQUEST_TAG = "AcceptRequest";
     private final String DECLINE_REQUEST_TAG = "DeclineRequest";
     final String UPDATE_LOCATION_TAG = "UpdateLocation";
     private final String HISTORY_TAG = "TOTAL_REQUESTS";
-    private final String PROFILE_TAG = "PROVIDER_PROFILE";
+    final String PROFILE_TAG = "PROVIDER_PROFILE";
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
@@ -100,7 +94,6 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
     ImageView ivProfilePic;
     View navHeader;
 
-    List<Services> listServices;
     Dialog dialogServices, dialogTerms, dialogRequest, dialogDecline;
     Handler handler;
     GoogleMap mGoogleMap;
@@ -125,14 +118,6 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         initDeclineDialog();
         initViews();
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-
-        mGoogleApiClient.connect();
-
         fetchLocation();
 
         mLocationCallback = new LocationCallback() {
@@ -147,10 +132,10 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
                     if (mGoogleMap != null)
                         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
 
-                    ModelManager.getInstance().getUpdateLocationManager().updateLocationTask(mContext, UPDATE_LOCATION_TAG,
+                    ModelManager.getInstance().getUpdateLocationManager().updateLocationTask(UPDATE_LOCATION_TAG,
                             Operations.updateLocationParams(user_id, latLng.latitude, latLng.longitude, lang));
                 }
-            };
+            }
         };
     }
 
@@ -241,12 +226,6 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         }
 
         dialogServices = Utils.createDialog(mContext, R.layout.dialog_services);
-
-        /*listServices.add(new Services("Make Up", false));
-        listServices.add(new Services("Hairs", false));
-        listServices.add(new Services("Nails", false));
-        listServices.add(new Services("Henna & Tattoos", false));
-        listServices.add(new Services("All", false));*/
 
         RecyclerView recyclerView = dialogServices.findViewById(R.id.recyclerServices);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -508,7 +487,6 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
             setOffline();
         }
 
-        showDialog();
         ModelManager.getInstance().getRequestsHistoryManager().historyTask(mContext, HISTORY_TAG,
                 Operations.historyParams(user_id, lang));
 
@@ -611,36 +589,6 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
             myCountDownTimer.cancel();
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-
-      /*  mLastLocation = location;
-        Timber.e("Updated location:: "
-                + "latitude-- "+mLastLocation.getLatitude()
-                + "\nlongitude-- "+mLastLocation.getLongitude());
-        LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-        if (mGoogleMap != null)
-            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-
-        ModelManager.getInstance().getUpdateLocationManager().updateLocationTask(mContext, UPDATE_LOCATION_TAG,
-                Operations.updateLocationParams(user_id, latLng.latitude, latLng.longitude, lang));*/
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
-
     public class MyCountDownTimer extends CountDownTimer {
 
         int countSec = 60, countMin = 9;
@@ -676,4 +624,9 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mFusedLocationClient.removeLocationUpdates(mLocationCallback);
+    }
 }

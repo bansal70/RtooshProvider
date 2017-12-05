@@ -26,6 +26,7 @@ public class PhoneVerificationManager {
             callback.postUnexpectedError(mContext.getString(R.string.error_no_internet));
             return;
         }
+
         Call<LoginResponse> call = apiService.phoneResponse(code, phone,
                 deviceToken, Constants.DEVICE_TYPE, lang, Constants.USER_TYPE);
         call.enqueue(callback);

@@ -33,9 +33,9 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
     @Override
     public void onBindViewHolder(OrdersAdapter.ViewHolder holder, int position) {
         RequestDetailsResponse.OrderItem orderItem = listOrders.get(position);
-        RequestDetailsResponse.Service service = orderItem.service;
+      //  RequestDetailsResponse.Service service = orderItem.service;
 
-        holder.tvService.setText(service.serviceName);
+        holder.tvService.setText(orderItem.serviceName);
 
 
         if (orderItem.noOfPerson.equals("1"))

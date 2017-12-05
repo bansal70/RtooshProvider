@@ -12,6 +12,8 @@
         android:id="@+id/layoutChangePic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="false"
         android:background="?selectableItemBackground"
         android:foreground="?selectableItemBackground"
         android:orientation="horizontal">
@@ -273,6 +275,8 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:scaleType="centerCrop"
                     android:adjustViewBounds="true"
+                    android:clickable="false"
+                    android:focusable="false"
                     android:foreground="@drawable/ripple"
                     android:contentDescription="@string/background_photo" />
 

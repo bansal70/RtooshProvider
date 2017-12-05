@@ -9,8 +9,6 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-import timber.log.Timber;
-
 public class Operations {
 
     public static JSONObject makeJsonRegisterService(String service, String serviceName, String description,
@@ -34,10 +32,24 @@ public class Operations {
         return jsonObject;
     }
 
-    public static String updateProfileParams(String query) {
-        String params = Config.UPDATE_PROFILE_URL + query;
-        Timber.e("update_profile params-- "+params);
-        return params;
+    public static HashMap<String, String> passwordParams(String phone, String password, String lang) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("phone", phone);
+        hashMap.put("password", password);
+        hashMap.put("lang", lang);
+        hashMap.put("userType", Constants.USER_TYPE);
+
+        return hashMap;
+    }
+
+    public static HashMap<String, String> forgotPasswordParams(String phone, String countryCode, String lang) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("phone", phone);
+        hashMap.put("country_code", countryCode);
+        hashMap.put("lang", lang);
+        hashMap.put("userType", Constants.USER_TYPE);
+
+        return hashMap;
     }
 
     public static HashMap<String, String> acceptRequestParams(String request_id, String lang) {
@@ -217,12 +229,14 @@ public class Operations {
         hashMap.put("user_id", user_id);
         hashMap.put("service_id", service_id);
         hashMap.put("price", price);
-
-        if (special)
-            hashMap.put("special", "1");
-        else
-            hashMap.put("special", "0");
         hashMap.put("lang", lang);
+
+        if (special) {
+            hashMap.put("special", "1");
+        }
+        else {
+            hashMap.put("special", "0");
+        }
 
         return hashMap;
     }

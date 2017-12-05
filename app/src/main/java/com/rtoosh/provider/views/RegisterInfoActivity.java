@@ -152,7 +152,7 @@ public class RegisterInfoActivity extends AppBaseActivity {
             case REGISTRATION_TAG:
                 showToast(apiResponse.getMessage());
                 RPPreferences.putBoolean(mContext, Constants.REGISTERED_KEY, true);
-                startActivity(new Intent(mContext, PhoneVerificationActivity.class)
+                startActivity(new Intent(mContext, PasswordActivity.class)
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK  | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 //Utils.gotoNextActivityAnimation(this);
                 break;

@@ -6,8 +6,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,12 +22,8 @@ import com.directions.route.Route;
 import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -65,7 +59,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyCallback, RoutingListener,
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener,
         MySupportMapFragment.OnTouchListener {
 
     private final String ORDER_DETAILS_TAG = "ORDER_DETAILS";
@@ -140,14 +133,6 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
                 Operations.requestDetailsParams(request_id, lang));
 
         polylines = new ArrayList<>();
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-
-        mGoogleApiClient.connect();
     }
 
     private void setData(RequestDetailsResponse requestDetailsResponse) {
@@ -168,16 +153,14 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
         else
             rlDiscount.setVisibility(View.VISIBLE);
 
-        for (int i = 0; i < listOrders.size(); i++) {
-            RequestDetailsResponse.Service service = listOrders.get(i).service;
-
-            int persons = Integer.parseInt(listOrders.get(i).noOfPerson);
+        for (RequestDetailsResponse.OrderItem orderItem : listOrders) {
+            int persons = Integer.parseInt(orderItem.noOfPerson);
             totalPersons += persons;
-            String[] time = service.duration.split(":");
+            String[] time = orderItem.duration.split(":");
             hour += persons * Integer.parseInt(time[0]);
             minutes += persons * Integer.parseInt(time[1]);
 
-            amount = Double.parseDouble(listOrders.get(i).amount);
+            amount = Double.parseDouble(orderItem.amount);
             price += persons * amount;
         }
 
@@ -198,8 +181,7 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
         ordersAdapter.notifyDataSetChanged();
         tvTotalPrice.setText(String.format("%s %s", String.valueOf(price), Constants.CURRENCY));
 
-        MySupportMapFragment mapFragment = (MySupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        MySupportMapFragment mapFragment = (MySupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         mapFragment.setListener(this);
 
@@ -303,9 +285,11 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
         } catch (Resources.NotFoundException e) {
             e.printStackTrace();
         }
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
         }
+
         mGoogleMap.setMyLocationEnabled(true);
 
         RequestDetailsResponse.Data data = requestDetailsResponse.data;
@@ -383,16 +367,16 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
         //     }
 
         // Start marker
-        MarkerOptions first = new MarkerOptions();
+        /*MarkerOptions first = new MarkerOptions();
         first.position(start);
         first.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_pin));
-        mGoogleMap.addMarker(first);
+        mGoogleMap.addMarker(first);*/
 
         // End marker
-       // MarkerOptions second = new MarkerOptions();
-       // second.position(end);
-       // second.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_pin));
-       // mGoogleMap.addMarker(second);
+        MarkerOptions second = new MarkerOptions();
+        second.position(end);
+        second.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_pin));
+        mGoogleMap.addMarker(second);
 
         /*LatLngBounds.Builder builder = new LatLngBounds.Builder();
         builder.include(start);
@@ -409,7 +393,7 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
         bounds = builder.build();
 
         int padding = 50;
-      //  LatLngBounds latLngBounds = Utils.createBoundsWithMinDiagonal(first, second);
+        //  LatLngBounds latLngBounds = Utils.createBoundsWithMinDiagonal(first, second);
         /* create the camera with bounds and padding to set into map*/
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
         mGoogleMap.animateCamera(cu);
@@ -425,59 +409,25 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
         moveTaskToBack(true);
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-        /*mLastLocation = location;
-        start = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-        Routing routing = new Routing.Builder()
-                .travelMode(AbstractRouting.TravelMode.DRIVING)
-                .withListener(this)
-                .alternativeRoutes(false)
-                .waypoints(start, end)
-                .build();
-        routing.execute();*/
-
-        // Start marker
-      /*  MarkerOptions first = new MarkerOptions();
-        first.position(start);
-        first.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_pin));
-        mGoogleMap.addMarker(first);
-
-        // End marker
-        MarkerOptions second = new MarkerOptions();
-        second.position(end);
-        second.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_pin));
-        mGoogleMap.addMarker(second);
-
-        int padding = 30;
-        LatLngBounds latLngBounds = Utils.createBoundsWithMinDiagonal(first, second);
-        *//* create the camera with bounds and padding to set into map*//*
-        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(latLngBounds, padding);
-        mGoogleMap.moveCamera(cu);*/
-    }
 
     @OnClick(R.id.tvOpenMap)
     public void openMap(){
         Utils.mapIntent(mContext, start.latitude, start.longitude, end.latitude, end.longitude);
     }
 
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+    @OnClick(R.id.tvShareLocation)
+    public void shareLocation() {
+        Utils.shareIntent(mContext, start.latitude, start.longitude, end.latitude, end.longitude);
     }
 
     @Override
     public void onTouch() {
         scrollView.requestDisallowInterceptTouchEvent(true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mFusedLocationClient.removeLocationUpdates(mLocationCallback);
     }
 }

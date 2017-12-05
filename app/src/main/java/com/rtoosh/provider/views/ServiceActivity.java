@@ -99,16 +99,14 @@ public class ServiceActivity extends AppBaseActivity {
         }
 
         List<RequestDetailsResponse.OrderItem> listOrders = data.orderItem;
-        for (int i=0; i<listOrders.size(); i++) {
-            RequestDetailsResponse.Service service = listOrders.get(i).service;
-
-            int persons = Integer.parseInt(listOrders.get(i).noOfPerson);
+        for (RequestDetailsResponse.OrderItem orderItem : listOrders) {
+            int persons = Integer.parseInt(orderItem.noOfPerson);
             totalPersons += persons;
-            String[] time = service.duration.split(":");
+            String[] time = orderItem.duration.split(":");
             hour += persons * Integer.parseInt(time[0]);
             minutes += persons * Integer.parseInt(time[1]);
 
-            amount = Double.parseDouble(listOrders.get(i).amount);
+            amount = Double.parseDouble(orderItem.amount);
             price += persons * amount;
         }
 

@@ -83,6 +83,7 @@ public final class Helper {
     public static boolean isInternetActive(Context ctx) {
         ConnectivityManager conMgr = (ConnectivityManager) ctx
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert conMgr != null;
         NetworkInfo info = conMgr.getActiveNetworkInfo();
 
         return info != null && info.isConnected() && info.isAvailable();

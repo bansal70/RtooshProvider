@@ -40,7 +40,6 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         Glide.with(mContext)
                 .load(portfolio.getImage())
                 .apply(new RequestOptions().format(DecodeFormat.PREFER_ARGB_8888)
-                        //.override(70, 70)
                         .placeholder(R.mipmap.ic_upload_image).dontTransform())
                 .into(holder.imgPortfolio);
 
@@ -75,15 +74,12 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
 
             if (listPortfolio.get(getAdapterPosition()).isSelected()) {
                 portfolio.setSelected(false);
-                listPortfolio.set(getAdapterPosition(), portfolio);
-                notifyItemChanged(getAdapterPosition());
-               // listRemove.remove(portfolio.getId());
             } else {
                 portfolio.setSelected(true);
-                listPortfolio.set(getAdapterPosition(), portfolio);
-                notifyItemChanged(getAdapterPosition());
-               // listRemove.add(portfolio.getId());
             }
+            //listPortfolio.set(getAdapterPosition(), portfolio);
+            //notifyItemChanged(getAdapterPosition());
+            notifyDataSetChanged();
         }
     }
 

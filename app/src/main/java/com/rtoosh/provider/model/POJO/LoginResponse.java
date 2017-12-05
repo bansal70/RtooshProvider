@@ -36,5 +36,7 @@ public class LoginResponse extends AbstractApiResponse{
         public String online;
         @SerializedName("country_code")
         public String countryCode;
+        @SerializedName("User")
+        public RegisterResponse.User user;
     }
 }

@@ -25,7 +25,7 @@ public class OtpManager {
             callback.postUnexpectedError(mContext.getString(R.string.error_no_internet));
             return;
         }
-        Call<OtpResponse> call = apiService.otpResponse(phone, otp, deviceToken, Constants.DEVICE_TYPE, lang);
+        Call<OtpResponse> call = apiService.otpResponse(phone, otp, deviceToken, Constants.DEVICE_TYPE, lang, Constants.USER_TYPE);
         call.enqueue(callback);
     }
 }

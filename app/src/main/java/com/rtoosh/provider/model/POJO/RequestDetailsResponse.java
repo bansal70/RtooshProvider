@@ -77,6 +77,14 @@ public class RequestDetailsResponse extends AbstractApiResponse{
         public String created;
         @SerializedName("modified")
         public String modified;
+        @SerializedName("service_name")
+        public String serviceName;
+        @SerializedName("description")
+        public String description;
+        @SerializedName("price")
+        public String price;
+        @SerializedName("duration")
+        public String duration;
         @SerializedName("Order")
         public Order order;
         @SerializedName("Service")

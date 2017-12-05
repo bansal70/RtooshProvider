@@ -137,9 +137,11 @@ public class ApprovedRequestAdapter extends RecyclerView.Adapter<ApprovedRequest
 
         price -= Integer.parseInt(order.discount);
 
+        String totalPrice = String.valueOf((int) price) + " " + Constants.CURRENCY;
+
         holder.tvTotalPersons.setText(String.valueOf(persons));
         holder.tvOrderId.setText(String.format("#%s", orderId));
-        holder.tvTotalPrice.setText(String.format("%s %s", String.valueOf(price), Constants.CURRENCY));
+        holder.tvTotalPrice.setText(totalPrice);
 
         ApprovedOrdersAdapter ordersAdapter = new ApprovedOrdersAdapter(context, orderItemList);
         holder.recyclerOrders.setAdapter(ordersAdapter);

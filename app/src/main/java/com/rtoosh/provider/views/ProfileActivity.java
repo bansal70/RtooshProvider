@@ -87,6 +87,7 @@ public class ProfileActivity extends AppBaseActivity {
 
         lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
         user_id = RPPreferences.readString(mContext, Constants.USER_ID_KEY);
+        setEnabled(false );
 
         showDialog();
         ModelManager.getInstance().getProfileManager().profileTask(mContext, PROFILE_TAG, user_id, lang);
@@ -208,9 +209,13 @@ public class ProfileActivity extends AppBaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
          super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            //isEdit = true;
+            //imgEdit.setImageResource(R.drawable.ic_profile_done);
+
             Bitmap photo = ImagePicker.getImageFromResult(this, resultCode, data);
             Uri tempUri = ImagePicker.getImageUri(this, photo);
             File finalFile = new File(ImagePicker.getRealPathFromURI(this, tempUri));
+
             if (imageType.equals("work")) {
                 tvNoCover.setVisibility(View.GONE);
 

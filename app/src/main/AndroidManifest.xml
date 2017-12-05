@@ -97,7 +97,8 @@
         <activity android:name=".views.SettingsActivity" />
         <activity android:name=".views.ReviewsActivity" />
         <activity android:name=".views.EditDocActivity" />
-        <activity android:name=".views.SpecialOffersActivity"></activity>
+        <activity android:name=".views.SpecialOffersActivity" />
+        <activity android:name=".views.PasswordActivity"></activity>
     </application>
 
 </manifest>

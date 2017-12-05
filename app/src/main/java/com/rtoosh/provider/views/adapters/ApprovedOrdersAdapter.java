@@ -34,9 +34,9 @@ public class ApprovedOrdersAdapter extends RecyclerView.Adapter<ApprovedOrdersAd
     @Override
     public void onBindViewHolder(ApprovedOrdersAdapter.ViewHolder holder, int position) {
         RequestDetailsResponse.OrderItem orderItem = orderItemList.get(position);
-        RequestDetailsResponse.Service service = orderItem.service;
+        //RequestDetailsResponse.Service service = orderItem.service;
 
-        holder.tvService.setText(service.serviceName);
+        holder.tvService.setText(orderItem.serviceName);
     }
 
     @Override

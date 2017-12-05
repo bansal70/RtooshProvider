@@ -83,6 +83,7 @@ public class PhoneVerificationActivity extends AppBaseActivity {
                     RPPreferences.putString(mContext, Constants.USER_STATUS_KEY, data.online);
                 }*/
 
+                RPPreferences.putString(mContext, Constants.COUNTRY_CODE_KEY, getString(R.string.country_code));
                 RPPreferences.putString(mContext, Constants.PHONE_KEY, editPhone.getText().toString().trim());
                 startActivity(new Intent(this, OtpActivity.class)
                     .putExtra("loginData", new Gson().toJson(loginResponse))

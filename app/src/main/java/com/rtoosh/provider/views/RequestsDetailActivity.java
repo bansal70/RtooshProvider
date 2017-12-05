@@ -93,19 +93,17 @@ public class RequestsDetailActivity extends AppBaseActivity {
         }
 
         List<RequestDetailsResponse.OrderItem> listOrders = data.orderItem;
-        for (int i=0; i<listOrders.size(); i++) {
-            RequestDetailsResponse.Service service = listOrders.get(i).service;
-
-            int persons = Integer.parseInt(listOrders.get(i).noOfPerson);
+        for (RequestDetailsResponse.OrderItem orderItem : listOrders) {
+            int persons = Integer.parseInt(orderItem.noOfPerson);
             totalPersons += persons;
-            Timber.e("duration-- "+service.duration);
-            if (service.duration != null && service.duration.contains(":")) {
-                String[] time = service.duration.split(":");
+            Timber.e("duration-- "+orderItem.duration);
+            if (orderItem.duration != null && orderItem.duration.contains(":")) {
+                String[] time = orderItem.duration.split(":");
                 hour += persons * Integer.parseInt(time[0]);
                 minutes += persons * Integer.parseInt(time[1]);
             }
 
-            amount = Double.parseDouble(listOrders.get(i).amount);
+            amount = Double.parseDouble(orderItem.amount);
             price += persons * amount;
         }
 
