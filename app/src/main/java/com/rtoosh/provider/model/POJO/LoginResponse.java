@@ -11,7 +11,7 @@ public class LoginResponse extends AbstractApiResponse{
     @SerializedName("otp")
     public Integer otp;
     @SerializedName("data")
-    public Data data;
+    public Data data = null;
 
     public class Data {
         @SerializedName("id")

@@ -1,9 +1,9 @@
 package com.rtoosh.provider.views;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,13 +14,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.myhexaville.smartimagepicker.ImagePicker;
 import com.rtoosh.provider.R;
 import com.rtoosh.provider.controller.ModelManager;
 import com.rtoosh.provider.controller.ProgressRequestBody;
 import com.rtoosh.provider.model.Constants;
 import com.rtoosh.provider.model.POJO.register.RegisterID;
 import com.rtoosh.provider.model.RPPreferences;
-import com.rtoosh.provider.model.custom.ImagePicker;
 import com.rtoosh.provider.model.custom.Utils;
 import com.rtoosh.provider.model.event.ApiErrorEvent;
 import com.rtoosh.provider.model.event.ApiErrorWithMessageEvent;
@@ -56,6 +56,7 @@ public class RegisterIDActivity extends AppBaseActivity implements CompoundButto
     private String online = "0", schedule = "0";
     String id, date, idType = "", filePath = "", user_id, lang;
     private boolean isUploaded = false, isUploading = false;
+    ImagePicker imagePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +94,25 @@ public class RegisterIDActivity extends AppBaseActivity implements CompoundButto
 
     @OnClick(R.id.tvUploadID)
     public void uploadID() {
-        dispatchTakePictureIntent();
+        //dispatchTakePictureIntent();
+        imagePicker = new ImagePicker(this, null,
+                (Uri imageUri) -> {
+                    String path = Utils.getPathFromUri(mContext, imageUri);
+                    if (path != null) {
+                        File finalFile = new File(path);
+                        filePath = finalFile.getAbsolutePath();
+
+                        ProgressRequestBody fileBody = new ProgressRequestBody(finalFile, this);
+                        MultipartBody.Part filePart = MultipartBody.Part.createFormData("id_image",
+                                finalFile.getName(), fileBody);
+
+                        ModelManager.getInstance().getUploadIDManager()
+                                .uploadIDTask(mContext, ID_TAG, user_id, lang, filePart);
+                        textUpload.setVisibility(View.VISIBLE);
+                        isUploaded = true;
+                    }
+                });
+        imagePicker.choosePicture(true);
     }
 
     @OnClick(R.id.tvPickSchedule)
@@ -180,8 +199,9 @@ public class RegisterIDActivity extends AppBaseActivity implements CompoundButto
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        super.onActivityResult(requestCode, resultCode, data);
+        imagePicker.handleActivityResult(resultCode,requestCode, data);
+       /* if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bitmap photo = ImagePicker.getImageFromResult(this, resultCode, data);
             Uri tempUri = ImagePicker.getImageUri(this, photo);
             File finalFile = new File(ImagePicker.getRealPathFromURI(this, tempUri));
@@ -195,7 +215,7 @@ public class RegisterIDActivity extends AppBaseActivity implements CompoundButto
                     .uploadIDTask(mContext, ID_TAG, user_id, lang, filePart);
             textUpload.setVisibility(View.VISIBLE);
             isUploaded = true;
-        }
+        }*/
     }
 
     @Override
@@ -252,6 +272,12 @@ public class RegisterIDActivity extends AppBaseActivity implements CompoundButto
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        imagePicker.handlePermission(requestCode, grantResults);
     }
 
 }

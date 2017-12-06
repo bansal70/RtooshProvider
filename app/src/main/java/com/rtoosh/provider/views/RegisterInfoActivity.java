@@ -1,9 +1,9 @@
 package com.rtoosh.provider.views;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,12 +16,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
+import com.myhexaville.smartimagepicker.ImagePicker;
 import com.rtoosh.provider.R;
 import com.rtoosh.provider.controller.ModelManager;
 import com.rtoosh.provider.model.Constants;
 import com.rtoosh.provider.model.POJO.register.RegisterInfo;
 import com.rtoosh.provider.model.RPPreferences;
-import com.rtoosh.provider.model.custom.ImagePicker;
+import com.rtoosh.provider.model.custom.Utils;
 import com.rtoosh.provider.model.event.ApiErrorEvent;
 import com.rtoosh.provider.model.event.ApiErrorWithMessageEvent;
 import com.rtoosh.provider.model.network.AbstractApiResponse;
@@ -56,7 +57,8 @@ public class RegisterInfoActivity extends AppBaseActivity {
     String lang, user_id, id, order, services, info, deviceToken;
     MyWorkAdapter myWorkAdapter;
     private List<String> listImages;
-    private String imageType = "";
+  //  private String imageType = "";
+    ImagePicker imagePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,19 +91,42 @@ public class RegisterInfoActivity extends AppBaseActivity {
 
     @OnClick(R.id.imgSelect)
     public void selectImage() {
-        imageType = "work";
-        dispatchTakePictureIntent();
+      //  imageType = "work";
+     //   dispatchTakePictureIntent();
+        imagePicker = new ImagePicker(this, null,
+                (Uri imageUri) -> {
+                    String path = Utils.getPathFromUri(mContext, imageUri);
+                    if (path != null) {
+                        File finalFile = new File(path);
+                        listImages.add(finalFile.getAbsolutePath());
+                        myWorkAdapter.notifyDataSetChanged();
+                    }
+                });
+        imagePicker.choosePicture(true);
     }
 
     @OnClick(R.id.imgBg)
     public void bgImage() {
-        imageType = "cover";
-        dispatchTakePictureIntent();
+      //  imageType = "cover";
+        //   dispatchTakePictureIntent();
+        imagePicker = new ImagePicker(this, null,
+                (Uri imageUri) -> {
+                    String path = Utils.getPathFromUri(mContext, imageUri);
+                    if (path != null) {
+                        File finalFile = new File(path);
+                        pathBg = finalFile.getAbsolutePath();
+                        Glide.with(mContext).asBitmap().load(imageUri)
+                                .apply(new RequestOptions().centerCrop()).into(imgBg);
+                    }
+                });
+        imagePicker.choosePicture(true);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        super.onActivityResult(requestCode, resultCode, data);
+        imagePicker.handleActivityResult(resultCode,requestCode, data);
+        /*if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
             Bitmap photo = ImagePicker.getImageFromResult(this, resultCode, data);
 
@@ -116,7 +141,7 @@ public class RegisterInfoActivity extends AppBaseActivity {
                 Glide.with(mContext).asBitmap().load(pathBg)
                         .apply(new RequestOptions().centerCrop()).into(imgBg);
             }
-        }
+        }*/
     }
 
     public void saveAccount(View v) {
@@ -151,7 +176,7 @@ public class RegisterInfoActivity extends AppBaseActivity {
         switch (apiResponse.getRequestTag()) {
             case REGISTRATION_TAG:
                 showToast(apiResponse.getMessage());
-                RPPreferences.putBoolean(mContext, Constants.REGISTERED_KEY, true);
+              //  RPPreferences.putBoolean(mContext, Constants.REGISTERED_KEY, true);
                 startActivity(new Intent(mContext, PasswordActivity.class)
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK  | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 //Utils.gotoNextActivityAnimation(this);
@@ -174,6 +199,12 @@ public class RegisterInfoActivity extends AppBaseActivity {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
         showToast(getString(R.string.something_went_wrong));
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        imagePicker.handlePermission(requestCode, grantResults);
     }
 
 }

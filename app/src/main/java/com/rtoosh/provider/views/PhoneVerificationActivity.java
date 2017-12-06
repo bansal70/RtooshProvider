@@ -69,26 +69,19 @@ public class PhoneVerificationActivity extends AppBaseActivity {
                 dismissDialog();
                 showToast(loginResponse.getMessage());
                 LoginResponse.Data data = loginResponse.data;
-                /* if (data != null) {
-                    RPPreferences.putString(mContext, Constants.USER_ID_KEY, data.id);
-                    RPPreferences.putString(mContext, Constants.ACCOUNT_STATUS_KEY, data.accountStatus);
-                    RPPreferences.putString(mContext, Constants.ID_NUMBER_KEY, data.idNumber);
-                    RPPreferences.putString(mContext, Constants.COUNTRY_CODE_KEY, tvCode.getText().toString());
-                    RPPreferences.putString(mContext, Constants.EMAIL_KEY, data.email);
-                    RPPreferences.putString(mContext, Constants.FULL_NAME_KEY, data.fullName);
-                    RPPreferences.putString(mContext, Constants.PROFILE_PIC_KEY, data.profilePic);
-                    RPPreferences.putString(mContext, Constants.WORK_ONLINE_KEY, data.workOnline);
-                    RPPreferences.putString(mContext, Constants.WORK_SCHEDULE_KEY, data.workSchedule);
-                    RPPreferences.putString(mContext, Constants.VACATION_MODE_KEY, data.vacationMode);
-                    RPPreferences.putString(mContext, Constants.USER_STATUS_KEY, data.online);
-                }*/
-
                 RPPreferences.putString(mContext, Constants.COUNTRY_CODE_KEY, getString(R.string.country_code));
                 RPPreferences.putString(mContext, Constants.PHONE_KEY, editPhone.getText().toString().trim());
+
+                if (data.accountStatus != null && data.accountStatus.equals(Constants.ACCOUNT_SUSPENDED)) {
+                    showToast(getString(R.string.error_account_suspended));
+                    return;
+                }
                 startActivity(new Intent(this, OtpActivity.class)
-                    .putExtra("loginData", new Gson().toJson(loginResponse))
-                    .putExtra("id_number", data.idNumber));
+                        .putExtra("loginData", new Gson().toJson(loginResponse))
+                        .putExtra("id_number", data.idNumber));
+
                 Utils.gotoNextActivityAnimation(this);
+
                 break;
 
             default:

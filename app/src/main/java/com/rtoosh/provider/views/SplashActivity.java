@@ -47,7 +47,7 @@ public class SplashActivity extends AppBaseActivity {
         user_id = RPPreferences.readString(mContext, Constants.USER_ID_KEY);
         idNumber = RPPreferences.readString(mContext, Constants.ID_NUMBER_KEY);
 
-        if (!user_id.isEmpty() && (!idNumber.isEmpty() || idNumber.equals("0"))) {
+        if (!user_id.isEmpty() && (!idNumber.isEmpty() || !idNumber.equals("0"))) {
             ModelManager.getInstance().getOngoingRequestManager().ongoingRequestTask(mContext, REQUEST_TAG,
                     Operations.ongoingRequestParams(user_id, lang));
             return;

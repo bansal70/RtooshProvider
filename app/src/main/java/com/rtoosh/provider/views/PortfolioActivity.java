@@ -1,9 +1,9 @@
 package com.rtoosh.provider.views;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.myhexaville.smartimagepicker.ImagePicker;
 import com.rtoosh.provider.R;
 import com.rtoosh.provider.controller.ModelManager;
 import com.rtoosh.provider.model.Constants;
@@ -19,7 +20,7 @@ import com.rtoosh.provider.model.POJO.Portfolio;
 import com.rtoosh.provider.model.POJO.ProfileResponse;
 import com.rtoosh.provider.model.RPPreferences;
 import com.rtoosh.provider.model.custom.DividerItemDecorator;
-import com.rtoosh.provider.model.custom.ImagePicker;
+import com.rtoosh.provider.model.custom.Utils;
 import com.rtoosh.provider.model.event.ApiErrorEvent;
 import com.rtoosh.provider.model.event.ApiErrorWithMessageEvent;
 import com.rtoosh.provider.model.event.RequestFinishedEvent;
@@ -54,6 +55,7 @@ public class PortfolioActivity extends AppBaseActivity {
     ArrayList<ProfileResponse.ProviderImage> portfolioList;
     private int lastId = 0;
     private List<String> listRemove;
+    ImagePicker imagePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,20 +114,34 @@ public class PortfolioActivity extends AppBaseActivity {
 
     @OnClick(R.id.btAddPhoto)
     public void addPhoto() {
-        dispatchTakePictureIntent();
+        imagePicker = new ImagePicker(this, null,
+                (Uri imageUri) -> {
+                    String path = Utils.getPathFromUri(mContext, imageUri);
+                    if (path != null) {
+                        File finalFile = new File(path);
+                        //     File file = imagePicker.getImageFile();
+                        lastId++;
+                        listPortfolio.add(new Portfolio(String.valueOf(lastId), finalFile.getAbsolutePath(),
+                                false, true));
+                        portfolioAdapter.notifyDataSetChanged();
+                    }
+                });
+        imagePicker.choosePicture(true);
+        // dispatchTakePictureIntent();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        imagePicker.handleActivityResult(resultCode,requestCode, data);
+       /* if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bitmap photo = ImagePicker.getImageFromResult(this, resultCode, data);
             Uri tempUri = ImagePicker.getImageUri(this, photo);
             File finalFile = new File(ImagePicker.getRealPathFromURI(this, tempUri));
             lastId++;
             listPortfolio.add(new Portfolio(String.valueOf(lastId), finalFile.getAbsolutePath(), false, true));
             portfolioAdapter.notifyDataSetChanged();
-        }
+        }*/
     }
 
     @Override
@@ -186,5 +202,11 @@ public class PortfolioActivity extends AppBaseActivity {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
         showToast(getString(R.string.something_went_wrong));
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        imagePicker.handlePermission(requestCode, grantResults);
     }
 }

@@ -85,7 +85,7 @@ public class NotificationController extends FirebaseMessagingService {
 
         if (status.equals(Constants.ACCOUNT_SUSPENDED)) {
             intent = new Intent(getApplicationContext(), PhoneVerificationActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             resultPendingIntent = PendingIntent.getActivity(getApplicationContext(),
                     code, intent, PendingIntent.FLAG_CANCEL_CURRENT);
             RPPreferences.clearPref(getApplicationContext());

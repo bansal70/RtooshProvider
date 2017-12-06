@@ -113,6 +113,7 @@ public class RegistrationActivity extends AppBaseActivity implements AdapterView
 
                 startActivity(new Intent(this, RegisterIDActivity.class)
                         .putExtra("user_id", user.id));
+                finish();
                 Utils.gotoNextActivityAnimation(this);
                 break;
 

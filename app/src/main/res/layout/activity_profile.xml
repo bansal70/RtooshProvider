@@ -36,8 +36,7 @@
             android:layout_marginLeft="@dimen/_5sdp"
             android:layout_marginRight="@dimen/_5sdp"
             android:textColor="@color/colorRed"
-            android:textAppearance="@style/TextAppearance.FontMedium"
-            android:text="@string/not_active" />
+            android:textAppearance="@style/TextAppearance.FontMedium" />
 
     </LinearLayout>
 

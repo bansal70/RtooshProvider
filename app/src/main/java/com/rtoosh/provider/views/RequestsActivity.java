@@ -185,14 +185,22 @@ public class RequestsActivity extends AppBaseActivity {
     public void onEventMainThread(ApiErrorWithMessageEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
-        showToast(event.getResultMsgUser());
+        switch (event.getRequestTag()) {
+            case HISTORY_TAG:
+                showToast(event.getResultMsgUser());
+                break;
+        }
     }
 
     @Subscribe(sticky = true)
     public void onEventMainThread(ApiErrorEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
-        showToast(getString(R.string.something_went_wrong));
+        switch (event.getRequestTag()) {
+            case HISTORY_TAG:
+                showToast(getString(R.string.something_went_wrong));
+                break;
+        }
     }
 
 }

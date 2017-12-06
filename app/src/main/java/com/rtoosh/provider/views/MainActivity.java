@@ -137,6 +137,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
                 }
             }
         };
+
     }
 
     private void initViews() {
@@ -454,16 +455,18 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
         switch (event.getRequestTag()) {
-            case HISTORY_TAG:
+            case ACCEPT_REQUEST_TAG:
+            case DECLINE_REQUEST_TAG:
+                showToast(event.getResultMsgUser());
+                break;
+
+            default:
                 tvRecentDate.setVisibility(View.GONE);
                 tvRecentTime.setVisibility(View.GONE);
                 tvNewRequests.setText("0");
                 tvApprovedRequests.setText("0");
                 break;
 
-            default:
-                showToast(event.getResultMsgUser());
-                break;
         }
     }
 
@@ -471,7 +474,19 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
     public void onEventMainThread(ApiErrorEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
-        showToast(getString(R.string.something_went_wrong));
+        switch (event.getRequestTag()) {
+            case ACCEPT_REQUEST_TAG:
+            case DECLINE_REQUEST_TAG:
+                showToast(getString(R.string.something_went_wrong));
+                break;
+
+            default:
+                tvRecentDate.setVisibility(View.GONE);
+                tvRecentTime.setVisibility(View.GONE);
+                tvNewRequests.setText("0");
+                tvApprovedRequests.setText("0");
+                break;
+        }
     }
 
     @Override

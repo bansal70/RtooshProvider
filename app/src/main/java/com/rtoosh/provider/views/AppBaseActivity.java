@@ -196,6 +196,11 @@ public abstract class AppBaseActivity extends AppCompatActivity {
         if (mEventBus.isRegistered(this)) {
             mEventBus.unregister(this);
         }
+
+      /*  boolean delete = Utils.deleteTempFiles(getExternalCacheDir());
+        if (delete)
+            Timber.e("Temp files deleted");*/
+
         super.onDestroy();
     }
 

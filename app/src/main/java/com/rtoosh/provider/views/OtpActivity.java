@@ -73,7 +73,6 @@ public class OtpActivity extends AppBaseActivity {
         switch (otpResponse.getRequestTag()) {
             case OTP_TAG:
                 dismissDialog();
-                showToast(otpResponse.getMessage());
 
                 if (idNumber !=null && !idNumber.equals("0") && !idNumber.isEmpty()) {
 
@@ -87,6 +86,7 @@ public class OtpActivity extends AppBaseActivity {
                             return;
                         }
 
+                        showToast(otpResponse.getMessage());
                         RPPreferences.putString(mContext, Constants.FULL_NAME_KEY, data.fullName);
 
                         startActivity(new Intent(mContext, PasswordActivity.class));
@@ -95,6 +95,7 @@ public class OtpActivity extends AppBaseActivity {
                     return;
                 }
 
+                showToast(otpResponse.getMessage());
                 if (otpResponse.register.equals("1"))
                     startActivity(new Intent(mContext, RegisterIDActivity.class));
                 else

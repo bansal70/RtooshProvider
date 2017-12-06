@@ -153,7 +153,8 @@ public class ImagePicker {
 
     public static File getTempFile(Context context) {
         File imageFile = new File(context.getExternalCacheDir(), TEMP_IMAGE_NAME);
-        imageFile.getParentFile().mkdirs();
+        imageFile.deleteOnExit();
+        //imageFile.getParentFile().mkdirs();
         return imageFile;
     }
 

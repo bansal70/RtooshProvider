@@ -72,6 +72,7 @@ dependencies {
     implementation 'org.parceler:parceler-api:1.1.9'
     implementation 'com.github.vlonjatg:progress-activity:v2.0.3'
     annotationProcessor 'org.parceler:parceler:1.1.9'
+    implementation 'com.myhexaville:smart-image-picker:1.0'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

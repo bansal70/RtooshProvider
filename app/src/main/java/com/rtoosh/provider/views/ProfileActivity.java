@@ -2,9 +2,9 @@ package com.rtoosh.provider.views;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -15,12 +15,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.myhexaville.smartimagepicker.ImagePicker;
 import com.rtoosh.provider.R;
 import com.rtoosh.provider.controller.ModelManager;
 import com.rtoosh.provider.model.Constants;
 import com.rtoosh.provider.model.POJO.ProfileResponse;
 import com.rtoosh.provider.model.RPPreferences;
-import com.rtoosh.provider.model.custom.ImagePicker;
 import com.rtoosh.provider.model.custom.Utils;
 import com.rtoosh.provider.model.event.ApiErrorEvent;
 import com.rtoosh.provider.model.event.ApiErrorWithMessageEvent;
@@ -64,10 +64,11 @@ public class ProfileActivity extends AppBaseActivity {
 
     boolean isEdit = false;
 
-    String lang, user_id, profilePic = "",coverImage = "", imageType = "";
+    String lang, user_id, profilePic = "", coverImage = "", imageType = "";
     Dialog dialog;
     ArrayList<ProfileResponse.ProviderImage> imagesList;
-    private final int REQUEST_CODE = 101;
+    final int REQUEST_CODE = 101;
+    ImagePicker imagePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +124,6 @@ public class ProfileActivity extends AppBaseActivity {
                 break;
         }
 
-
         editSurname.setText(user.surname);
         editBio.setText(user.bio);
 
@@ -168,18 +168,42 @@ public class ProfileActivity extends AppBaseActivity {
 
 
         RPPreferences.putString(mContext, Constants.PROFILE_PIC_KEY, user.profilePic);
+        RPPreferences.putString(getApplicationContext(), Constants.ACCOUNT_STATUS_KEY, user.status);
     }
 
     @OnClick(R.id.layoutChangePic)
     public void updateProfilePic() {
-        imageType = "cover";
-        dispatchTakePictureIntent();
+        imageType = "profile";
+        // dispatchTakePictureIntent();
+        imagePicker = new ImagePicker(this, null,
+                (Uri imageUri) -> {
+                    String path = Utils.getPathFromUri(mContext, imageUri);
+                    if (path != null) {
+                        File finalFile = new File(path);
+                        Glide.with(mContext).load(imageUri)
+                                .apply(RequestOptions.circleCropTransform().placeholder(R.mipmap.ic_user_placeholder))
+                                .into(imgProfilePic);
+                        profilePic = finalFile.getAbsolutePath();
+                    }
+                });
+        imagePicker.choosePicture(true);
     }
 
     @OnClick(R.id.imgCover)
     public void updateCoverPic() {
         imageType = "work";
-        dispatchTakePictureIntent();
+        // dispatchTakePictureIntent();
+        imagePicker = new ImagePicker(this, null,
+                (Uri imageUri) -> {
+                    tvNoCover.setVisibility(View.GONE);
+                    String path = Utils.getPathFromUri(mContext, imageUri);
+                    if (path != null) {
+                        File finalFile = new File(path);
+                        imgCover.setImageURI(imageUri);
+                        coverImage = finalFile.getAbsolutePath();
+                    }
+                });
+        imagePicker.choosePicture(true);
     }
 
     public void updateProfile() {
@@ -207,8 +231,16 @@ public class ProfileActivity extends AppBaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            showDialog();
+            ModelManager.getInstance().getProfileManager().profileTask(mContext, PROFILE_TAG, user_id, lang);
+            return;
+        }
+
+        if (imagePicker != null)
+            imagePicker.handleActivityResult(resultCode,requestCode, data);
+        /*if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             //isEdit = true;
             //imgEdit.setImageResource(R.drawable.ic_profile_done);
 
@@ -230,10 +262,7 @@ public class ProfileActivity extends AppBaseActivity {
                         .into(imgProfilePic);
             }
         }
-        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-            showDialog();
-            ModelManager.getInstance().getProfileManager().profileTask(mContext, PROFILE_TAG, user_id, lang);
-        }
+        */
     }
 
     public void initDialog() {
@@ -297,6 +326,12 @@ public class ProfileActivity extends AppBaseActivity {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        imagePicker.handlePermission(requestCode, grantResults);
     }
 
     @Subscribe(sticky = true)
