@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginLeft="@dimen/_5sdp"
+    android:layout_marginRight="@dimen/_5sdp"
+    android:layout_marginStart="@dimen/_5sdp"
+    android:layout_marginEnd="@dimen/_5sdp">
 
     <TextView
         android:id="@+id/tvService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hair_cut"
+        android:text="@string/service_commission"
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/_12sdp"
-        android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:drawableLeft="@mipmap/ic_ticket_grey"
         android:drawableStart="@mipmap/ic_ticket_grey"
         android:drawablePadding="@dimen/_10sdp"
-        android:maxLength="25"
-        android:ellipsize="end"
         android:textAppearance="@style/TextAppearance.FontMedium"
         android:gravity="center|start"/>
 
@@ -30,7 +33,7 @@
         android:layout_alignParentEnd="true">
 
         <TextView
-            android:id="@+id/tvQuantity"
+            android:id="@+id/tvCommissionRate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.FontMedium"
@@ -38,7 +41,7 @@
             android:textSize="@dimen/_12sdp"/>
 
         <TextView
-            android:id="@+id/tvPrice"
+            android:id="@+id/tvCommission"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/_12sdp"
@@ -54,7 +57,6 @@
             android:textColor="@color/black"
             android:textSize="@dimen/_12sdp"
             android:textAppearance="@style/TextAppearance.FontMedium"/>
-
     </LinearLayout>
 
 </RelativeLayout>

@@ -52,7 +52,6 @@
     <string name="total_amount">Total Amount</string>
     <string name="invoice_breakdown">Invoice Breakdown</string>
     <string name="service_commission">Service commission</string>
-
     <string name="total">Total</string>
     <string name="purchase_detail">Purchase Detail</string>
     <string name="yes">YES</string>
@@ -85,6 +84,7 @@
     <string name="two">2</string>
     <string name="three">3</string>
     <string name="four">4</string>
+
     <string name="title_activity_registration">RegistrationActivity</string>
     <string name="register">Register!</string>
     <string name="terms_and_conditions">By register you agreed to our terms and conditions</string>
@@ -93,7 +93,7 @@
     <string name="select">Select</string>
     <string name="full_name">Full Name</string>
     <string name="already_have_an_account">Already have an account?</string>
-    <string name="account_status">Account Status :</string>
+    <string name="account_status">Account Status</string>
     <string name="not_active">&#160; Not Active</string>
     <string name="complete_following">Please complete the following to activate your account</string>
     <string name="id_information">ID information</string>
@@ -138,9 +138,10 @@
     <string name="description">Description</string>
     <string name="price">Price in SAR</string>
     <string name="service_duration">Service Duration(hh:mm)</string>
-    <string name="duration">Duration :&#160;</string>
+    <string name="duration">Duration &#160;</string>
     <string name="verify">Verify</string>
     <string name="background_photo">Background photo</string>
+
     <string name="toast_invalid_number">Please enter the valid mobile number</string>
     <string name="toast_digits_access_code">Please enter the 4-digits access code</string>
     <string name="toast_fill_data">Please fill all the data</string>
@@ -156,10 +157,10 @@
     <string name="service_note">Please note service details will show up after you accept this request</string>
     <string name="details">Details</string>
     <string name="left">Left</string>
-    <string name="time_date"><![CDATA[Time & Date:]]></string>
-    <string name="number_of_persons">Number of persons:</string>
-    <string name="time_left">Time Left:</string>
-    <string name="order_number">Order number:</string>
+    <string name="time_date"><![CDATA[Time & Date]]></string>
+    <string name="number_of_persons">Number of persons</string>
+    <string name="time_left">Time Left</string>
+    <string name="order_number">Order number</string>
     <string name="service_details">Service Details</string>
     <string name="incorrect_otp">Incorrect OTP entered. Please try again.</string>
     <string name="error_no_internet">Please check your internet connection and try again.</string>
@@ -257,6 +258,7 @@
     <string name="order_initiated">Initiated</string>
     <string name="order_started">Started</string>
     <string name="hours">Hours</string>
+
     <string name="customer_service_request">Customers Service Requests</string>
     <string name="service_requests">Service Requests</string>
     <string name="notification_account_status">Account Status Notification</string>
@@ -283,4 +285,27 @@
     <string name="mm">MM</string>
     <string name="type_in_time">Type in time</string>
     <string name="error_invalid_time">Enter a valid time</string>
+    <string name="error_id_number">Id number can not be 0</string>
+    <string name="id_upload_in_progress">Please wait while we are uploading your id</string>
+    <string name="total_earnings">Total Earnings</string>
+    <string name="due_amount">Due Amount</string>
+    <string name="your_earnings">Your Earnings</string>
+    <string name="language">Language</string>
+
+    <string name="day_monday">Monday</string>
+    <string name="day_tuesday">Tuesday</string>
+    <string name="day_wednesday">Wednesday</string>
+    <string name="day_thursday">Thursday</string>
+    <string name="day_friday">Friday</string>
+    <string name="day_saturday">Saturday</string>
+    <string name="day_sunday">Sunday</string>
+    <string name="role_select">Select</string>
+    <string name="role_salon_owner">Salon Owner</string>
+    <string name="role_provider">Independent Service Provider</string>
+
+    <string-array name="language_titles">
+        <item>English</item>
+        <item>Arabic</item>
+    </string-array>
+
 </resources>

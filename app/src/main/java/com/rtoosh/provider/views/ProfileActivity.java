@@ -1,10 +1,13 @@
 package com.rtoosh.provider.views;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -37,7 +41,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ProfileActivity extends AppBaseActivity {
+import static android.os.Build.VERSION_CODES.M;
+
+public class ProfileActivity extends AppBaseActivity implements LanguageDialog.OnDialogSelectorListener{
 
     private final String PROFILE_TAG = "ProfileActivity";
     private final String UPDATE_PROFILE_TAG = "UpdateProfile";
@@ -70,6 +76,8 @@ public class ProfileActivity extends AppBaseActivity {
     final int REQUEST_CODE = 101;
     ImagePicker imagePicker;
 
+    private int selectedLangId = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +97,12 @@ public class ProfileActivity extends AppBaseActivity {
         lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
         user_id = RPPreferences.readString(mContext, Constants.USER_ID_KEY);
         setEnabled(false );
+
+        if (lang.equals("en")) {
+            selectedLangId = 0;
+        } else {
+            selectedLangId = 1;
+        }
 
         showDialog();
         ModelManager.getInstance().getProfileManager().profileTask(mContext, PROFILE_TAG, user_id, lang);
@@ -174,7 +188,33 @@ public class ProfileActivity extends AppBaseActivity {
     @OnClick(R.id.layoutChangePic)
     public void updateProfilePic() {
         imageType = "profile";
+        if (Build.VERSION.SDK_INT >= M) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
+        } else {
+            selectProfilePic();
+        }
         // dispatchTakePictureIntent();
+
+    }
+
+    @OnClick(R.id.imgCover)
+    public void updateCoverPic() {
+        imageType = "work";
+        if (Build.VERSION.SDK_INT >= M) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
+        } else {
+            selectCoverPic();
+        }
+        // dispatchTakePictureIntent();
+    }
+
+    private void selectProfilePic() {
         imagePicker = new ImagePicker(this, null,
                 (Uri imageUri) -> {
                     String path = Utils.getPathFromUri(mContext, imageUri);
@@ -189,22 +229,19 @@ public class ProfileActivity extends AppBaseActivity {
         imagePicker.choosePicture(true);
     }
 
-    @OnClick(R.id.imgCover)
-    public void updateCoverPic() {
-        imageType = "work";
-        // dispatchTakePictureIntent();
-        imagePicker = new ImagePicker(this, null,
-                (Uri imageUri) -> {
-                    tvNoCover.setVisibility(View.GONE);
-                    String path = Utils.getPathFromUri(mContext, imageUri);
-                    if (path != null) {
-                        File finalFile = new File(path);
-                        imgCover.setImageURI(imageUri);
-                        coverImage = finalFile.getAbsolutePath();
-                    }
-                });
-        imagePicker.choosePicture(true);
-    }
+     private void selectCoverPic() {
+         imagePicker = new ImagePicker(this, null,
+                 (Uri imageUri) -> {
+                     tvNoCover.setVisibility(View.GONE);
+                     String path = Utils.getPathFromUri(mContext, imageUri);
+                     if (path != null) {
+                         File finalFile = new File(path);
+                         imgCover.setImageURI(imageUri);
+                         coverImage = finalFile.getAbsolutePath();
+                     }
+                 });
+         imagePicker.choosePicture(true);
+     }
 
     public void updateProfile() {
         String surname = editSurname.getText().toString().trim();
@@ -307,11 +344,6 @@ public class ProfileActivity extends AppBaseActivity {
         Utils.gotoNextActivityAnimation(mContext);
     }
 
-    @OnClick(R.id.tvSpecialOffers)
-    public void specialOffers() {
-        startActivity(new Intent(mContext, SpecialOffersActivity.class));
-        Utils.gotoNextActivityAnimation(mContext);
-    }
 
     @Subscribe(sticky = true)
     public void onEvent(ProfileResponse profileResponse) {
@@ -326,12 +358,6 @@ public class ProfileActivity extends AppBaseActivity {
             default:
                 break;
         }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        imagePicker.handlePermission(requestCode, grantResults);
     }
 
     @Subscribe(sticky = true)
@@ -386,4 +412,41 @@ public class ProfileActivity extends AppBaseActivity {
         dismissDialog();
         showToast(getString(R.string.something_went_wrong));
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_REQUEST_CODE && hasAllPermissionsGranted(grantResults)) {
+            if (imageType.equals("work")) {
+                selectCoverPic();
+            } else {
+                selectProfilePic();
+            }
+        } else {
+            Toast.makeText(this, R.string.grant_permissions, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @OnClick(R.id.tvEditLanguage)
+    public void updateLanguage() {
+        LanguageDialog dialog = LanguageDialog.newInstance(R.array.language_titles, selectedLangId);
+        dialog.setDialogSelectorListener(this);
+        dialog.show(getFragmentManager(), "Language");
+    }
+
+    @Override
+    public void onSelectedOption(int dialogId) {
+        selectedLangId = dialogId;
+
+        if (dialogId == 0) {
+            RPPreferences.putString(mContext, Constants.LANGUAGE_KEY, "en");
+            updateLanguage("en");
+        } else if (dialogId == 1) {
+            RPPreferences.putString(mContext, Constants.LANGUAGE_KEY, "ar");
+            updateLanguage("ar");
+        }
+
+        recreate();
+    }
+
 }

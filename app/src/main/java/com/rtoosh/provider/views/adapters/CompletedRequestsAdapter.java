@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rtoosh.provider.R;
-import com.rtoosh.provider.model.Constants;
 import com.rtoosh.provider.model.POJO.HistoryResponse;
 import com.rtoosh.provider.model.POJO.RequestDetailsResponse;
 import com.rtoosh.provider.model.custom.DateUtils;
@@ -64,9 +63,15 @@ public class CompletedRequestsAdapter extends RecyclerView.Adapter<CompletedRequ
 
         price -= Integer.parseInt(order.discount);
 
-        String totalPrice = String.valueOf((int) price) + " " + Constants.CURRENCY;
+        String totalPrice = String.valueOf((int) price) + " " + context.getString(R.string.currency);
 
         holder.tvCustomer.setText(client.fullName);
+
+        if (client.fullName.contains(" ")) {
+            String[] split = client.fullName.split(" ");
+            holder.tvCustomer.setText(split[0]);
+        }
+
         holder.tvTotalPersons.setText(String.valueOf(persons));
         holder.tvOrderId.setText(String.format("#%s", orderId));
         holder.tvTotalPrice.setText(totalPrice);

@@ -179,7 +179,7 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
         ordersAdapter = new OrdersAdapter(mContext, listOrders);
         recyclerOrders.setAdapter(ordersAdapter);
         ordersAdapter.notifyDataSetChanged();
-        tvTotalPrice.setText(String.format("%s %s", String.valueOf(price), Constants.CURRENCY));
+        tvTotalPrice.setText(String.format("%s %s", String.valueOf(price), getString(R.string.currency)));
 
         MySupportMapFragment mapFragment = (MySupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -194,6 +194,7 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
                     mLastLocation = location;
                     start = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
                     Routing routing = new Routing.Builder()
+                            .key(Constants.API_KEY)
                             .travelMode(AbstractRouting.TravelMode.DRIVING)
                             .withListener(OrderDetailsActivity.this)
                             .alternativeRoutes(false)

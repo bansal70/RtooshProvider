@@ -1,9 +1,12 @@
 package com.rtoosh.provider.views;
 
+import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -40,6 +44,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import timber.log.Timber;
 
+import static android.os.Build.VERSION_CODES.M;
+
 public class RegisterInfoActivity extends AppBaseActivity {
 
     private final String REGISTRATION_TAG = "Registration";
@@ -57,7 +63,7 @@ public class RegisterInfoActivity extends AppBaseActivity {
     String lang, user_id, id, order, services, info, deviceToken;
     MyWorkAdapter myWorkAdapter;
     private List<String> listImages;
-  //  private String imageType = "";
+    private String imageType = "";
     ImagePicker imagePicker;
 
     @Override
@@ -91,8 +97,33 @@ public class RegisterInfoActivity extends AppBaseActivity {
 
     @OnClick(R.id.imgSelect)
     public void selectImage() {
-      //  imageType = "work";
-     //   dispatchTakePictureIntent();
+        imageType = "work";
+        if (Build.VERSION.SDK_INT >= M) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
+        } else {
+            selectWorkImage();
+        }
+        //   dispatchTakePictureIntent();
+    }
+
+    @OnClick(R.id.imgBg)
+    public void bgImage() {
+        imageType = "cover";
+        if (Build.VERSION.SDK_INT >= M) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
+        } else {
+            selectCoverImage();
+        }
+        //   dispatchTakePictureIntent();
+    }
+
+    private void selectWorkImage() {
         imagePicker = new ImagePicker(this, null,
                 (Uri imageUri) -> {
                     String path = Utils.getPathFromUri(mContext, imageUri);
@@ -105,10 +136,7 @@ public class RegisterInfoActivity extends AppBaseActivity {
         imagePicker.choosePicture(true);
     }
 
-    @OnClick(R.id.imgBg)
-    public void bgImage() {
-      //  imageType = "cover";
-        //   dispatchTakePictureIntent();
+    private void selectCoverImage() {
         imagePicker = new ImagePicker(this, null,
                 (Uri imageUri) -> {
                     String path = Utils.getPathFromUri(mContext, imageUri);
@@ -204,7 +232,14 @@ public class RegisterInfoActivity extends AppBaseActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        imagePicker.handlePermission(requestCode, grantResults);
+        if (requestCode == PERMISSION_REQUEST_CODE && hasAllPermissionsGranted(grantResults)) {
+            if (imageType.equals("work"))
+                selectWorkImage();
+            else
+                selectCoverImage();
+        } else {
+            Toast.makeText(this, R.string.grant_permissions, Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

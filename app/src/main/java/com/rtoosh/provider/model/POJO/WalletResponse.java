@@ -12,6 +12,8 @@ public class WalletResponse extends AbstractApiResponse{
     public Data data;
     @SerializedName("account")
     public Account account;
+    @SerializedName("wallet")
+    public Wallet wallet;
 
     public class Data {
         @SerializedName("Today")
@@ -42,6 +44,15 @@ public class WalletResponse extends AbstractApiResponse{
         public String created;
         @SerializedName("modified")
         public String modified;
+    }
+
+    public class Wallet {
+        @SerializedName("earning")
+        public String earning;
+        @SerializedName("due")
+        public String due;
+        @SerializedName("balance")
+        public String balance;
     }
 
 }

@@ -2,8 +2,10 @@ package com.rtoosh.provider.views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -28,6 +30,7 @@ public class OtpActivity extends AppBaseActivity {
 
     private final String OTP_TAG = "OtpActivity";
 
+    @BindView(R.id.layoutOtp) LinearLayout layoutOtp;
     @BindView(R.id.edit1) EditText edit1;
     @BindView(R.id.edit2) EditText edit2;
     @BindView(R.id.edit3) EditText edit3;
@@ -40,6 +43,8 @@ public class OtpActivity extends AppBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp);
         ButterKnife.bind(this);
+
+        ViewCompat.setLayoutDirection(layoutOtp, ViewCompat.LAYOUT_DIRECTION_LTR);
 
         initViews();
     }

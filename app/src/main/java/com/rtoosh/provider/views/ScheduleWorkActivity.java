@@ -46,7 +46,7 @@ public class ScheduleWorkActivity extends AppBaseActivity {
 
         openingHoursList = new ArrayList<>();
 
-        String[] days = DateUtils.getAllDays();
+        String[] days = DateUtils.getAllDays(mContext);
         for (String day : days) {
             OpeningTime time = new OpeningTime("", "");
             OpeningHours hours = new OpeningHours(day, time);

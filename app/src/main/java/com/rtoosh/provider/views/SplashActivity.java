@@ -19,6 +19,8 @@ import com.rtoosh.provider.model.event.ApiErrorWithMessageEvent;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.Locale;
+
 import timber.log.Timber;
 
 public class SplashActivity extends AppBaseActivity {
@@ -42,7 +44,11 @@ public class SplashActivity extends AppBaseActivity {
     private void initViews() {
         handler = new Handler();
 
-        RPPreferences.putString(mContext, Constants.LANGUAGE_KEY, Constants.LANGUAGE_EN);
+        if (RPPreferences.readString(mContext, Constants.LANGUAGE_KEY).isEmpty()) {
+            Timber.e("Language code-- " + Locale.getDefault().getLanguage());
+            RPPreferences.putString(mContext, Constants.LANGUAGE_KEY, Locale.getDefault().getLanguage());
+        }
+
         lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
         user_id = RPPreferences.readString(mContext, Constants.USER_ID_KEY);
         idNumber = RPPreferences.readString(mContext, Constants.ID_NUMBER_KEY);

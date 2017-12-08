@@ -28,7 +28,7 @@ public class RequestDetailsResponse extends AbstractApiResponse{
         public OrderDetails order;
     }
 
-    public class OrderDetails {
+    public class OrderDetails implements Serializable{
         @SerializedName("id")
         public String id;
         @SerializedName("lat")
@@ -37,6 +37,8 @@ public class RequestDetailsResponse extends AbstractApiResponse{
         public String lng;
         @SerializedName("discount")
         public String discount;
+        @SerializedName("commission")
+        public String commission;
     }
 
     public class Provider implements Serializable{
@@ -147,6 +149,8 @@ public class RequestDetailsResponse extends AbstractApiResponse{
         public String orderType;
         @SerializedName("discount")
         public String discount;
+        @SerializedName("commission")
+        public String commission;
 
         public String timeRemains;
     }

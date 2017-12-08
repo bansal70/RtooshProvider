@@ -45,6 +45,8 @@ public class RequestsDetailActivity extends AppBaseActivity {
     @BindView(R.id.tvTimeText) TextView tvTimeText;
     @BindView(R.id.tvTimeLeft) TextView tvTimeLeft;
     @BindView(R.id.tvTime) TextView tvTime;
+    @BindView(R.id.tvCommissionRate) TextView tvCommissionRate;
+    @BindView(R.id.tvCommission) TextView tvCommission;
     @BindView(R.id.rlDiscount) RelativeLayout rlDiscount;
     @BindView(R.id.tvDiscount) TextView tvDiscount;
 
@@ -120,7 +122,14 @@ public class RequestsDetailActivity extends AppBaseActivity {
         tvDiscount.setText(order.discount);
         tvPersons.setText(String.valueOf(totalPersons));
         tvOrderId.setText(data.order.id);
-        tvTotalPrice.setText(String.format("%s %s", String.valueOf(price), Constants.CURRENCY));
+
+        tvCommissionRate.setText(String.format("%s%% = ", order.commission));
+        int commission = (int)((price / 100.0f) * Float.parseFloat(order.commission));
+        tvCommission.setText(String.valueOf(commission));
+
+        price -= commission;
+
+        tvTotalPrice.setText(String.format("%s %s", String.valueOf(price), getString(R.string.currency)));
 
         if (data.order.orderType.equals(Constants.ORDER_ONLINE)) {
             tvTime.setText(String.format("%s %s %s",

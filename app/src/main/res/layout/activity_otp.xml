@@ -46,6 +46,7 @@
             android:text="@string/access_code_verification_text"/>
 
         <LinearLayout
+            android:id="@+id/layoutOtp"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:gravity="center"
@@ -56,7 +57,6 @@
                 android:id="@+id/edit1"
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="match_parent"
-                android:hint="@string/one"
                 android:maxLength="1"
                 android:background="@drawable/custom_stroke_pink"
                 android:textAppearance="@style/TextAppearance.FontBold"
@@ -71,7 +71,6 @@
                 android:id="@+id/edit2"
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="match_parent"
-                android:hint="@string/two"
                 android:maxLength="1"
                 android:imeOptions="actionNext"
                 android:background="@drawable/custom_stroke_pink"
@@ -88,7 +87,6 @@
                 android:id="@+id/edit3"
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="match_parent"
-                android:hint="@string/three"
                 android:maxLength="1"
                 android:imeOptions="actionNext"
                 android:background="@drawable/custom_stroke_pink"
@@ -105,7 +103,6 @@
                 android:id="@+id/edit4"
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="match_parent"
-                android:hint="@string/four"
                 android:maxLength="1"
                 android:imeOptions="actionDone"
                 android:background="@drawable/custom_stroke_pink"
@@ -136,6 +133,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tvResendCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"

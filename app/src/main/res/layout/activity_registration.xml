@@ -42,6 +42,7 @@
                 android:textAppearance="@style/TextAppearance.FontMedium"/>
 
             <LinearLayout
+                android:id="@+id/layoutRegister"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -161,7 +162,6 @@
                         android:paddingRight="@dimen/_10sdp"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
-                        android:imeOptions="actionDone"
                         android:textAppearance="@style/TextAppearance.FontMedium"
                         android:hint="@string/password"/>
 

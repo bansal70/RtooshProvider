@@ -65,8 +65,6 @@
                 android:textColor="@color/colorBlack"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_toLeftOf="@+id/tvTotalPrice"
-                android:layout_toStartOf="@+id/tvTotalPrice"
                 android:textAppearance="@style/TextAppearance.FontMedium"
                 android:textSize="@dimen/_14sdp" />
 
@@ -105,11 +103,11 @@
                     android:layout_toStartOf="@id/llExpectedTime">
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_order_details_time_black"
-                        android:drawablePadding="@dimen/_10sdp"
                         android:drawableStart="@drawable/ic_order_details_time_black"
+                        android:drawablePadding="@dimen/_10sdp"
                         android:gravity="center|start"
                         android:textColor="@color/black"
                         android:text="@string/expected_time_to_finish"

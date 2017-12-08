@@ -2,8 +2,10 @@ package com.rtoosh.provider.views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -20,13 +22,17 @@ import com.rtoosh.provider.model.event.ApiErrorWithMessageEvent;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class PhoneVerificationActivity extends AppBaseActivity {
 
     public static final String OTP_TAG = "PhoneVerificationActivity";
 
+    @BindView(R.id.numberLayout) LinearLayout numberLayout;
     @BindView(R.id.editPhone) EditText editPhone;
     @BindView(R.id.tvCode) TextView tvCode;
     String deviceToken, lang;
@@ -36,7 +42,13 @@ public class PhoneVerificationActivity extends AppBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_verification);
         ButterKnife.bind(this);
-        RPPreferences.putString(mContext, Constants.LANGUAGE_KEY, Constants.LANGUAGE_EN);
+
+        ViewCompat.setLayoutDirection(numberLayout, ViewCompat.LAYOUT_DIRECTION_LTR);
+
+        if (RPPreferences.readString(mContext, Constants.LANGUAGE_KEY).isEmpty()) {
+            Timber.e("Language code-- " + Locale.getDefault().getLanguage());
+            RPPreferences.putString(mContext, Constants.LANGUAGE_KEY, Locale.getDefault().getLanguage());
+        }
 
         initViews();
     }
@@ -76,6 +88,17 @@ public class PhoneVerificationActivity extends AppBaseActivity {
                     showToast(getString(R.string.error_account_suspended));
                     return;
                 }
+
+                if (data.id != null) {
+                    RPPreferences.putString(mContext, Constants.USER_ID_KEY, data.id);
+                }
+
+                if (data.fullName != null) {
+                    RPPreferences.putString(mContext, Constants.FULL_NAME_KEY, data.fullName);
+                }
+
+                showToast(String.valueOf(loginResponse.otp));
+
                 startActivity(new Intent(this, OtpActivity.class)
                         .putExtra("loginData", new Gson().toJson(loginResponse))
                         .putExtra("id_number", data.idNumber));

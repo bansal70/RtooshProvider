@@ -129,7 +129,7 @@ public class ServiceActivity extends AppBaseActivity {
         ordersAdapter = new OrdersAdapter(mContext, listOrders);
         recyclerOrders.setAdapter(ordersAdapter);
         ordersAdapter.notifyDataSetChanged();
-        tvTotalPrice.setText(String.format("%s %s", String.valueOf(price), Constants.CURRENCY));
+        tvTotalPrice.setText(String.format("%s %s", String.valueOf(price), getString(R.string.currency)));
     }
 
     @OnClick(R.id.tvSms)

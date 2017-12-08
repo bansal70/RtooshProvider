@@ -121,6 +121,10 @@ public class Utils {
         return matcher.matches();
     }
 
+    public static boolean isValidEmail(String target) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(target.trim()).matches();
+    }
+
     public static boolean isValidMobile(String phone) {
         return android.util.Patterns.PHONE.matcher(phone).matches();
     }

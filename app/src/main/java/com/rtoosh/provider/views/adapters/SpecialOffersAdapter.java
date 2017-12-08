@@ -68,7 +68,7 @@ public class SpecialOffersAdapter extends RecyclerView.Adapter<SpecialOffersAdap
         ProfileResponse.Category category = service.category;
         holder.tvServiceName.setText(service.serviceName);
         holder.tvServiceContent.setText(service.description);
-        holder.tvServicePrice.setText(String.format("%s %s", service.price, Constants.CURRENCY));
+        holder.tvServicePrice.setText(String.format("%s %s", service.price, mContext.getString(R.string.currency)));
         holder.tvServiceDuration.setText(service.duration);
 
         Glide.with(mContext).load(category.image).apply(RequestOptions.centerCropTransform()).into(holder.imgService);

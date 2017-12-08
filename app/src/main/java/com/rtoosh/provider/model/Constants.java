@@ -6,6 +6,7 @@ package com.rtoosh.provider.model;
 
 public class Constants {
 
+    public static final String API_KEY = "AIzaSyDYcFoTC4JRSJ7oZF_qrPHP2LhxBRXGkSo";
     /* Account Status Keys */
     public static final String ACCOUNT_ACTIVE = "1";
     public static final String ACCOUNT_INACTIVE = "2";
@@ -35,7 +36,6 @@ public class Constants {
 
     public static final String DEVICE_TYPE = "Android";
     public static final String USER_TYPE = "2";
-    public static final String CURRENCY = "SAR";
     public static final String ORDER_ONLINE = "1";
     public static final String ORDER_SCHEDULE = "2";
 

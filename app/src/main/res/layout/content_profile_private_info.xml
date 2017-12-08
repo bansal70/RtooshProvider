@@ -134,64 +134,53 @@
     </LinearLayout>
 
     <com.rtoosh.provider.model.custom.TextViewDrawableSize
-        android:id="@+id/tvChangePassword"
-        android:layout_width="match_parent"
+        android:id="@+id/tvEditLanguage"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:drawableLeft="@drawable/ic_settings_change_password"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:drawableLeft="@drawable/ic_language"
+        android:drawableStart="@drawable/ic_language"
         android:drawablePadding="@dimen/_10sdp"
-        android:drawableRight="@drawable/ic_edit_service"
-        android:drawableEnd="@drawable/ic_edit_service"
+        android:text="@string/language"
+        android:padding="@dimen/_10sdp"
+        android:textAllCaps="true"
+        android:foreground="?selectableItemBackground"
+        android:background="?selectableItemBackground"
+        android:textAppearance="@style/TextAppearance.FontMedium"
+        android:textColor="@color/colorAccent"
+        app:compoundDrawableWidth="@dimen/_15sdp" />
+
+    <com.rtoosh.provider.model.custom.TextViewDrawableSize
+        android:id="@+id/tvChangePassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/_10sdp"
+        android:drawableLeft="@drawable/ic_settings_change_password"
         android:drawableStart="@drawable/ic_settings_change_password"
         android:text="@string/change_password"
         android:textAllCaps="true"
-        android:background="@color/white"
         android:padding="@dimen/_10sdp"
         android:foreground="?selectableItemBackground"
+        android:background="?selectableItemBackground"
         android:textAppearance="@style/TextAppearance.FontMedium"
         android:textColor="@color/colorAccent"
         app:compoundDrawableWidth="@dimen/_15sdp" />
-
 
     <com.rtoosh.provider.model.custom.TextViewDrawableSize
         android:id="@+id/tvEditDocument"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:drawableLeft="@drawable/ic_settings_document"
         android:drawablePadding="@dimen/_10sdp"
         android:drawableStart="@drawable/ic_settings_document"
-        android:drawableRight="@drawable/ic_edit_service"
-        android:drawableEnd="@drawable/ic_edit_service"
         android:text="@string/documents"
         android:padding="@dimen/_10sdp"
         android:textAllCaps="true"
-        android:background="@color/white"
         android:foreground="?selectableItemBackground"
+        android:background="?selectableItemBackground"
         android:textAppearance="@style/TextAppearance.FontMedium"
         android:textColor="@color/colorAccent"
         app:compoundDrawableWidth="@dimen/_15sdp" />
-
-
-    <com.rtoosh.provider.model.custom.TextViewDrawableSize
-        android:id="@+id/tvSpecialOffers"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:drawableLeft="@drawable/ic_settings_document"
-        android:drawablePadding="@dimen/_10sdp"
-        android:drawableStart="@drawable/ic_settings_document"
-        android:drawableRight="@drawable/ic_edit_service"
-        android:drawableEnd="@drawable/ic_edit_service"
-        android:text="@string/special_offers"
-        android:padding="@dimen/_10sdp"
-        android:textAllCaps="true"
-        android:background="@color/white"
-        android:foreground="?selectableItemBackground"
-        android:textAppearance="@style/TextAppearance.FontMedium"
-        android:textColor="@color/colorAccent"
-        app:compoundDrawableWidth="@dimen/_15sdp" />
-
 
 </LinearLayout>

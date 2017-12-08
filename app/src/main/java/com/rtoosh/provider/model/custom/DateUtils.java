@@ -1,7 +1,10 @@
 package com.rtoosh.provider.model.custom;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.rtoosh.provider.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,15 +36,15 @@ public class DateUtils {
         return sdf.parse(dateFormateInUTC);
     }
 
-    public static String[] getAllDays() {
+    public static String[] getAllDays(Context mContext) {
         String[] days = new String[7];
-        days[0] = "Monday";
-        days[1] = "Tuesday";
-        days[2] = "Wednesday";
-        days[3] = "Thursday";
-        days[4] = "Friday";
-        days[5] = "Saturday";
-        days[6] = "Sunday";
+        days[0] = mContext.getString(R.string.day_monday);
+        days[1] = mContext.getString(R.string.day_tuesday);
+        days[2] = mContext.getString(R.string.day_wednesday);
+        days[3] = mContext.getString(R.string.day_thursday);
+        days[4] = mContext.getString(R.string.day_friday);
+        days[5] = mContext.getString(R.string.day_saturday);
+        days[6] = mContext.getString(R.string.day_sunday);
         return days;
     }
 
@@ -88,6 +91,7 @@ public class DateUtils {
             e.printStackTrace();
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM", Locale.getDefault());
+        Timber.e("date-- " + dateFormat.format(date));
 
         return dateFormat.format(date);
     }

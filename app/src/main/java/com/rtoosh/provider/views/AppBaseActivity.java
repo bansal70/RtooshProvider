@@ -35,9 +35,9 @@ import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.Task;
-import com.rtoosh.provider.R;
 import com.rtoosh.provider.model.Constants;
 import com.rtoosh.provider.model.Event;
+import com.rtoosh.provider.model.LocaleHelper;
 import com.rtoosh.provider.model.RPPreferences;
 import com.rtoosh.provider.model.custom.ImagePicker;
 import com.rtoosh.provider.model.custom.Utils;
@@ -142,23 +142,39 @@ public abstract class AppBaseActivity extends AppCompatActivity {
 
         if (requestCode == PERMISSION_LOCATION_CODE && hasAllPermissionsGranted(grantResults)) {
             getLocation();
-            return;
+            //return;
         }
-        if (requestCode == PERMISSION_REQUEST_CODE && hasAllPermissionsGranted(grantResults)) {
+     /*   if (requestCode == PERMISSION_REQUEST_CODE && hasAllPermissionsGranted(grantResults)) {
             chooseImage();
         } else {
             Toast.makeText(this, R.string.grant_permissions, Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
     }
 
-    private boolean hasAllPermissionsGranted(@NonNull int[] grantResults) {
+    public boolean hasAllPermissionsGranted(@NonNull int[] grantResults) {
         for (int grantResult : grantResults) {
             if (grantResult == PackageManager.PERMISSION_DENIED) {
                 return false;
             }
         }
         return true;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        setLanguage(RPPreferences.readString(this, Constants.LANGUAGE_KEY));
+    }
+
+    public void setLanguage(String langCode) {
+        LocaleHelper.setLocale(this, langCode);
+    }
+
+    public void updateLanguage(String langCode) {
+        LocaleHelper.setLocale(this, langCode);
+        recreate();
     }
 
     /*@Override

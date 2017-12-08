@@ -2,10 +2,12 @@ package com.rtoosh.provider.views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -32,6 +34,7 @@ public class RegistrationActivity extends AppBaseActivity implements AdapterView
 
     private final String REGISTER_TAG = "RegistrationActivity";
 
+    @BindView(R.id.layoutRegister) LinearLayout layoutRegister;
     @BindView(R.id.editName) EditText editName;
     @BindView(R.id.editEmail) EditText editEmail;
     @BindView(R.id.editPassword) EditText editPassword;
@@ -47,6 +50,8 @@ public class RegistrationActivity extends AppBaseActivity implements AdapterView
         setContentView(R.layout.activity_registration);
         ButterKnife.bind(this);
 
+        ViewCompat.setLayoutDirection(layoutRegister, ViewCompat.LAYOUT_DIRECTION_LTR);
+
         initViews();
     }
 
@@ -57,9 +62,9 @@ public class RegistrationActivity extends AppBaseActivity implements AdapterView
         country_code = RPPreferences.readString(mContext, Constants.COUNTRY_CODE_KEY);
 
         listSelect = new ArrayList<>();
-        listSelect.add("Select");
-        listSelect.add("Salon Owner");
-        listSelect.add("Independent Service Provider");
+        listSelect.add(getString(R.string.role_select));
+        listSelect.add(getString(R.string.role_salon_owner));
+        listSelect.add(getString(R.string.role_provider));
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this,
                 R.layout.spinner_item, listSelect);
@@ -110,6 +115,7 @@ public class RegistrationActivity extends AppBaseActivity implements AdapterView
                 RegisterResponse.Data data = registerResponse.data;
                 RegisterResponse.User user = data.user;
                 RPPreferences.putString(mContext, Constants.USER_ID_KEY, user.id);
+                RPPreferences.putString(mContext, Constants.FULL_NAME_KEY, editName.getText().toString());
 
                 startActivity(new Intent(this, RegisterIDActivity.class)
                         .putExtra("user_id", user.id));

@@ -100,14 +100,15 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    tools:ignore="RelativeOverlap">
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/llPrepare"
-                        android:layout_toStartOf="@+id/llPrepare"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
                         android:drawableLeft="@mipmap/ic_prepair"
                         android:drawablePadding="@dimen/_5sdp"
                         android:drawableStart="@mipmap/ic_prepair"
@@ -151,6 +152,7 @@
                             android:paddingTop="@dimen/_5sdp"
                             android:text="@string/i_m_ready"
                             android:textSize="@dimen/_10sdp"
+                            android:visibility="gone"
                             android:textAppearance="@style/TextAppearance.FontMedium"
                             android:textColor="@color/colorWhite" />
 
@@ -187,11 +189,11 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/llExpectedTime"
-                    android:layout_toStartOf="@id/llExpectedTime"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:drawableLeft="@drawable/ic_order_details_time_black"
                     android:drawablePadding="@dimen/_5sdp"
                     android:drawableStart="@drawable/ic_order_details_time_black"

@@ -42,14 +42,6 @@ public class RequestsActivity extends AppBaseActivity {
     @BindView(R.id.tvApprovedRequests) TextView tvApprovedRequests;
     @BindView(R.id.tvCompletedRequests) TextView tvCompletedRequests;
 
-    NewRequestsAdapter newRequestsAdapter;
-    ApprovedRequestAdapter approvedRequestAdapter;
-    CompletedRequestsAdapter completedRequestsAdapter;
-
-    List<HistoryResponse.Data> pendingRequestsList;
-    List<HistoryResponse.Data> approvedRequestsList;
-    List<HistoryResponse.Data> completedRequestsList;
-
     String lang, user_id, serverTime;
 
     @Override
@@ -83,9 +75,10 @@ public class RequestsActivity extends AppBaseActivity {
     }
 
     private void setHistory(HistoryResponse historyResponse) {
-        pendingRequestsList = new ArrayList<>();
-        approvedRequestsList = new ArrayList<>();
-        completedRequestsList = new ArrayList<>();
+        List<HistoryResponse.Data> pendingRequestsList = new ArrayList<>();
+        List<HistoryResponse.Data> approvedRequestsList = new ArrayList<>();
+        List<HistoryResponse.Data> completedRequestsList = new ArrayList<>();
+
         serverTime = historyResponse.serverTime;
 
         List<HistoryResponse.Data> dataList = historyResponse.data;
@@ -130,13 +123,17 @@ public class RequestsActivity extends AppBaseActivity {
             }
         }
 
-        approvedRequestAdapter = new ApprovedRequestAdapter(mContext, approvedRequestsList, serverTime);
-        newRequestsAdapter = new NewRequestsAdapter(mContext, pendingRequestsList);
-        completedRequestsAdapter = new CompletedRequestsAdapter(mContext, completedRequestsList);
+        ApprovedRequestAdapter approvedRequestAdapter = new ApprovedRequestAdapter(mContext, approvedRequestsList, serverTime);
+        NewRequestsAdapter newRequestsAdapter = new NewRequestsAdapter(mContext, pendingRequestsList);
+        CompletedRequestsAdapter completedRequestsAdapter = new CompletedRequestsAdapter(mContext, completedRequestsList);
 
         recyclerNewRequests.setAdapter(newRequestsAdapter);
         recyclerApprovedRequests.setAdapter(approvedRequestAdapter);
         recyclerCompletedRequests.setAdapter(completedRequestsAdapter);
+
+        tvNewRequests.setText(String.valueOf(pendingRequestsList.size()));
+        tvApprovedRequests.setText(String.valueOf(approvedRequestsList.size()));
+        tvCompletedRequests.setText(String.valueOf(completedRequestsList.size()));
 
         newRequestsAdapter.setOnDataChangeListener(size -> {
             if (!isFinishing()) {
@@ -153,10 +150,6 @@ public class RequestsActivity extends AppBaseActivity {
                         Operations.historyParams(user_id, lang));
             }
         });
-
-        tvNewRequests.setText(String.valueOf(pendingRequestsList.size()));
-        tvApprovedRequests.setText(String.valueOf(approvedRequestsList.size()));
-        tvCompletedRequests.setText(String.valueOf(completedRequestsList.size()));
     }
 
     @Override

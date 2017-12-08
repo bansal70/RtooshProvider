@@ -39,6 +39,9 @@ public class WalletActivity extends AppBaseActivity {
     @BindView(R.id.tvYear) TextView tvYear;
     @BindView(R.id.tvMonth) TextView tvMonth;
     @BindView(R.id.tvWeek) TextView tvWeek;
+    @BindView(R.id.tvEarnings) TextView tvEarnings;
+    @BindView(R.id.tvDue) TextView tvDue;
+    @BindView(R.id.tvPending) TextView tvPending;
     @BindView(R.id.tvTotalEarnings) TextView tvTotalEarnings;
     @BindView(R.id.tvBalance) TextView tvBalance;
 
@@ -99,13 +102,22 @@ public class WalletActivity extends AppBaseActivity {
     }
 
     private void setWalletData(WalletResponse walletResponse) {
-        WalletResponse.Data data = walletResponse.data;
+        //WalletResponse.Data data = walletResponse.data;
+        WalletResponse.Wallet wallet = walletResponse.wallet;
 
-        tvBalance.setText(String.format("%s %s", String.valueOf(data.today), Constants.CURRENCY));
-        tvMonth.setText(String.format("%s %s", String.valueOf(data.monthly), Constants.CURRENCY));
-        tvWeek.setText(String.format("%s %s", String.valueOf(data.weekly), Constants.CURRENCY));
-        tvYear.setText(String.format("%s %s", String.valueOf(data.total), Constants.CURRENCY));
-        tvTotalEarnings.setText(String.format("%s %s", String.valueOf(data.total), Constants.CURRENCY));
+        tvBalance.setText(String.format("%s %s", String.valueOf(wallet.balance), getString(R.string.currency)));
+        tvEarnings.setText(String.format("%s %s", String.valueOf(wallet.earning), getString(R.string.currency)));
+        tvDue.setText(String.format("%s %s", String.valueOf(wallet.due), getString(R.string.currency)));
+        tvPending.setText(String.format("%s %s", String.valueOf(wallet.balance), getString(R.string.currency)));
+
+        float total = Float.parseFloat(wallet.earning) + Float.parseFloat(wallet.balance);
+
+        tvTotalEarnings.setText(String.format("%s %s", String.valueOf(total), getString(R.string.currency)));
+
+        /*tvMonth.setText(String.format("%s %s", String.valueOf(data.monthly), getString(R.string.currency)));
+        tvWeek.setText(String.format("%s %s", String.valueOf(data.weekly), getString(R.string.currency)));
+        tvYear.setText(String.format("%s %s", String.valueOf(data.total), getString(R.string.currency)));
+        tvTotalEarnings.setText(String.format("%s %s", String.valueOf(data.total), getString(R.string.currency)));*/
 
         WalletResponse.Account account = walletResponse.account;
         WalletResponse.AccountDetails details = account.account;

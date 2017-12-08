@@ -183,14 +183,24 @@ public class CalendarActivity extends AppBaseActivity {
         List<ProfileResponse.Hour> hoursList = data.hour;
 
         openingHoursList = new ArrayList<>();
-        for (ProfileResponse.Hour hour : hoursList) {
+        for (int i=0; i<hoursList.size(); i++) {
+            ProfileResponse.Hour hour = hoursList.get(i);
+            String[] days = DateUtils.getAllDays(mContext);
             OpeningTime time = new OpeningTime(hour.open, hour.close);
-            OpeningHours hours = new OpeningHours(hour.day, time);
+            OpeningHours hours = new OpeningHours(days[i], time);
             openingHoursList.add(hours);
         }
 
+        /*for (ProfileResponse.Hour hour : hoursList) {
+            String[] days = DateUtils.getAllDays(mContext);
+
+            OpeningTime time = new OpeningTime(hour.open, hour.close);
+            OpeningHours hours = new OpeningHours(hour.day, time);
+            openingHoursList.add(hours);
+        }*/
+
         if (hoursList.size() == 0) {
-            String[] days = DateUtils.getAllDays();
+            String[] days = DateUtils.getAllDays(mContext);
             for (String day : days) {
                 OpeningTime time = new OpeningTime("", "");
                 OpeningHours hours = new OpeningHours(day, time);

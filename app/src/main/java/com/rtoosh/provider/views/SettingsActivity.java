@@ -1,5 +1,6 @@
 package com.rtoosh.provider.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.rtoosh.provider.model.POJO.register.RegisterOrder;
 import com.rtoosh.provider.model.POJO.register.RegisterServiceData;
 import com.rtoosh.provider.model.POJO.register.RegisterServiceResponse;
 import com.rtoosh.provider.model.RPPreferences;
+import com.rtoosh.provider.model.custom.Utils;
 import com.rtoosh.provider.model.event.ApiErrorEvent;
 import com.rtoosh.provider.model.event.ApiErrorWithMessageEvent;
 import com.rtoosh.provider.model.network.AbstractApiResponse;
@@ -91,6 +93,12 @@ public class SettingsActivity extends AppBaseActivity {
         recyclerServices.setNestedScrollingEnabled(false);
         registerServiceAdapter = new RegisterServiceAdapter(mContext, listData, listAddServices);
         recyclerServices.setAdapter(registerServiceAdapter);
+    }
+
+    @OnClick(R.id.cardSpecial)
+    public void specialOffers() {
+        startActivity(new Intent(mContext, SpecialOffersActivity.class));
+        Utils.gotoNextActivityAnimation(mContext);
     }
 
     @OnClick(R.id.ivAddPerson)

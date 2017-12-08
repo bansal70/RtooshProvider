@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rtoosh.provider.R;
-import com.rtoosh.provider.model.Constants;
 import com.rtoosh.provider.model.POJO.AddService;
 import com.rtoosh.provider.model.custom.Utils;
 
@@ -45,7 +44,7 @@ public class RegisterServiceDetailsAdapter extends RecyclerView.Adapter<Register
         AddService addService = listServices.get(position);
         holder.tvServiceName.setText(addService.getName());
         holder.tvServiceContent.setText(addService.getDescription());
-        holder.tvServicePrice.setText(String.format("%s %s", addService.getPrice(), Constants.CURRENCY));
+        holder.tvServicePrice.setText(String.format("%s %s", addService.getPrice(), context.getString(R.string.currency)));
         holder.tvServiceDuration.setText(addService.getDuration());
     }
 

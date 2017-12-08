@@ -39,7 +39,7 @@
 
             <TextView
                 android:id="@+id/textView1"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/new_requests"
                 android:textSize="@dimen/_14sdp"
@@ -48,8 +48,8 @@
                 android:textColor="@color/colorBlack"
                 android:layout_centerVertical="true"
                 android:drawablePadding="@dimen/_10sdp"
-                android:layout_toLeftOf="@+id/tvNewRequest"
-                android:layout_toStartOf="@+id/tvNewRequest"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:drawableLeft="@drawable/ic_new_requests"
                 android:drawableStart="@drawable/ic_new_requests"/>
 
@@ -108,7 +108,7 @@
                 android:padding="@dimen/_5sdp">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/approved_requests"
                     android:textSize="@dimen/_14sdp"
@@ -117,8 +117,8 @@
                     android:gravity="start|center"
                     android:layout_centerVertical="true"
                     android:drawablePadding="@dimen/_10sdp"
-                    android:layout_toLeftOf="@+id/tvApprovedRequests"
-                    android:layout_toStartOf="@+id/tvApprovedRequests"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:drawableLeft="@drawable/ic_approved_requests"
                     android:drawableStart="@drawable/ic_approved_requests"/>
 
@@ -177,7 +177,7 @@
                 android:padding="@dimen/_5sdp">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/completed_requests"
                     android:textSize="@dimen/_14sdp"
@@ -186,8 +186,8 @@
                     android:gravity="start|center"
                     android:layout_centerVertical="true"
                     android:drawablePadding="@dimen/_10sdp"
-                    android:layout_toLeftOf="@+id/tvCompletedRequests"
-                    android:layout_toStartOf="@+id/tvCompletedRequests"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:drawableLeft="@drawable/ic_service_like"
                     android:drawableStart="@drawable/ic_service_like"/>
 

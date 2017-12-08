@@ -84,6 +84,85 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentStart="true"
+                            android:text="@string/your_earnings"
+                            android:textAppearance="@style/TextAppearance.FontMedium" />
+
+                        <TextView
+                            android:id="@+id/tvEarnings"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:textAppearance="@style/TextAppearance.FontMedium"
+                            android:textColor="@color/colorAccent" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_10sdp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:text="@string/due_amount"
+                            android:textAppearance="@style/TextAppearance.FontMedium" />
+
+                        <TextView
+                            android:id="@+id/tvDue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:textAppearance="@style/TextAppearance.FontMedium"
+                            android:textColor="@color/colorAccent" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_10sdp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:text="@string/your_balance"
+                            android:textAppearance="@style/TextAppearance.FontMedium" />
+
+                        <TextView
+                            android:id="@+id/tvPending"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:textAppearance="@style/TextAppearance.FontMedium"
+                            android:textColor="@color/colorAccent" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_10sdp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
                             android:text="@string/this_year"
                             android:layout_toLeftOf="@+id/tvYear"
                             android:layout_toStartOf="@+id/tvYear"
@@ -103,6 +182,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
                         android:paddingStart="@dimen/_10sdp">
@@ -131,6 +211,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
                         android:paddingStart="@dimen/_10sdp">
@@ -173,9 +254,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentStart="true"
-                            android:text="@string/total"
-                            android:layout_toLeftOf="@+id/tvTotalEarnings"
-                            android:layout_toStartOf="@+id/tvTotalEarnings"
+                            android:text="@string/total_earnings"
                             android:textAppearance="@style/TextAppearance.FontMedium" />
 
                         <TextView
@@ -206,8 +285,6 @@
                                 android:textSize="@dimen/_14sdp"
                                 android:textColor="@color/colorAccent"
                                 android:padding="@dimen/_10sdp"
-                                android:layout_toLeftOf="@+id/imgEdit"
-                                android:layout_toStartOf="@+id/imgEdit"
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentLeft="true"
                                 android:textAppearance="@style/TextAppearance.FontMedium"/>
@@ -290,8 +367,14 @@
 
                     </LinearLayout>
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorLightYellow"
+                        android:layout_marginTop="@dimen/_10sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/string_weekly_balance"
                         android:textColor="@color/colorDarkYellow"
@@ -300,10 +383,9 @@
                         android:drawableLeft="@drawable/ic_flag"
                         android:drawableStart="@drawable/ic_flag"
                         android:drawablePadding="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:textAppearance="@style/TextAppearance.FontMedium"
-                        android:background="@color/colorLightYellow"/>
+                        android:textAppearance="@style/TextAppearance.FontMedium" />
 
+                    </LinearLayout>
 
                 </LinearLayout>
 

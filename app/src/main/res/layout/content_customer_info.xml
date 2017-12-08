@@ -24,16 +24,18 @@
 
         <TextView
             android:id="@+id/tvCustomerName"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/llInfo"
-            android:layout_toStartOf="@+id/llInfo"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:drawableLeft="@drawable/ic_order_details_name"
             android:drawablePadding="@dimen/_10sdp"
             android:drawableStart="@drawable/ic_order_details_name"
             android:gravity="center|start"
             android:text=""
+            android:maxLength="20"
+            android:ellipsize="end"
             android:textAppearance="@style/TextAppearance.FontBold"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/_12sdp" />
@@ -133,11 +135,11 @@
         android:layout_marginStart="@dimen/_10sdp">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/llTime"
-            android:layout_toStartOf="@id/llTime"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:drawableLeft="@drawable/ic_order_details_time_black"
             android:drawablePadding="@dimen/_10sdp"
             android:drawableStart="@drawable/ic_order_details_time_black"

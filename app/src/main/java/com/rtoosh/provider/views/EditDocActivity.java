@@ -1,9 +1,12 @@
 package com.rtoosh.provider.views;
 
+import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -39,6 +43,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.os.Build.VERSION_CODES.M;
 
 public class EditDocActivity extends AppBaseActivity implements AdapterView.OnItemSelectedListener{
 
@@ -101,7 +107,18 @@ public class EditDocActivity extends AppBaseActivity implements AdapterView.OnIt
 
     @OnClick(R.id.imgID)
     public void selectImage() {
+        if (Build.VERSION.SDK_INT >= M) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
+        } else {
+            pickImage();
+        }
        // dispatchTakePictureIntent();
+    }
+
+    private void pickImage() {
         imagePicker = new ImagePicker(this, null,
                 (Uri imageUri) -> {
                     String path = Utils.getPathFromUri(mContext, imageUri);
@@ -254,6 +271,10 @@ public class EditDocActivity extends AppBaseActivity implements AdapterView.OnIt
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        imagePicker.handlePermission(requestCode, grantResults);
+        if (requestCode == PERMISSION_REQUEST_CODE && hasAllPermissionsGranted(grantResults)) {
+            pickImage();
+        } else {
+            Toast.makeText(this, R.string.grant_permissions, Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -38,8 +38,6 @@
                     android:text="@string/hair_cut"
                     android:maxLines="1"
                     android:ellipsize="end"
-                    android:layout_toLeftOf="@+id/tvServicePrice"
-                    android:layout_toStartOf="@+id/tvServicePrice"
                     android:textAppearance="@style/TextAppearance.FontMedium"
                     android:textSize="@dimen/_15sdp" />
 
@@ -58,7 +56,7 @@
 
             <TextView
                 android:id="@+id/tvServiceContent"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/service"
                 android:maxLines="1"
@@ -80,6 +78,11 @@
                     android:layout_gravity="center"
                     android:textAppearance="@style/TextAppearance.FontRegular"
                     android:textColor="@color/colorGrayDark"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/colon"/>
 
                 <TextView
                     android:id="@+id/tvServiceDuration"

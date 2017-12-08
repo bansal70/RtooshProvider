@@ -1,9 +1,12 @@
 package com.rtoosh.provider.views;
 
+import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,6 +15,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.myhexaville.smartimagepicker.ImagePicker;
@@ -38,6 +42,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.MultipartBody;
 import timber.log.Timber;
+
+import static android.os.Build.VERSION_CODES.M;
 
 public class RegisterIDActivity extends AppBaseActivity implements CompoundButton.OnCheckedChangeListener,
         AdapterView.OnItemSelectedListener, ProgressRequestBody.UploadCallbacks {
@@ -94,7 +100,18 @@ public class RegisterIDActivity extends AppBaseActivity implements CompoundButto
 
     @OnClick(R.id.tvUploadID)
     public void uploadID() {
+        if (Build.VERSION.SDK_INT >= M) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
+        } else {
+            pickImage();
+        }
         //dispatchTakePictureIntent();
+    }
+
+    private void pickImage() {
         imagePicker = new ImagePicker(this, null,
                 (Uri imageUri) -> {
                     String path = Utils.getPathFromUri(mContext, imageUri);
@@ -172,7 +189,9 @@ public class RegisterIDActivity extends AppBaseActivity implements CompoundButto
         } else if (!isUploaded) {
             showToast(getString(R.string.error_upload_id));
         } else if (!isUploading) {
-            showToast("Please wait while we are uploading your id");
+            showToast(getString(R.string.id_upload_in_progress));
+        } else if (id.equals("0")) {
+            showToast(getString(R.string.error_id_number));
         } else {
             RegisterID registerID = createIdObject();
             Gson gson = new Gson();
@@ -201,7 +220,7 @@ public class RegisterIDActivity extends AppBaseActivity implements CompoundButto
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         imagePicker.handleActivityResult(resultCode,requestCode, data);
-       /* if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        /* if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bitmap photo = ImagePicker.getImageFromResult(this, resultCode, data);
             Uri tempUri = ImagePicker.getImageUri(this, photo);
             File finalFile = new File(ImagePicker.getRealPathFromURI(this, tempUri));
@@ -215,7 +234,7 @@ public class RegisterIDActivity extends AppBaseActivity implements CompoundButto
                     .uploadIDTask(mContext, ID_TAG, user_id, lang, filePart);
             textUpload.setVisibility(View.VISIBLE);
             isUploaded = true;
-        }*/
+        } */
     }
 
     @Override
@@ -277,7 +296,11 @@ public class RegisterIDActivity extends AppBaseActivity implements CompoundButto
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        imagePicker.handlePermission(requestCode, grantResults);
+        if (requestCode == PERMISSION_REQUEST_CODE && hasAllPermissionsGranted(grantResults)) {
+            pickImage();
+        } else {
+            Toast.makeText(this, R.string.grant_permissions, Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

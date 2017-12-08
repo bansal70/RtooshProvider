@@ -49,6 +49,7 @@ public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnC
     @BindView(R.id.cardPurchase) CardView cardPurchase;
     @BindView(R.id.tvTotalPrice) TextView tvTotalPrice;
     @BindView(R.id.tvCustomerName) TextView tvCustomerName;
+    @BindView(R.id.tvCommissionRate) TextView tvCommissionRate;
     @BindView(R.id.tvCommission) TextView tvCommission;
     @BindView(R.id.tvActualPrice) TextView tvActualPrice;
     @BindView(R.id.rlDiscount) RelativeLayout rlDiscount;
@@ -122,18 +123,18 @@ public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnC
         tvCustomerName.setText(client.fullName);
         tvDiscount.setText(order.discount);
 
-
         recyclerOrders.setLayoutManager(new LinearLayoutManager(mContext));
         ordersAdapter = new OrdersAdapter(mContext, listOrders);
         recyclerOrders.setAdapter(ordersAdapter);
         ordersAdapter.notifyDataSetChanged();
 
-        int commission = (int)(price / 100.0f) * 20;
+        tvCommissionRate.setText(String.format("%s%% = ", order.commission));
+        int commission = (int)((price / 100.0f) * Float.parseFloat(order.commission));
         tvCommission.setText(String.valueOf(commission));
-        tvActualPrice.setText(String.format("%s %s", String.valueOf(price), Constants.CURRENCY));
+        tvActualPrice.setText(String.format("%s %s", String.valueOf(price), getString(R.string.currency)));
 
         price -= commission;
-        tvTotalPrice.setText(String.format("%s %s", String.valueOf(price), Constants.CURRENCY));
+        tvTotalPrice.setText(String.format("%s %s", String.valueOf(price), getString(R.string.currency)));
     }
 
     @OnClick(R.id.tvYes)

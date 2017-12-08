@@ -22,20 +22,27 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <TextView
-            android:id="@+id/textOnline"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorWhite"
-            android:text="@string/you_are_online_now"
-            android:textAppearance="@style/TextAppearance.FontBold"
-            android:textColor="@color/colorGreen"
-            android:padding="@dimen/_5sdp"
-            android:gravity="center|start"
-            android:visibility="gone"
-            android:drawableLeft="@mipmap/ic_online"
-            android:drawableStart="@mipmap/ic_online"
-            android:drawablePadding="@dimen/_10sdp"/>
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:id="@+id/textOnline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:text="@string/you_are_online_now"
+                android:textAppearance="@style/TextAppearance.FontBold"
+                android:textColor="@color/colorGreen"
+                android:padding="@dimen/_5sdp"
+                android:gravity="center|start"
+                android:visibility="gone"
+                android:drawableLeft="@mipmap/ic_online"
+                android:drawableStart="@mipmap/ic_online"
+                android:drawablePadding="@dimen/_10sdp"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/llRequesting"
@@ -46,30 +53,30 @@
             android:visibility="gone"
             android:layout_centerInParent="true">
 
-        <TextView
-            android:id="@+id/tvWaitingRequest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/custom_basic_gradient_rounded"
-            android:text="@string/waiting_for_request"
-            android:textSize="@dimen/_25sdp"
-            android:textAppearance="@style/TextAppearance.FontMedium"
-            android:textColor="@color/colorLightGreen"
-            android:paddingLeft="@dimen/_20sdp"
-            android:paddingRight="@dimen/_20sdp"
-            android:paddingStart="@dimen/_20sdp"
-            android:paddingEnd="@dimen/_20sdp"
-            android:drawablePadding="@dimen/_10sdp"/>
+            <TextView
+                android:id="@+id/tvWaitingRequest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_basic_gradient_rounded"
+                android:text="@string/waiting_for_request"
+                android:textSize="@dimen/_25sdp"
+                android:textAppearance="@style/TextAppearance.FontMedium"
+                android:textColor="@color/colorLightGreen"
+                android:paddingLeft="@dimen/_20sdp"
+                android:paddingRight="@dimen/_20sdp"
+                android:paddingStart="@dimen/_20sdp"
+                android:paddingEnd="@dimen/_20sdp"
+                android:drawablePadding="@dimen/_10sdp"/>
 
-        <com.github.silvestrpredko.dotprogressbar.DotProgressBar
-            android:id="@+id/dot_progress_bar"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            app:amount="8"
-            app:duration="@android:integer/config_shortAnimTime"
-            app:endColor="@color/colorPrimary"
-            app:startColor="@color/colorAccent"
-            app:animationDirection="right"/>
+            <com.github.silvestrpredko.dotprogressbar.DotProgressBar
+                android:id="@+id/dot_progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                app:amount="8"
+                app:duration="@android:integer/config_shortAnimTime"
+                app:endColor="@color/colorPrimary"
+                app:startColor="@color/colorAccent"
+                app:animationDirection="right"/>
 
         </LinearLayout>
 
@@ -138,8 +145,6 @@
                     android:layout_toRightOf="@+id/ivNewRequest"
                     android:layout_toEndOf="@+id/ivNewRequest"
                     android:gravity="start"
-                    android:layout_toLeftOf="@+id/tvNewRequest"
-                    android:layout_toStartOf="@+id/tvNewRequest"
                     android:textAppearance="@style/TextAppearance.FontRegular"
                     android:layout_margin="@dimen/_5sdp"
                     android:layout_centerInParent="true" />
@@ -197,8 +202,6 @@
                     android:layout_toRightOf="@+id/ivApprovedRequest"
                     android:layout_toEndOf="@+id/ivApprovedRequest"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/llTime"
-                    android:layout_toStartOf="@+id/llTime"
                     android:maxLines="1"
                     android:textAppearance="@style/TextAppearance.FontRegular"
                     android:layout_margin="@dimen/_5sdp" />
