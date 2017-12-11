@@ -43,17 +43,18 @@ public class PhoneVerificationActivity extends AppBaseActivity {
         setContentView(R.layout.activity_phone_verification);
         ButterKnife.bind(this);
 
-        ViewCompat.setLayoutDirection(numberLayout, ViewCompat.LAYOUT_DIRECTION_LTR);
-
         if (RPPreferences.readString(mContext, Constants.LANGUAGE_KEY).isEmpty()) {
             Timber.e("Language code-- " + Locale.getDefault().getLanguage());
             RPPreferences.putString(mContext, Constants.LANGUAGE_KEY, Locale.getDefault().getLanguage());
         }
 
+        ViewCompat.setLayoutDirection(numberLayout, ViewCompat.LAYOUT_DIRECTION_LTR);
+
         initViews();
     }
 
     private void initViews() {
+        Utils.setTextWatcherPhoneLimit(editPhone);
         RPPreferences.removeKey(mContext, Constants.USER_ID_KEY);
         deviceToken = FirebaseInstanceId.getInstance().getToken();
         lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
@@ -63,7 +64,7 @@ public class PhoneVerificationActivity extends AppBaseActivity {
         String number = editPhone.getText().toString().trim();
         String code = tvCode.getText().toString();
 
-        if (!Utils.isValidMobile(number)) {
+        if (!Utils.isValidPhone(number)) {
             showToast(getString(R.string.toast_invalid_number));
             return;
         }
@@ -96,8 +97,6 @@ public class PhoneVerificationActivity extends AppBaseActivity {
                 if (data.fullName != null) {
                     RPPreferences.putString(mContext, Constants.FULL_NAME_KEY, data.fullName);
                 }
-
-                showToast(String.valueOf(loginResponse.otp));
 
                 startActivity(new Intent(this, OtpActivity.class)
                         .putExtra("loginData", new Gson().toJson(loginResponse))

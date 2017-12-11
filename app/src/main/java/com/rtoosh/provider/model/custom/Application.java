@@ -1,13 +1,18 @@
 package com.rtoosh.provider.model.custom;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.util.Log;
 
 import com.rtoosh.provider.BuildConfig;
 import com.rtoosh.provider.R;
+import com.rtoosh.provider.model.Constants;
+import com.rtoosh.provider.model.RPPreferences;
 
 import org.acra.ACRA;
 import org.acra.annotation.ReportsCrashes;
+
+import java.util.Locale;
 
 import timber.log.Timber;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -16,6 +21,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 public final class Application extends android.app.Application {
 
     public static String Font_Text = "fonts/AvenirLTStd-Light.otf";
+    public static String sDefSystemLanguage;
 
     @Override
     public void onCreate() {
@@ -27,6 +33,8 @@ public final class Application extends android.app.Application {
             Timber.plant(new CrashReportingTree());
         }
 
+        sDefSystemLanguage = Locale.getDefault().getLanguage();
+
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath(Font_Text)
                 .setFontAttrId(R.attr.fontPath)
@@ -36,6 +44,16 @@ public final class Application extends android.app.Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        sDefSystemLanguage = newConfig.locale.getLanguage();
+
+        if (RPPreferences.readString(getApplicationContext(), Constants.LANGUAGE_KEY).isEmpty())
+            RPPreferences.putString(getApplicationContext(), Constants.LANGUAGE_KEY, sDefSystemLanguage);
+        //LocaleHelper.setLocale(this, RPPreferences.readString(this, Constants.LANGUAGE_KEY));
     }
 
     /**

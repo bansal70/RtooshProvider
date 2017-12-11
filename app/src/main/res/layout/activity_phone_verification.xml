@@ -85,6 +85,7 @@
                 android:layout_gravity="end"
                 android:imeOptions="actionDone"
                 android:padding="@dimen/_3sdp"
+                android:digits="0123456789"
                 android:textAppearance="@style/TextAppearance.FontMedium"
                 android:textColorHint="@color/colorGrayDark" />
 

@@ -124,7 +124,7 @@
     <string name="makeup"> ماكياج </string>
     <string name="nails"> الأظافر </string>
     <string name="public_account_information"> معلومات الحساب العامة </string>
-    <string name="surname"> اسم العائلة، سيظهر هذا الاسم للعميل </string>
+    <string name="surname">الاسم المستعار، سيظهر هذا الاسم للعميل</string>
     <string name="bio"> بيو </string>
     <string name="my_work"> عملي </string>
     <string name="choose_best_photo"> اختر أحد أفضل صورك التي تعرض عملك المثالي للحصول على المزيد من العملاء </string>
@@ -194,7 +194,7 @@
     <string name="documents"> المستندات </string>
     <string name="change_profile_photo"> انقر عليه لتغييره </string>
     <string name="profile_photo"> صورة الملف الشخصي </string>
-    <string name="text_surname"> اسم </string>
+    <string name="text_surname">كنية</string>
     <string name="public_info"> معلومات عامة </string>
     <string name="private_info"> معلومات خاصة </string>
     <string name="portfolio"> محفظة </string>
@@ -299,6 +299,8 @@
     <string name="role_select"> حدد </string>
     <string name="role_salon_owner"> سالون أونر </string>
     <string name="role_provider"> مقدم خدمة مستقل </string>
+    <string name="text_resend_activation">سيتم تنشيط إعادة إرسال الشفرة في</string>
+    <string name="text_resend_time">ثواني</string>
 
     <string-array name="language_titles">
         <item>الإنجليزية</item>

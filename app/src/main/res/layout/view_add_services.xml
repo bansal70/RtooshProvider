@@ -38,6 +38,7 @@
                     android:text="@string/hair_cut"
                     android:maxLines="1"
                     android:ellipsize="end"
+                    android:maxLength="25"
                     android:textAppearance="@style/TextAppearance.FontMedium"
                     android:textSize="@dimen/_15sdp" />
 

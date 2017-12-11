@@ -101,7 +101,8 @@ public abstract class AppBaseActivity extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(LocaleHelper
+                .setLocale(newBase, RPPreferences.readString(newBase, Constants.LANGUAGE_KEY))));
     }
 
     public void showDialog() {

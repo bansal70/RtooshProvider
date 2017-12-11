@@ -31,6 +31,7 @@ import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
@@ -49,6 +50,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.rtoosh.provider.R;
+import com.rtoosh.provider.model.Constants;
 import com.rtoosh.provider.model.RPPreferences;
 import com.rtoosh.provider.views.PhoneVerificationActivity;
 
@@ -129,6 +131,10 @@ public class Utils {
         return android.util.Patterns.PHONE.matcher(phone).matches();
     }
 
+    public static boolean isValidPhone(String phone) {
+        return phone.startsWith("0") && phone.length() == 10 || !phone.startsWith("0") && phone.length() == 9;
+    }
+
     public static void maxDatePicker(Context mContext, final TextView textView) {
         final Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR); // current year
@@ -170,6 +176,31 @@ public class Utils {
                 String str = s.toString();
                 if (str.length() == 1) {
                     editNext.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
+    public static void setTextWatcherPhoneLimit(EditText edt) {
+        edt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String number = s.toString();
+                if (number.length() < 2) {
+                    if (number.startsWith("0"))
+                        edt.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
+                    else
+                        edt.setFilters(new InputFilter[]{new InputFilter.LengthFilter(9)});
                 }
             }
 
@@ -255,9 +286,11 @@ public class Utils {
 
         alertBuilder.setPositiveButton(R.string.yes, (dialogInterface, i) -> {
             dialogInterface.dismiss();
+            String lang = RPPreferences.readString(context, Constants.LANGUAGE_KEY);
             RPPreferences.clearPref(context);
             context.startActivity(new Intent(context, PhoneVerificationActivity.class));
             context.finish();
+            RPPreferences.putString(context, Constants.LANGUAGE_KEY, lang);
             Toast.makeText(context, R.string.logged_out, Toast.LENGTH_SHORT).show();
             NotificationManager notificationManager = (NotificationManager)
                     context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -272,6 +305,8 @@ public class Utils {
     }
 
     public static void smsIntent(Context mContext, String number) {
+        if (!number.startsWith("0"))
+            number = "0" + number;
         Intent sendIntent = new Intent(Intent.ACTION_VIEW);
         sendIntent.setType("vnd.android-dir/mms-sms");
         sendIntent.setData(Uri.parse("sms:" + number));
@@ -279,6 +314,8 @@ public class Utils {
     }
 
     public static void callIntent(Context mContext, String number) {
+        if (!number.startsWith("0"))
+            number = "0" + number;
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", number, null));
         mContext.startActivity(intent);
     }

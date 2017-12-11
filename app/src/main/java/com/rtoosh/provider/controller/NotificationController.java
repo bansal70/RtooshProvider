@@ -28,8 +28,6 @@ import com.rtoosh.provider.views.RequestsActivity;
 
 import java.util.List;
 
-import timber.log.Timber;
-
 public class NotificationController extends FirebaseMessagingService {
 
     private static final String TAG = NotificationController.class.getSimpleName();
@@ -46,11 +44,11 @@ public class NotificationController extends FirebaseMessagingService {
         String payment_mode = remoteMessage.getData().get("payment_mode");
         String orderType = remoteMessage.getData().get("orderType");
 
-        Timber.e("order id-- "+orderId);
         if (message == null)
             return;
 
         String user_id = RPPreferences.readString(this, Constants.USER_ID_KEY);
+
         if (!user_id.isEmpty()) {
             if (notify_type.equals(Constants.NOTIFY_ACCOUNT_STATUS)) {
                 RPPreferences.putString(getApplicationContext(), Constants.ACCOUNT_STATUS_KEY, accountStatus);

@@ -128,7 +128,7 @@
     <string name="makeup">Makeup</string>
     <string name="nails">Nails</string>
     <string name="public_account_information">Public Account Information</string>
-    <string name="surname">Surname, This name will show to customer</string>
+    <string name="surname">Nickname, This name will show to customer</string>
     <string name="bio">Bio</string>
     <string name="my_work">My Work</string>
     <string name="choose_best_photo">Choose one of your best photo that shows your perfect work to get more customers</string>
@@ -198,7 +198,7 @@
     <string name="documents">Documents</string>
     <string name="change_profile_photo">Click on it to change it</string>
     <string name="profile_photo">Profile Photo</string>
-    <string name="text_surname">Surname</string>
+    <string name="text_surname">Nickname</string>
     <string name="public_info">Public Info</string>
     <string name="private_info">Private Info</string>
     <string name="portfolio">Portfolio</string>
@@ -302,6 +302,8 @@
     <string name="role_select">Select</string>
     <string name="role_salon_owner">Salon Owner</string>
     <string name="role_provider">Independent Service Provider</string>
+    <string name="text_resend_activation">Resend code will be activated in</string>
+    <string name="text_resend_time">seconds</string>
 
     <string-array name="language_titles">
         <item>English</item>

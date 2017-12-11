@@ -7,13 +7,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -55,7 +56,9 @@ public class RegisterInfoActivity extends AppBaseActivity {
     @BindView(R.id.editBio) EditText editBio;
     @BindView(R.id.imgBg) ImageView imgBg;
     @BindView(R.id.recyclerWork) RecyclerView recyclerWork;
-    @BindView(R.id.cardWork) CardView cardWork;
+    @BindView(R.id.layoutWork) LinearLayout layoutWork;
+    @BindView(R.id.scrollPortfolio) HorizontalScrollView scrollPortfolio;
+   // @BindView(R.id.cardWork) CardView cardWork;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     String pathBg = "";
@@ -144,7 +147,7 @@ public class RegisterInfoActivity extends AppBaseActivity {
                         File finalFile = new File(path);
                         pathBg = finalFile.getAbsolutePath();
                         Glide.with(mContext).asBitmap().load(imageUri)
-                                .apply(new RequestOptions().centerCrop()).into(imgBg);
+                                .apply(RequestOptions.centerCropTransform()).into(imgBg);
                     }
                 });
         imagePicker.choosePicture(true);

@@ -32,13 +32,19 @@ import com.rtoosh.provider.model.custom.Utils;
 import com.rtoosh.provider.model.event.ApiErrorEvent;
 import com.rtoosh.provider.model.event.ApiErrorWithMessageEvent;
 import com.rtoosh.provider.model.network.AbstractApiResponse;
+import com.tsongkha.spinnerdatepicker.DatePicker;
+import com.tsongkha.spinnerdatepicker.DatePickerDialog;
+import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,7 +52,7 @@ import butterknife.OnClick;
 
 import static android.os.Build.VERSION_CODES.M;
 
-public class EditDocActivity extends AppBaseActivity implements AdapterView.OnItemSelectedListener{
+public class EditDocActivity extends AppBaseActivity implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener{
 
     private final String PROFILE_TAG = "DOC_INFO";
     private final String UPDATE_ID_PIC = "UPDATE_ID_PIC";
@@ -65,6 +71,7 @@ public class EditDocActivity extends AppBaseActivity implements AdapterView.OnIt
 
     String user_id, lang;
     ImagePicker imagePicker;
+    int year, month, day;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,18 +163,26 @@ public class EditDocActivity extends AppBaseActivity implements AdapterView.OnIt
         editID.setText(user.idNumber);
         tvIssueDate.setText(user.issueDate);
 
-        for (int i=0; i<listIdType.size(); i++) {
+        for (int i = 0; i < listIdType.size(); i++) {
             if (listIdType.get(i).equals(user.idType)) {
                 spinnerIDType.setSelection(i);
             }
         }
 
-       // setEnabled(false);
+        // setEnabled(false);
     }
 
     @OnClick(R.id.tvIssueDate)
     public void issueDate() {
-        Utils.maxDatePicker(mContext, tvIssueDate);
+        String date = tvIssueDate.getText().toString();
+        if (!date.isEmpty() && date.contains("/")) {
+            String[] dateSplit = date.split("/");
+            day = Integer.parseInt(dateSplit[1]);
+            month = Integer.parseInt(dateSplit[0]);
+            year = Integer.parseInt(dateSplit[2]);
+        }
+        showDate(R.style.NumberPickerStyle);
+      //  Utils.maxDatePicker(mContext, tvIssueDate);
     }
 
    /* private void setEnabled(boolean enabled) {
@@ -276,5 +291,27 @@ public class EditDocActivity extends AppBaseActivity implements AdapterView.OnIt
         } else {
             Toast.makeText(this, R.string.grant_permissions, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    void showDate(int spinnerTheme) {
+        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+        int maxMonth = calendar.get(Calendar.MONTH) + 1;
+        int maxYear = calendar.get(Calendar.YEAR);
+        int maxDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+        new SpinnerDatePickerDialogBuilder()
+                .context(this)
+                .callback(this)
+                .spinnerTheme(spinnerTheme)
+                .defaultDate(year, month-1, day)
+                .maxDate(maxYear, maxMonth, maxDay)
+                .build()
+                .show();
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        Calendar calendar = new GregorianCalendar(year, monthOfYear, dayOfMonth);
+        tvIssueDate.setText(String.format("%s/%s/%s",monthOfYear+1, dayOfMonth, year));
     }
 }

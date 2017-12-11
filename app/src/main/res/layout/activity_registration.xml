@@ -213,6 +213,7 @@
         android:orientation="horizontal"
         android:gravity="center"
         android:padding="@dimen/_10sdp"
+        android:visibility="gone"
         android:layout_alignParentBottom="true">
 
         <TextView

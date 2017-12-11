@@ -130,6 +130,12 @@
             android:background="@drawable/custom_basic_gradient_rounded"
             android:layout_marginTop="@dimen/_30sdp"/>
 
+        <TextView
+            android:id="@+id/textResend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"/>
+
     </LinearLayout>
 
     <TextView

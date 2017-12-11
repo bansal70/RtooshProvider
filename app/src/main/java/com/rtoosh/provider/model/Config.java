@@ -5,6 +5,6 @@ package com.rtoosh.provider.model;
  */
 
 public class Config {
-    public static final String BASE_URL = "http://rotsys.com/api/";
+    public static final String BASE_URL = "https://rotsys.com/api/";
     static final String UPDATE_PROFILE_URL = "apis/updateProfile?";
 }
