@@ -68,8 +68,8 @@ public class DateUtils {
         String date = tk.nextToken();
         String time = tk.nextToken();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM", Locale.getDefault());
-        SimpleDateFormat sdfs = new SimpleDateFormat("hh:mm", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM", Locale.US);
+        SimpleDateFormat sdfs = new SimpleDateFormat("hh:mm", Locale.US);
         Date dt = null;
         try {
             dt = sdf.parse(date);
@@ -83,14 +83,14 @@ public class DateUtils {
 
     public static String getDateFormat(String dateTime) {
         // Get date from string
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
         Date date = null;
         try {
             date = dateFormatter.parse(dateTime);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM", Locale.US);
         Timber.e("date-- " + dateFormat.format(date));
 
         return dateFormat.format(date);
@@ -98,7 +98,7 @@ public class DateUtils {
 
     public static String getTimeFormat(String dateTime) {
         // Get date from string
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
         Date date = null;
         try {
             date = dateFormatter.parse(dateTime);
@@ -107,7 +107,7 @@ public class DateUtils {
         }
 
 // Get time from date
-        SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm", Locale.US);
         return timeFormatter.format(date);
     }
 
@@ -137,7 +137,7 @@ public class DateUtils {
         int mm = 0;
         int sec = 0;
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
             Date oldDate = dateFormat.parse(orderTime);
             Date cDate = dateFormat.parse(serverTime);
             Long timeDiff = cDate.getTime() - oldDate.getTime();
@@ -198,7 +198,7 @@ public class DateUtils {
 
     public static String printDifference(String orderTime, String serverTime) {
         String time = "";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
         Date date1 = null, date2 = null;
 
         try {
@@ -373,7 +373,7 @@ public class DateUtils {
         String nDate = rDate.replaceAll("-", "/");
 
         try {
-            dateDT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(nDate);
+            dateDT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US).parse(nDate);
             // Log.v( TAG, "#parseDate dateDT: " + dateDT );
         } catch (ParseException e) {
             e.printStackTrace();

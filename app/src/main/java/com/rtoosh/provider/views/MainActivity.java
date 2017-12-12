@@ -441,8 +441,8 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         dismissDialog();
         switch (profileResponse.getRequestTag()) {
             case PROFILE_TAG:
-                //showToast(profileResponse.getMessage());
-              //  initServiceDialog(profileResponse);
+                //  showToast(profileResponse.getMessage());
+                //  initServiceDialog(profileResponse);
                 break;
 
             default:

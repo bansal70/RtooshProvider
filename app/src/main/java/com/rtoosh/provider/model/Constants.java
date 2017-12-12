@@ -33,6 +33,7 @@ public class Constants {
     public static final String TERMS_ACCEPTED_KEY = "terms_accepted";
 
     public static final String LANGUAGE_EN = "en";
+    public static final String LANGUAGE_AR = "ar";
 
     public static final String DEVICE_TYPE = "Android";
     public static final String USER_TYPE = "2";
@@ -77,6 +78,6 @@ public class Constants {
     public static final int REGISTER_SUCCESS = 1003;
     public static final int REGISTER_ERROR = 1004;
 
-    public static final long FASTEST_TIME_INTERVAL = 10000; // 10 seconds
-    public static final long TIME_INTERVAL = 60 * 1000; // 1 minutes
+    public static final long FASTEST_TIME_INTERVAL = 60 * 1000; // 10 seconds
+    public static final long TIME_INTERVAL = 5 * 60 * 1000; // 1 minutes
 }

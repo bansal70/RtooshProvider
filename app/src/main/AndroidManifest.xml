@@ -67,13 +67,6 @@
             android:name=".views.RegisterInfoActivity"
             android:windowSoftInputMode="stateHidden" />
 
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
-
         <activity android:name=".views.RequestsActivity" />
         <activity android:name=".views.RequestsDetailActivity" />
         <activity android:name=".views.ScheduleWorkActivity" />
@@ -82,6 +75,21 @@
         <activity android:name=".views.ProfileActivity" />
         <activity android:name=".views.WalletActivity" />
         <activity android:name=".views.PortfolioActivity" />
+        <activity android:name=".views.CalendarActivity" />
+        <activity android:name=".views.SettingsActivity" />
+        <activity android:name=".views.ReviewsActivity" />
+        <activity android:name=".views.EditDocActivity" />
+        <activity android:name=".views.SpecialOffersActivity" />
+        <activity android:name=".views.PasswordActivity" />
+
+        <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="false" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
 
         <service android:name=".controller.NotificationController">
             <intent-filter>
@@ -93,18 +101,13 @@
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
+
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".views.CalendarActivity" />
-        <activity android:name=".views.SettingsActivity" />
-        <activity android:name=".views.ReviewsActivity" />
-        <activity android:name=".views.EditDocActivity" />
-        <activity android:name=".views.SpecialOffersActivity" />
-        <activity android:name=".views.PasswordActivity" />
     </application>
 
 </manifest>

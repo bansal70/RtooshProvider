@@ -241,4 +241,12 @@ public class Operations {
         return hashMap;
     }
 
+    public static HashMap<String, String> languageParams(String user_id, String lang) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("user_id", user_id);
+        hashMap.put("lang", lang);
+
+        return hashMap;
+    }
+
 }

@@ -23,6 +23,7 @@ import com.myhexaville.smartimagepicker.ImagePicker;
 import com.rtoosh.provider.R;
 import com.rtoosh.provider.controller.ModelManager;
 import com.rtoosh.provider.model.Constants;
+import com.rtoosh.provider.model.Operations;
 import com.rtoosh.provider.model.POJO.ProfileResponse;
 import com.rtoosh.provider.model.RPPreferences;
 import com.rtoosh.provider.model.custom.Utils;
@@ -48,6 +49,7 @@ public class ProfileActivity extends AppBaseActivity implements LanguageDialog.O
     private final String PROFILE_TAG = "ProfileActivity";
     private final String UPDATE_PROFILE_TAG = "UpdateProfile";
     private final String UPDATE_PASSWORD_TAG = "UpdatePassword";
+    private final String UPDATE_LANGUAGE_TAG = "UPDATE_LANGUAGE";
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
@@ -345,6 +347,25 @@ public class ProfileActivity extends AppBaseActivity implements LanguageDialog.O
     }
 
 
+    @OnClick(R.id.tvEditLanguage)
+    public void updateLanguage() {
+        LanguageDialog dialog = LanguageDialog.newInstance(R.array.language_titles, selectedLangId);
+        dialog.setDialogSelectorListener(this);
+        dialog.show(getFragmentManager(), getString(R.string.language));
+    }
+
+    @Override
+    public void onSelectedOption(int dialogId) {
+        selectedLangId = dialogId;
+        showDialog();
+
+        if (dialogId == 0) {
+            ModelManager.getInstance().getLanguageManager().languageTask(mContext, UPDATE_LANGUAGE_TAG, Operations.languageParams(user_id, Constants.LANGUAGE_EN));
+        } else if (dialogId == 1) {
+            ModelManager.getInstance().getLanguageManager().languageTask(mContext, UPDATE_LANGUAGE_TAG, Operations.languageParams(user_id, Constants.LANGUAGE_AR));
+        }
+    }
+
     @Subscribe(sticky = true)
     public void onEvent(ProfileResponse profileResponse) {
         EventBus.getDefault().removeAllStickyEvents();
@@ -378,19 +399,24 @@ public class ProfileActivity extends AppBaseActivity implements LanguageDialog.O
                 showToast(apiResponse.getMessage());
                 break;
 
+            case UPDATE_LANGUAGE_TAG:
+                dismissDialog();
+                showToast(apiResponse.getMessage());
+                switch (selectedLangId) {
+                    case 0:
+                        RPPreferences.putString(mContext, Constants.LANGUAGE_KEY, Constants.LANGUAGE_EN);
+                        updateLanguage(Constants.LANGUAGE_EN);
+                        break;
+                    case 1:
+                        RPPreferences.putString(mContext, Constants.LANGUAGE_KEY, Constants.LANGUAGE_AR);
+                        updateLanguage(Constants.LANGUAGE_AR);
+                        break;
+                }
+                break;
+
             default:
                 break;
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
     }
 
     @Subscribe(sticky = true)
@@ -425,28 +451,6 @@ public class ProfileActivity extends AppBaseActivity implements LanguageDialog.O
         } else {
             Toast.makeText(this, R.string.grant_permissions, Toast.LENGTH_SHORT).show();
         }
-    }
-
-    @OnClick(R.id.tvEditLanguage)
-    public void updateLanguage() {
-        LanguageDialog dialog = LanguageDialog.newInstance(R.array.language_titles, selectedLangId);
-        dialog.setDialogSelectorListener(this);
-        dialog.show(getFragmentManager(), "Language");
-    }
-
-    @Override
-    public void onSelectedOption(int dialogId) {
-        selectedLangId = dialogId;
-
-        if (dialogId == 0) {
-            RPPreferences.putString(mContext, Constants.LANGUAGE_KEY, "en");
-            updateLanguage("en");
-        } else if (dialogId == 1) {
-            RPPreferences.putString(mContext, Constants.LANGUAGE_KEY, "ar");
-            updateLanguage("ar");
-        }
-
-        recreate();
     }
 
 }

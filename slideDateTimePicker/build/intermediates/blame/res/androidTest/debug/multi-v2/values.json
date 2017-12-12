@@ -4,7 +4,7 @@
             "outputFile": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\values\\values.xml",
+                    "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2,3,4,5,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,53,54,58,59,60",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\6297157b2b7ace49da5cae1d4ab31f6c\\res\\values\\values.xml",
+                    "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\340783f3242c5aa44cb288e7d3111153\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",

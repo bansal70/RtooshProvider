@@ -213,4 +213,7 @@ public interface APIService {
     @POST("apis/addSpecial")
     Call<AbstractApiResponse> specialOffersResponse(@QueryMap HashMap<String, String> mapParams);
 
+    @POST("apis/updateLanguage")
+    Call<AbstractApiResponse> languageResponse(@QueryMap HashMap<String, String> mapParams);
+
 }

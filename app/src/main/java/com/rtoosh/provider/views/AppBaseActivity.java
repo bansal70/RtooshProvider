@@ -38,6 +38,7 @@ import com.google.android.gms.tasks.Task;
 import com.rtoosh.provider.model.Constants;
 import com.rtoosh.provider.model.Event;
 import com.rtoosh.provider.model.LocaleHelper;
+import com.rtoosh.provider.model.LocaleManager;
 import com.rtoosh.provider.model.RPPreferences;
 import com.rtoosh.provider.model.custom.ImagePicker;
 import com.rtoosh.provider.model.custom.Utils;
@@ -48,6 +49,7 @@ import org.greenrobot.eventbus.Subscribe;
 import timber.log.Timber;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static android.content.pm.PackageManager.GET_META_DATA;
 import static android.os.Build.VERSION_CODES.M;
 
 public abstract class AppBaseActivity extends AppCompatActivity {
@@ -82,7 +84,7 @@ public abstract class AppBaseActivity extends AppCompatActivity {
         //dialog.setCancelable(false);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+        manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(Constants.TIME_INTERVAL);
         mLocationRequest.setFastestInterval(Constants.FASTEST_TIME_INTERVAL);
@@ -97,12 +99,13 @@ public abstract class AppBaseActivity extends AppCompatActivity {
                 }*/
             };
         };
+
+        resetTitles();
     }
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(LocaleHelper
-                .setLocale(newBase, RPPreferences.readString(newBase, Constants.LANGUAGE_KEY))));
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(LocaleManager.setLocale(newBase)));
     }
 
     public void showDialog() {
@@ -174,9 +177,24 @@ public abstract class AppBaseActivity extends AppCompatActivity {
     }
 
     public void updateLanguage(String langCode) {
-        LocaleHelper.setLocale(this, langCode);
-        recreate();
+     //   LocaleHelper.setLocale(this, langCode);
+        LocaleManager.setNewLocale(this, langCode);
+
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
     }
+
+    private void resetTitles() {
+        try {
+            ActivityInfo info = getPackageManager().getActivityInfo(getComponentName(), GET_META_DATA);
+            if (info.labelRes != 0) {
+                setTitle(info.labelRes);
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /*@Override
     public void onStart() {
@@ -195,8 +213,8 @@ public abstract class AppBaseActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (!mEventBus.isRegistered(this)) {
-            mEventBus.register(this);
+        if (mEventBus.isRegistered(this)) {
+            mEventBus.unregister(this);
         }
     }
 
@@ -213,10 +231,6 @@ public abstract class AppBaseActivity extends AppCompatActivity {
         if (mEventBus.isRegistered(this)) {
             mEventBus.unregister(this);
         }
-
-      /*  boolean delete = Utils.deleteTempFiles(getExternalCacheDir());
-        if (delete)
-            Timber.e("Temp files deleted");*/
 
         super.onDestroy();
     }
@@ -260,8 +274,8 @@ public abstract class AppBaseActivity extends AppCompatActivity {
     /*Method to get the enable location settings dialog*/
     public void settingRequest() {
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(10000);    // 10 seconds, in milliseconds
-        mLocationRequest.setFastestInterval(5000);   // 5 second, in milliseconds
+        mLocationRequest.setInterval(Constants.TIME_INTERVAL);    // 10 seconds, in milliseconds
+        mLocationRequest.setFastestInterval(Constants.FASTEST_TIME_INTERVAL);   // 5 second, in milliseconds
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
@@ -355,29 +369,11 @@ public abstract class AppBaseActivity extends AppCompatActivity {
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, location -> {
             // Got last known location. In some rare situations this can be null.
             if (location != null) {
-                // Logic to handle location object
                 mLastLocation = location;
-
-                mFusedLocationClient.requestLocationUpdates(mLocationRequest,
-                        mLocationCallback, null /* Looper */);
-
-                /*Timber.e("Last location:: "
-                        + "latitude-- " + mLastLocation.getLatitude()
-                        + "\nlongitude-- " + mLastLocation.getLongitude());
-                if (mGoogleApiClient.isConnected())
-                    LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
-                            mLocationRequest, this);*/
+                mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null);
             } else {
-                    /*if there is no last known location. Which means the device has no data for the location currently.
-                    * So we will get the current location.
-                    * For this we'll implement Location Listener and override onLocationChanged*/
                 Timber.e("no data for current location");
-
-               /* if (mGoogleApiClient.isConnected())
-                    LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
-                            mLocationRequest, this);*/
-                mFusedLocationClient.requestLocationUpdates(mLocationRequest,
-                        mLocationCallback, null /* Looper */);
+                mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null);
             }
         });
 

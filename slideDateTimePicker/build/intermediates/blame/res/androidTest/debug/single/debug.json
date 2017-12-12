@@ -1,39 +1,39 @@
 [
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable_notification_icon_background.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\drawable\\notification_icon_background.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\drawable\\notification_icon_background.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout_notification_template_big_media.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\6297157b2b7ace49da5cae1d4ab31f6c\\res\\layout\\notification_template_big_media.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\340783f3242c5aa44cb288e7d3111153\\res\\layout\\notification_template_big_media.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4_notification_bg_normal_pressed.9.png.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\drawable-mdpi-v4\\notification_bg_normal_pressed.9.png"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\drawable-mdpi-v4\\notification_bg_normal_pressed.9.png"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21_notification_template_custom_big.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\layout-v21\\notification_template_custom_big.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\layout-v21\\notification_template_custom_big.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout_notification_action_tombstone.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\layout\\notification_action_tombstone.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\layout\\notification_action_tombstone.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4_notification_bg_low_normal.9.png.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\drawable-mdpi-v4\\notification_bg_low_normal.9.png"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\drawable-mdpi-v4\\notification_bg_low_normal.9.png"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4_notification_bg_low_normal.9.png.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\drawable-xhdpi-v4\\notification_bg_low_normal.9.png"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\drawable-xhdpi-v4\\notification_bg_low_normal.9.png"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4_notification_bg_normal_pressed.9.png.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\drawable-xhdpi-v4\\notification_bg_normal_pressed.9.png"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\drawable-xhdpi-v4\\notification_bg_normal_pressed.9.png"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout_notification_template_lines_media.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\6297157b2b7ace49da5cae1d4ab31f6c\\res\\layout\\notification_template_lines_media.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\340783f3242c5aa44cb288e7d3111153\\res\\layout\\notification_template_lines_media.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout_slide_date_time_picker.xml.flat",
@@ -41,19 +41,19 @@
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout_notification_template_big_media_narrow.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\6297157b2b7ace49da5cae1d4ab31f6c\\res\\layout\\notification_template_big_media_narrow.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\340783f3242c5aa44cb288e7d3111153\\res\\layout\\notification_template_big_media_narrow.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout_notification_template_part_time.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\layout\\notification_template_part_time.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\layout\\notification_template_part_time.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable_notification_bg.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\drawable\\notification_bg.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\drawable\\notification_bg.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21_notification_action_background.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\drawable-v21\\notification_action_background.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\drawable-v21\\notification_action_background.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout_custom_tab.xml.flat",
@@ -61,19 +61,19 @@
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4_notification_bg_normal.9.png.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\drawable-mdpi-v4\\notification_bg_normal.9.png"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\drawable-mdpi-v4\\notification_bg_normal.9.png"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable_notification_bg_low.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\drawable\\notification_bg_low.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\drawable\\notification_bg_low.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4_notification_bg_normal_pressed.9.png.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\drawable-hdpi-v4\\notification_bg_normal_pressed.9.png"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\drawable-hdpi-v4\\notification_bg_normal_pressed.9.png"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4_notify_panel_notification_icon_bg.png.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\drawable-hdpi-v4\\notify_panel_notification_icon_bg.png"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\drawable-hdpi-v4\\notify_panel_notification_icon_bg.png"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4_selection_divider.9.png.flat",
@@ -81,35 +81,35 @@
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21_notification_action_tombstone.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\layout-v21\\notification_action_tombstone.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\layout-v21\\notification_action_tombstone.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout_notification_action.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\layout\\notification_action.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\layout\\notification_action.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4_notification_bg_low_pressed.9.png.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\drawable-hdpi-v4\\notification_bg_low_pressed.9.png"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\drawable-hdpi-v4\\notification_bg_low_pressed.9.png"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable_notification_tile_bg.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\drawable\\notification_tile_bg.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\drawable\\notification_tile_bg.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v16_notification_template_custom_big.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\layout-v16\\notification_template_custom_big.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\layout-v16\\notification_template_custom_big.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4_notify_panel_notification_icon_bg.png.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\drawable-mdpi-v4\\notify_panel_notification_icon_bg.png"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\drawable-mdpi-v4\\notify_panel_notification_icon_bg.png"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout_notification_media_cancel_action.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\6297157b2b7ace49da5cae1d4ab31f6c\\res\\layout\\notification_media_cancel_action.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\340783f3242c5aa44cb288e7d3111153\\res\\layout\\notification_media_cancel_action.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout_notification_media_action.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\6297157b2b7ace49da5cae1d4ab31f6c\\res\\layout\\notification_media_action.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\340783f3242c5aa44cb288e7d3111153\\res\\layout\\notification_media_action.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4_selection_divider.9.png.flat",
@@ -117,31 +117,31 @@
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4_notification_bg_low_pressed.9.png.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\drawable-xhdpi-v4\\notification_bg_low_pressed.9.png"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\drawable-xhdpi-v4\\notification_bg_low_pressed.9.png"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout_notification_template_media.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\6297157b2b7ace49da5cae1d4ab31f6c\\res\\layout\\notification_template_media.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\340783f3242c5aa44cb288e7d3111153\\res\\layout\\notification_template_media.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout_notification_template_media_custom.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\6297157b2b7ace49da5cae1d4ab31f6c\\res\\layout\\notification_template_media_custom.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\340783f3242c5aa44cb288e7d3111153\\res\\layout\\notification_template_media_custom.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4_notify_panel_notification_icon_bg.png.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\drawable-xhdpi-v4\\notify_panel_notification_icon_bg.png"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\drawable-xhdpi-v4\\notify_panel_notification_icon_bg.png"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4_notification_bg_normal.9.png.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\drawable-xhdpi-v4\\notification_bg_normal.9.png"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\drawable-xhdpi-v4\\notification_bg_normal.9.png"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout_notification_template_icon_group.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\layout\\notification_template_icon_group.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\layout\\notification_template_icon_group.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout_notification_template_custom_big.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\layout\\notification_template_custom_big.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\layout\\notification_template_custom_big.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4_selection_divider.9.png.flat",
@@ -153,11 +153,11 @@
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21_notification_action.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\layout-v21\\notification_action.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\layout-v21\\notification_action.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4_notification_bg_low_normal.9.png.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\drawable-hdpi-v4\\notification_bg_low_normal.9.png"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\drawable-hdpi-v4\\notification_bg_low_normal.9.png"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout_fragment_date.xml.flat",
@@ -165,26 +165,26 @@
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout_notification_template_big_media_custom.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\6297157b2b7ace49da5cae1d4ab31f6c\\res\\layout\\notification_template_big_media_custom.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\340783f3242c5aa44cb288e7d3111153\\res\\layout\\notification_template_big_media_custom.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4_notification_bg_low_pressed.9.png.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\drawable-mdpi-v4\\notification_bg_low_pressed.9.png"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\drawable-mdpi-v4\\notification_bg_low_pressed.9.png"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4_notification_bg_normal.9.png.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\drawable-hdpi-v4\\notification_bg_normal.9.png"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\drawable-hdpi-v4\\notification_bg_normal.9.png"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout_notification_template_part_chronometer.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\layout\\notification_template_part_chronometer.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\layout\\notification_template_part_chronometer.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout_notification_template_big_media_narrow_custom.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\6297157b2b7ace49da5cae1d4ab31f6c\\res\\layout\\notification_template_big_media_narrow_custom.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\340783f3242c5aa44cb288e7d3111153\\res\\layout\\notification_template_big_media_narrow_custom.xml"
     },
     {
         "merged": "D:\\Projects 3.0\\RtooshProvider\\slideDateTimePicker\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21_notification_template_icon_group.xml.flat",
-        "source": "C:\\Users\\win 10\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\7cf6d3ca58ce5ce297224649a3df76ec\\res\\layout-v21\\notification_template_icon_group.xml"
+        "source": "D:\\Android\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f2dfd0d89f8fdda73fcdee4e096b0fea\\res\\layout-v21\\notification_template_icon_group.xml"
     }
 ]

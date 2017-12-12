@@ -1,6 +1,7 @@
 package com.rtoosh.provider.views;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.view.View;
@@ -43,9 +44,15 @@ public class PhoneVerificationActivity extends AppBaseActivity {
         setContentView(R.layout.activity_phone_verification);
         ButterKnife.bind(this);
 
+        String langCode = Locale.getDefault().getLanguage();
+        if (langCode.isEmpty())
+            langCode = Resources.getSystem().getConfiguration().locale.getLanguage();
+
         if (RPPreferences.readString(mContext, Constants.LANGUAGE_KEY).isEmpty()) {
-            Timber.e("Language code-- " + Locale.getDefault().getLanguage());
-            RPPreferences.putString(mContext, Constants.LANGUAGE_KEY, Locale.getDefault().getLanguage());
+            if (langCode.isEmpty())
+                langCode = "en";
+            Timber.e("Language code-- %s", langCode);
+            RPPreferences.putString(mContext, Constants.LANGUAGE_KEY, langCode);
         }
 
         ViewCompat.setLayoutDirection(numberLayout, ViewCompat.LAYOUT_DIRECTION_LTR);

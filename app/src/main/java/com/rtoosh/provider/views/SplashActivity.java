@@ -1,6 +1,7 @@
 package com.rtoosh.provider.views;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -43,10 +44,15 @@ public class SplashActivity extends AppBaseActivity {
 
     private void initViews() {
         handler = new Handler();
+        String langCode = Locale.getDefault().getLanguage();
+        if (langCode.isEmpty())
+            langCode = Resources.getSystem().getConfiguration().locale.getLanguage();
 
         if (RPPreferences.readString(mContext, Constants.LANGUAGE_KEY).isEmpty()) {
-            Timber.e("Language code-- " + Locale.getDefault().getLanguage());
-            RPPreferences.putString(mContext, Constants.LANGUAGE_KEY, Locale.getDefault().getLanguage());
+            Timber.e("Language code-- %s", langCode);
+            if (langCode.isEmpty())
+                langCode = "en";
+            RPPreferences.putString(mContext, Constants.LANGUAGE_KEY, langCode);
         }
 
         lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);

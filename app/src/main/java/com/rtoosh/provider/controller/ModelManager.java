@@ -33,6 +33,7 @@ public class ModelManager {
     private OngoingRequestManager ongoingRequestManager;
     private OrderDetailsManager orderDetailsManager;
     private SpecialOffersManager specialOffersManager;
+    private LanguageManager languageManager;
 
     public static ModelManager getInstance() {
         if (modelManager != null)
@@ -69,6 +70,7 @@ public class ModelManager {
         orderDetailsManager = new OrderDetailsManager();
         specialOffersManager = new SpecialOffersManager();
         passwordManager = new PasswordManager();
+        languageManager = new LanguageManager();
     }
 
     public PhoneVerificationManager getPhoneVerificationManager() {
@@ -177,5 +179,9 @@ public class ModelManager {
 
     public PasswordManager getPasswordManager() {
         return passwordManager;
+    }
+
+    public LanguageManager getLanguageManager() {
+        return languageManager;
     }
 }

@@ -43,13 +43,14 @@ public class NotificationController extends FirebaseMessagingService {
         String orderId = remoteMessage.getData().get("orderID");
         String payment_mode = remoteMessage.getData().get("payment_mode");
         String orderType = remoteMessage.getData().get("orderType");
+        String userID = remoteMessage.getData().get("user_id");
 
         if (message == null)
             return;
 
         String user_id = RPPreferences.readString(this, Constants.USER_ID_KEY);
 
-        if (!user_id.isEmpty()) {
+        if (!user_id.isEmpty() && user_id.equals(userID)) {
             if (notify_type.equals(Constants.NOTIFY_ACCOUNT_STATUS)) {
                 RPPreferences.putString(getApplicationContext(), Constants.ACCOUNT_STATUS_KEY, accountStatus);
                 switch (accountStatus) {
