@@ -94,7 +94,7 @@
                 android:textAllCaps="true"
                 android:foreground="?selectableItemBackground"
                 android:textAppearance="@style/TextAppearance.FontMedium"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorGrayDark"
                 android:padding="@dimen/_15sdp"/>
 
         </LinearLayout>

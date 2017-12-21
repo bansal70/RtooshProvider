@@ -1,6 +1,7 @@
 package com.rtoosh.provider.views;
 
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
@@ -54,12 +55,13 @@ public class CalendarActivity extends AppBaseActivity {
     @BindView(R.id.imgEdit) ImageView imgEdit;
     @BindView(R.id.tvScheduleText) TextView tvScheduleText;
     @BindView(R.id.scheduleLayout) LinearLayout scheduleLayout;
+    @BindView(R.id.scrollCalendar) NestedScrollView scrollCalendar;
+    @BindView(R.id.recyclerSchedule) RecyclerView recyclerSchedule;
 
     String lang, user_id;
     String work_online, work_schedule, vacation_mode;
-    boolean isEdit = false;
 
-    @BindView(R.id.recyclerSchedule) RecyclerView recyclerSchedule;
+    boolean isEdit = false;
     public ScheduleHoursAdapter scheduleHoursAdapter;
     public List<OpeningHours> openingHoursList;
 
@@ -90,7 +92,8 @@ public class CalendarActivity extends AppBaseActivity {
             switchSchedule.setEnabled(false);
         }
 
-        showDialog();
+        // showDialog();
+        showProgressBar();
         ModelManager.getInstance().getProfileManager().profileTask(mContext, PROFILE_TAG, user_id, lang);
     }
 
@@ -140,11 +143,10 @@ public class CalendarActivity extends AppBaseActivity {
     public void editProfile() {
         if (isEdit) {
            // showDialog();
-            recyclerSchedule.setEnabled(true);
             addHours();
         } else {
+            scheduleHoursAdapter.setClickable(true);
             imgEdit.setImageResource(R.drawable.ic_profile_done);
-            recyclerSchedule.setEnabled(true);
             isEdit = true;
         }
     }
@@ -212,15 +214,16 @@ public class CalendarActivity extends AppBaseActivity {
         recyclerSchedule.setNestedScrollingEnabled(false);
         recyclerSchedule.setLayoutManager(new LinearLayoutManager(mContext));
 
-        scheduleHoursAdapter = new ScheduleHoursAdapter(mContext, openingHoursList, getSupportFragmentManager());
+        scheduleHoursAdapter = new ScheduleHoursAdapter(mContext, openingHoursList);
         recyclerSchedule.setAdapter(scheduleHoursAdapter);
         scheduleHoursAdapter.notifyDataSetChanged();
+        scheduleHoursAdapter.setClickable(false);
     }
 
     public void addHours() {
         Gson gson = new Gson();
         String jsonHours = gson.toJson(scheduleHoursAdapter.hoursList());
-        Timber.e("hours-- "+jsonHours);
+        Timber.e("hours-- %s", jsonHours);
 
         showDialog();
         ModelManager.getInstance().getCalendarManager().updateScheduleTask(mContext, UPDATE_HOURS,
@@ -231,9 +234,11 @@ public class CalendarActivity extends AppBaseActivity {
     public void onEvent(ProfileResponse profileResponse) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
+        hideProgressBar();
         switch (profileResponse.getRequestTag()) {
             case PROFILE_TAG:
                 setCalendar(profileResponse);
+                scrollCalendar.setVisibility(View.VISIBLE);
                 break;
 
             default:
@@ -294,6 +299,7 @@ public class CalendarActivity extends AppBaseActivity {
                 showToast(apiResponse.getMessage());
                 isEdit = false;
                 imgEdit.setImageResource(R.drawable.ic_edit_service);
+                scheduleHoursAdapter.setClickable(false);
                 break;
         }
     }
@@ -303,6 +309,7 @@ public class CalendarActivity extends AppBaseActivity {
     public void onEventMainThread(ApiErrorWithMessageEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
+        hideProgressBar();
         showToast(event.getResultMsgUser());
     }
 
@@ -310,6 +317,7 @@ public class CalendarActivity extends AppBaseActivity {
     public void onEventMainThread(ApiErrorEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
+        hideProgressBar();
         showToast(getString(R.string.something_went_wrong));
     }
 

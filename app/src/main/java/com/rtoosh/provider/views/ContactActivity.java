@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ContactActivity extends AppBaseActivity {
+public class  ContactActivity extends AppBaseActivity {
 
     private final String CONTACT_TAG = "ContactActivity";
     @BindView(R.id.toolbar) Toolbar toolbar;

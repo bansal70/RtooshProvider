@@ -40,7 +40,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         Glide.with(mContext)
                 .load(portfolio.getImage())
                 .apply(new RequestOptions().format(DecodeFormat.PREFER_ARGB_8888)
-                        .placeholder(R.mipmap.ic_upload_image).dontTransform())
+                        .placeholder(R.mipmap.ic_upload_image).centerCrop())
                 .into(holder.imgPortfolio);
 
         if (portfolio.isSelected()) {
@@ -77,9 +77,9 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             } else {
                 portfolio.setSelected(true);
             }
-            //listPortfolio.set(getAdapterPosition(), portfolio);
-            //notifyItemChanged(getAdapterPosition());
-            notifyDataSetChanged();
+            listPortfolio.set(getAdapterPosition(), portfolio);
+            notifyItemChanged(getAdapterPosition());
+            //notifyDataSetChanged();
         }
     }
 

@@ -2,9 +2,11 @@ package com.rtoosh.provider.views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
 import com.rtoosh.provider.R;
@@ -41,6 +43,7 @@ public class RequestsActivity extends AppBaseActivity {
     @BindView(R.id.tvNewRequest) TextView tvNewRequests;
     @BindView(R.id.tvApprovedRequests) TextView tvApprovedRequests;
     @BindView(R.id.tvCompletedRequests) TextView tvCompletedRequests;
+    @BindView(R.id.scrollHistory) NestedScrollView scrollHistory;
 
     String lang, user_id, serverTime;
 
@@ -69,7 +72,8 @@ public class RequestsActivity extends AppBaseActivity {
         recyclerApprovedRequests.setNestedScrollingEnabled(false);
         recyclerCompletedRequests.setNestedScrollingEnabled(false);
 
-        showDialog();
+        //showDialog();
+        showProgressBar();
         ModelManager.getInstance().getRequestsHistoryManager().historyTask(mContext, HISTORY_TAG,
                 Operations.historyParams(user_id, lang));
     }
@@ -134,6 +138,12 @@ public class RequestsActivity extends AppBaseActivity {
         tvNewRequests.setText(String.valueOf(pendingRequestsList.size()));
         tvApprovedRequests.setText(String.valueOf(approvedRequestsList.size()));
         tvCompletedRequests.setText(String.valueOf(completedRequestsList.size()));
+        newRequestsAdapter.setOnDataChangeListener(new NewRequestsAdapter.OnDataChangeListener() {
+            @Override
+            public void onDataChanged(int size) {
+
+            }
+        });
 
         newRequestsAdapter.setOnDataChangeListener(size -> {
             if (!isFinishing()) {
@@ -163,10 +173,12 @@ public class RequestsActivity extends AppBaseActivity {
     public void onEvent(HistoryResponse historyResponse) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
+        hideProgressBar();
         switch (historyResponse.getRequestTag()) {
             case HISTORY_TAG:
                 //showToast(historyResponse.getMessage());
                 setHistory(historyResponse);
+                scrollHistory.setVisibility(View.VISIBLE);
                 break;
 
             default:
@@ -180,6 +192,8 @@ public class RequestsActivity extends AppBaseActivity {
         dismissDialog();
         switch (event.getRequestTag()) {
             case HISTORY_TAG:
+                hideProgressBar();
+                scrollHistory.setVisibility(View.VISIBLE);
                 showToast(event.getResultMsgUser());
                 break;
         }
@@ -191,6 +205,7 @@ public class RequestsActivity extends AppBaseActivity {
         dismissDialog();
         switch (event.getRequestTag()) {
             case HISTORY_TAG:
+                hideProgressBar();
                 showToast(getString(R.string.something_went_wrong));
                 break;
         }

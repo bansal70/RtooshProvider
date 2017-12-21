@@ -5,7 +5,7 @@
     android:id="@+id/cardServices"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/_5sdp"
+    app:cardCornerRadius="@dimen/_2sdp"
     app:cardUseCompatPadding="true">
 
     <RelativeLayout

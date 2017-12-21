@@ -109,7 +109,7 @@ public class PortfolioActivity extends AppBaseActivity {
         listPortfolio = portfolioAdapter.getPortfolio();
         for (int i = listPortfolio.size() - 1; i >= 0; i--) {
             if (listPortfolio.get(i).isSelected()) {
-                Timber.e("selected-- " + listPortfolio.get(i).getId());
+                Timber.e("selected-- %s", listPortfolio.get(i).getId());
                 listRemove.add(listPortfolio.get(i).getId());
                 listPortfolio.remove(i);
                 portfolioAdapter.notifyItemRemoved(i);
@@ -136,10 +136,11 @@ public class PortfolioActivity extends AppBaseActivity {
                 (Uri imageUri) -> {
                     String path = Utils.getPathFromUri(mContext, imageUri);
                     if (path != null) {
+                        path = Utils.decodeFile(path, 400, 800);
                         File finalFile = new File(path);
                         //     File file = imagePicker.getImageFile();
                         lastId++;
-                        listPortfolio.add(new Portfolio(String.valueOf(lastId), finalFile.getAbsolutePath(),
+                        listPortfolio.add(new Portfolio(String.valueOf(lastId), path,
                                 false, true));
                         portfolioAdapter.notifyDataSetChanged();
                     }

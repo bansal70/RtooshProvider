@@ -11,7 +11,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -57,6 +56,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyCallback, RoutingListener,
         MySupportMapFragment.OnTouchListener {
@@ -128,7 +128,8 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
         request_id = getIntent().getStringExtra("request_id");
         //requestDetailsResponse = (RequestDetailsResponse) getIntent().getSerializableExtra("requestDetails");
 
-        showDialog();
+      //  showDialog();
+        showProgressBar();
         ModelManager.getInstance().getOrderDetailsManager().requestDetailsTask(mContext, ORDER_DETAILS_TAG,
                 Operations.requestDetailsParams(request_id, lang));
 
@@ -236,8 +237,10 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
     public void onEvent(RequestDetailsResponse detailsResponse) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
+        hideProgressBar();
         switch (detailsResponse.getRequestTag()) {
             case ORDER_DETAILS_TAG:
+                scrollView.setVisibility(View.VISIBLE);
                 setData(detailsResponse);
                 requestDetailsResponse = detailsResponse;
                 break;
@@ -263,6 +266,7 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
     public void onEventMainThread(ApiErrorWithMessageEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
+        hideProgressBar();
         showToast(event.getResultMsgUser());
     }
 
@@ -270,6 +274,7 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
     public void onEventMainThread(ApiErrorEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
+        hideProgressBar();
         showToast(getString(R.string.something_went_wrong));
     }
 
@@ -281,7 +286,7 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
                     MapStyleOptions.loadRawResourceStyle(
                             this, R.raw.style_json));
             if (!success) {
-                Log.e("sorry try again", "Style parsing failed.");
+                Timber.tag("sorry try again").e("Style parsing failed.");
             }
         } catch (Resources.NotFoundException e) {
             e.printStackTrace();
@@ -295,13 +300,13 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
 
         RequestDetailsResponse.Data data = requestDetailsResponse.data;
         RequestDetailsResponse.OrderDetails order = data.order;
-        RequestDetailsResponse.Client client = data.client;
+        RequestDetailsResponse.Provider provider = data.provider;
 
-        double providerLat = Double.parseDouble(order.lat);
-        double providerLng = Double.parseDouble(order.lng);
+        double providerLat = Double.parseDouble(provider.lat);
+        double providerLng = Double.parseDouble(provider.lng);
 
-        double clientLat = Double.parseDouble(client.lat);
-        double clientLng = Double.parseDouble(client.lng);
+        double clientLat = Double.parseDouble(order.lat);
+        double clientLng = Double.parseDouble(order.lng);
 
         start = new LatLng(providerLat, providerLng);
         end = new LatLng(clientLat, clientLng);

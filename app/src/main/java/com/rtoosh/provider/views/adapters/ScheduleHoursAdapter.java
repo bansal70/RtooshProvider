@@ -2,7 +2,7 @@ package com.rtoosh.provider.views.adapters;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,16 +27,15 @@ public class ScheduleHoursAdapter extends RecyclerView.Adapter<ScheduleHoursAdap
     private List<OpeningHours> openingHoursList;
     private Dialog timeDialog;
     private int position;
-    private FragmentManager manager;
     @BindView(R.id.tvOpenTime) TextView tvOpenTime;
     @BindView(R.id.tvCloseTime) TextView tvCloseTime;
     @BindView(R.id.tvAddTime) TextView tvAddTime;
     @BindView(R.id.tvCancelTime) TextView tvCancelTime;
+    private boolean isClickable = true;
 
-    public ScheduleHoursAdapter(Context context, List<OpeningHours> openingHoursList, FragmentManager manager) {
+    public ScheduleHoursAdapter(Context context, List<OpeningHours> openingHoursList) {
         this.context = context;
         this.openingHoursList = openingHoursList;
-        this.manager = manager;
 
         timeDialog = Utils.createDialog(context, R.layout.dialog_opening_hours);
         ButterKnife.bind(this, timeDialog);
@@ -79,11 +78,25 @@ public class ScheduleHoursAdapter extends RecyclerView.Adapter<ScheduleHoursAdap
         public void selectHours() {
             OpeningHours openingHours = openingHoursList.get(getAdapterPosition());
             OpeningTime openingTime = openingHours.getOpeningTime();
-            tvOpenTime.setText(openingTime.getFrom());
-            tvCloseTime.setText(openingTime.getTo());
+            if (!openingTime.getFrom().isEmpty())
+                tvOpenTime.setText(openingTime.getFrom());
+            if (!openingTime.getTo().isEmpty())
+                tvCloseTime.setText(openingTime.getTo());
 
             position = getAdapterPosition();
-            timeDialog.show();
+
+            if (isClickable) {
+                if (tvOpenTime.getText().toString().isEmpty() || tvCloseTime.getText().toString().isEmpty()) {
+                    tvAddTime.setEnabled(false);
+                    tvAddTime.setTextColor(ContextCompat.getColor(context, R.color.colorGrayDark));
+                } else {
+                    tvAddTime.setEnabled(true);
+                    tvAddTime.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+                }
+                timeDialog.show();
+            } else {
+                Utils.showToast(context, context.getString(R.string.enable_edit_button));
+            }
         }
 
         @OnClick(R.id.imgClear)
@@ -107,13 +120,13 @@ public class ScheduleHoursAdapter extends RecyclerView.Adapter<ScheduleHoursAdap
 
     @OnClick(R.id.tvOpenTime)
     public void setOpenTime() {
-      //  Utils.setTimePicker(context, tvOpenTime);
+        //  Utils.setTimePicker(context, tvOpenTime);
         initTimeDialog("open");
     }
 
     @OnClick(R.id.tvCloseTime)
     public void setCloseTime() {
-      //  Utils.setTimePicker(context, tvCloseTime);
+        //  Utils.setTimePicker(context, tvCloseTime);
         initTimeDialog("close");
     }
 
@@ -182,6 +195,15 @@ public class ScheduleHoursAdapter extends RecyclerView.Adapter<ScheduleHoursAdap
             } else {
                 tvCloseTime.setText(String.format("%s:%s", editHours.getText().toString(), editMinutes.getText().toString()));
             }
+
+            if (tvOpenTime.getText().toString().isEmpty() || tvCloseTime.getText().toString().isEmpty()) {
+                tvAddTime.setEnabled(false);
+                tvAddTime.setTextColor(ContextCompat.getColor(context, R.color.colorGrayDark));
+            } else {
+                tvAddTime.setEnabled(true);
+                tvAddTime.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+            }
+
            // tvServiceDuration.setText(String.format("%s:%s", editHours.getText().toString(), editMinutes.getText().toString()));
         });
 
@@ -189,4 +211,9 @@ public class ScheduleHoursAdapter extends RecyclerView.Adapter<ScheduleHoursAdap
 
         timeDialog.show();
     }
+
+    public void setClickable(boolean status) {
+        isClickable = status;
+    }
+
 }

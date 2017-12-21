@@ -32,7 +32,7 @@ public class RegisterServiceAdapter extends RecyclerView.Adapter<RegisterService
     private List<RegisterServiceData> listData;
     private int position;
     private String id, name, image;
-    TextView tvServiceDuration;
+    private TextView tvServiceDuration;
 
     public RegisterServiceAdapter(Context context, List<RegisterServiceData> listData, List<AddService> listAddServices) {
         this.context = context;
@@ -91,11 +91,14 @@ public class RegisterServiceAdapter extends RecyclerView.Adapter<RegisterService
 
     private void initSelectionDialog() {
         dialogSelection = Utils.createDialog(context, R.layout.dialog_add_services);
+        final TextView tvServiceTitle = dialogSelection.findViewById(R.id.tvServiceTitle);
         final EditText editServiceName = dialogSelection.findViewById(R.id.editServiceName);
         final EditText editServiceContent = dialogSelection.findViewById(R.id.editServiceContent);
         final EditText editServicePrice = dialogSelection.findViewById(R.id.editServicePrice);
         tvServiceDuration = dialogSelection.findViewById(R.id.editServiceDuration);
        // editServiceDuration.addTextChangedListener(new MaskWatcher("##:##"));
+        RegisterServiceData serviceData = listData.get(position);
+        tvServiceTitle.setText(String.format("%s %s", serviceData.getName(), context.getString(R.string.selection_new_service)));
 
         tvServiceDuration.setOnClickListener(v -> initTimeDialog());
 

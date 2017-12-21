@@ -123,7 +123,11 @@ public class RegisterIDActivity extends AppBaseActivity implements CompoundButto
                 (Uri imageUri) -> {
                     String path = Utils.getPathFromUri(mContext, imageUri);
                     if (path != null) {
+                        path = Utils.decodeFile(path, 400, 800);
                         File finalFile = new File(path);
+                        //File finalFile = Utils.saveBitmapToFile(new File(path));
+
+                        //assert finalFile != null;
                         filePath = finalFile.getAbsolutePath();
 
                         ProgressRequestBody fileBody = new ProgressRequestBody(finalFile, this);

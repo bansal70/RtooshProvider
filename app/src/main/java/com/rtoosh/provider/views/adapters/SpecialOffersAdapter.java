@@ -81,7 +81,7 @@ public class SpecialOffersAdapter extends RecyclerView.Adapter<SpecialOffersAdap
             holder.imgSpecial.setVisibility(View.GONE);
         }
 
-        holder.tvCategory.setText(category.catName);
+        holder.tvCategory.setText(service.serviceName);
 
     }
 

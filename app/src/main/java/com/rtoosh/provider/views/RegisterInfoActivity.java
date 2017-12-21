@@ -36,7 +36,6 @@ import com.rtoosh.provider.views.adapters.MyWorkAdapter;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -131,8 +130,9 @@ public class RegisterInfoActivity extends AppBaseActivity {
                 (Uri imageUri) -> {
                     String path = Utils.getPathFromUri(mContext, imageUri);
                     if (path != null) {
-                        File finalFile = new File(path);
-                        listImages.add(finalFile.getAbsolutePath());
+                        path = Utils.decodeFile(path, 400, 800);
+                        //File finalFile = new File(path);
+                        listImages.add(path);
                         myWorkAdapter.notifyDataSetChanged();
                     }
                 });
@@ -144,10 +144,12 @@ public class RegisterInfoActivity extends AppBaseActivity {
                 (Uri imageUri) -> {
                     String path = Utils.getPathFromUri(mContext, imageUri);
                     if (path != null) {
-                        File finalFile = new File(path);
-                        pathBg = finalFile.getAbsolutePath();
+                        path = Utils.decodeFile(path, 800, 400);
+                        //File finalFile = new File(path);
                         Glide.with(mContext).asBitmap().load(imageUri)
                                 .apply(RequestOptions.centerCropTransform()).into(imgBg);
+
+                        pathBg = path;
                     }
                 });
         imagePicker.choosePicture(true);

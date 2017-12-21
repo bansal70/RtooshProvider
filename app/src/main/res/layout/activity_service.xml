@@ -10,8 +10,10 @@
         android:id="@+id/toolbar"/>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollService"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_below="@+id/toolbar"
         android:layout_above="@+id/tvServiceCompleted">
 

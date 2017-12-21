@@ -117,6 +117,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/layoutNewRequests"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
                 android:onClick="requestsClick"
@@ -153,7 +154,6 @@
                     android:id="@+id/tvNewRequest"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/custom_circular_pink_bg"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
@@ -211,6 +211,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     android:layout_toLeftOf="@+id/tvApprovedRequests"
                     android:layout_toStartOf="@+id/tvApprovedRequests"
                     android:layout_centerInParent="true"
@@ -241,7 +242,6 @@
                     android:id="@+id/tvApprovedRequests"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/custom_circular_green_bg"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"

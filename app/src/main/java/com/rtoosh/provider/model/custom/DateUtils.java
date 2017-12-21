@@ -38,13 +38,13 @@ public class DateUtils {
 
     public static String[] getAllDays(Context mContext) {
         String[] days = new String[7];
-        days[0] = mContext.getString(R.string.day_monday);
-        days[1] = mContext.getString(R.string.day_tuesday);
-        days[2] = mContext.getString(R.string.day_wednesday);
-        days[3] = mContext.getString(R.string.day_thursday);
-        days[4] = mContext.getString(R.string.day_friday);
-        days[5] = mContext.getString(R.string.day_saturday);
-        days[6] = mContext.getString(R.string.day_sunday);
+        days[0] = mContext.getString(R.string.day_sunday);
+        days[1] = mContext.getString(R.string.day_monday);
+        days[2] = mContext.getString(R.string.day_tuesday);
+        days[3] = mContext.getString(R.string.day_wednesday);
+        days[4] = mContext.getString(R.string.day_thursday);
+        days[5] = mContext.getString(R.string.day_friday);
+        days[6] = mContext.getString(R.string.day_saturday);
         return days;
     }
 

@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.rtoosh.provider">
 
+    <uses-sdk
+        android:minSdkVersion="18"
+        tools:overrideLibrary="com.tsongkha.spinnerdatepicker" />
+
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -19,20 +23,16 @@
         android:name="android.hardware.camera"
         android:required="true" />
 
-    <uses-sdk android:minSdkVersion="18"
-        tools:overrideLibrary="com.tsongkha.spinnerdatepicker"/>
-
     <application
         android:name=".model.custom.Application"
         android:allowBackup="false"
         android:fullBackupContent="false"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_provider_logo"
+        android:roundIcon="@mipmap/ic_provider_logo_round"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon,android:allowBackup,android:label">
-
-
         <activity android:name=".views.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -66,7 +66,6 @@
         <activity
             android:name=".views.RegisterInfoActivity"
             android:windowSoftInputMode="stateHidden" />
-
         <activity android:name=".views.RequestsActivity" />
         <activity android:name=".views.RequestsDetailActivity" />
         <activity android:name=".views.ScheduleWorkActivity" />
@@ -81,9 +80,11 @@
         <activity android:name=".views.EditDocActivity" />
         <activity android:name=".views.SpecialOffersActivity" />
         <activity android:name=".views.PasswordActivity" />
+        <activity android:name=".views.TermsConditionsActivity"/>
 
-        <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="false" />
-
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="false" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -91,7 +92,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <service android:name=".controller.NotificationController">
+        <service android:name=".controller.NotificationController"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -101,7 +103,6 @@
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
-
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"

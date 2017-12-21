@@ -2,9 +2,11 @@ package com.rtoosh.provider.views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -50,6 +52,8 @@ public class SettingsActivity extends AppBaseActivity {
     @BindView(R.id.tvPersons) TextView tvPersons;
     @BindView(R.id.tvServices) TextView tvServices;
     @BindView(R.id.editPrice) EditText editPrice;
+    @BindView(R.id.scrollSettings) NestedScrollView scrollSettings;
+    @BindView(R.id.tvDone) TextView tvDone;
 
     private int persons, services;
     String lang, user_id;
@@ -86,7 +90,8 @@ public class SettingsActivity extends AppBaseActivity {
         listAddServices = new ArrayList<>();
         jsonServices = new JSONArray();
 
-        showDialog();
+        //showDialog();
+        showProgressBar();
         ModelManager.getInstance().getServicesListManager().serviceTask(mContext, SERVICES_TAG, lang);
 
         recyclerServices.setLayoutManager(new LinearLayoutManager(mContext));
@@ -136,9 +141,10 @@ public class SettingsActivity extends AppBaseActivity {
         price = editPrice.getText().toString().trim();
 
         String order = new Gson().toJson(createOrder());
-        Timber.e("json order-- " + order);
+        Timber.e("json order-- %s", order);
 
         try {
+            jsonServices = new JSONArray();
             for (RegisterServiceData data : listData) {
                 List<AddService> addServiceList = data.getListAddServices();
                 for (AddService service : addServiceList) {
@@ -150,7 +156,7 @@ public class SettingsActivity extends AppBaseActivity {
             jsonObject.put("services", jsonServices);
             totalServices = jsonObject.toString();
 
-            Timber.e("json services-- " + totalServices);
+            Timber.e("json services-- %s", totalServices);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -200,11 +206,16 @@ public class SettingsActivity extends AppBaseActivity {
                             data.getImage(), listAddServices);
                     listData.set(j, serviceData);
                 }
+                registerServiceAdapter.notifyDataSetChanged();
             }
         }
-        registerServiceAdapter.notifyDataSetChanged();
 
         setOrder(profileData);
+        scrollSettings.setVisibility(View.VISIBLE);
+        tvDone.setVisibility(View.VISIBLE);
+
+        dismissDialog();
+        hideProgressBar();
     }
 
     private void setOrder(ProfileResponse.Data profileData) {
@@ -235,7 +246,6 @@ public class SettingsActivity extends AppBaseActivity {
     @Subscribe(sticky = true)
     public void onEvent(ProfileResponse profileResponse) {
         EventBus.getDefault().removeAllStickyEvents();
-        dismissDialog();
 
         switch (profileResponse.getRequestTag()) {
             case SERVICES_TAG:
@@ -243,6 +253,7 @@ public class SettingsActivity extends AppBaseActivity {
                 break;
 
             default:
+                dismissDialog();
                 break;
         }
     }
@@ -262,6 +273,7 @@ public class SettingsActivity extends AppBaseActivity {
     public void onEventMainThread(ApiErrorWithMessageEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
+        hideProgressBar();
         showToast(event.getResultMsgUser());
     }
 
@@ -269,6 +281,7 @@ public class SettingsActivity extends AppBaseActivity {
     public void onEventMainThread(ApiErrorEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
+        hideProgressBar();
         showToast(getString(R.string.something_went_wrong));
     }
 }

@@ -29,6 +29,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class RegistrationActivity extends AppBaseActivity implements AdapterView.OnItemSelectedListener{
 
@@ -103,6 +104,12 @@ public class RegistrationActivity extends AppBaseActivity implements AdapterView
             ModelManager.getInstance().getRegistrationManager().registrationTask(mContext, REGISTER_TAG, name,
                     email, country_code, phone, password, select, deviceToken, lang);
         }
+    }
+
+    @OnClick(R.id.tvTerms)
+    public void openTermsPage() {
+        startActivity(new Intent(mContext, TermsConditionsActivity.class));
+        Utils.gotoNextActivityAnimation(mContext);
     }
 
     @Subscribe(sticky = true)

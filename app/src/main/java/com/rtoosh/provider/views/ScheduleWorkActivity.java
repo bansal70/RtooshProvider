@@ -56,7 +56,7 @@ public class ScheduleWorkActivity extends AppBaseActivity {
         recyclerSchedule.setHasFixedSize(true);
         recyclerSchedule.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
 
-        scheduleHoursAdapter = new ScheduleHoursAdapter(mContext, openingHoursList, getSupportFragmentManager());
+        scheduleHoursAdapter = new ScheduleHoursAdapter(mContext, openingHoursList);
         recyclerSchedule.setAdapter(scheduleHoursAdapter);
         scheduleHoursAdapter.notifyDataSetChanged();
     }

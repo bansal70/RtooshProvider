@@ -35,7 +35,6 @@ import com.rtoosh.provider.model.network.AbstractApiResponse;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -69,6 +68,8 @@ public class ProfileActivity extends AppBaseActivity implements LanguageDialog.O
     @BindView(R.id.imgProfilePic) ImageView imgProfilePic;
     @BindView(R.id.imgEdit) ImageView imgEdit;
     @BindView(R.id.tvViewAll) TextView tvViewAll;
+    @BindView(R.id.layoutProfile) LinearLayout layoutProfile;
+    @BindView(R.id.layoutStatus) LinearLayout layoutStatus;
 
     boolean isEdit = false;
 
@@ -106,7 +107,8 @@ public class ProfileActivity extends AppBaseActivity implements LanguageDialog.O
             selectedLangId = 1;
         }
 
-        showDialog();
+        //showDialog();
+        showProgressBar();
         ModelManager.getInstance().getProfileManager().profileTask(mContext, PROFILE_TAG, user_id, lang);
     }
 
@@ -139,6 +141,11 @@ public class ProfileActivity extends AppBaseActivity implements LanguageDialog.O
                 tvAccountStatus.setText(R.string.account_suspended);
                 break;
         }
+
+        if (user.online.equals(Constants.STATUS_ONLINE))
+            RPPreferences.putString(mContext, Constants.USER_STATUS_KEY, Constants.STATUS_ONLINE);
+        else
+            RPPreferences.putString(mContext, Constants.USER_STATUS_KEY, Constants.STATUS_OFFLINE);
 
         editSurname.setText(user.surname);
         editBio.setText(user.bio);
@@ -221,11 +228,12 @@ public class ProfileActivity extends AppBaseActivity implements LanguageDialog.O
                 (Uri imageUri) -> {
                     String path = Utils.getPathFromUri(mContext, imageUri);
                     if (path != null) {
-                        File finalFile = new File(path);
+                        path = Utils.decodeFile(path, 400, 800);
+                       // File finalFile = new File(path);
                         Glide.with(mContext).load(imageUri)
                                 .apply(RequestOptions.circleCropTransform().placeholder(R.mipmap.ic_user_placeholder))
                                 .into(imgProfilePic);
-                        profilePic = finalFile.getAbsolutePath();
+                        profilePic = path;
                     }
                 });
         imagePicker.choosePicture(true);
@@ -237,9 +245,10 @@ public class ProfileActivity extends AppBaseActivity implements LanguageDialog.O
                      tvNoCover.setVisibility(View.GONE);
                      String path = Utils.getPathFromUri(mContext, imageUri);
                      if (path != null) {
-                         File finalFile = new File(path);
+                         path = Utils.decodeFile(path, 800, 400);
+                         //File finalFile = new File(path);
                          imgCover.setImageURI(imageUri);
-                         coverImage = finalFile.getAbsolutePath();
+                         coverImage = path;
                      }
                  });
          imagePicker.choosePicture(true);
@@ -372,6 +381,9 @@ public class ProfileActivity extends AppBaseActivity implements LanguageDialog.O
         dismissDialog();
         switch (profileResponse.getRequestTag()) {
             case PROFILE_TAG:
+                layoutProfile.setVisibility(View.VISIBLE);
+                layoutStatus.setVisibility(View.VISIBLE);
+                hideProgressBar();
                 //showToast(profileResponse.getMessage());
                 setProfile(profileResponse);
                 break;
@@ -423,12 +435,14 @@ public class ProfileActivity extends AppBaseActivity implements LanguageDialog.O
     public void onEventMainThread(ApiErrorWithMessageEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
+        hideProgressBar();
         showToast(event.getResultMsgUser());
     }
 
     @Subscribe(sticky = true)
     public void onEventMainThread(RequestFinishedEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
+        hideProgressBar();
 //        dismissDialog();
     }
 
@@ -436,6 +450,7 @@ public class ProfileActivity extends AppBaseActivity implements LanguageDialog.O
     public void onEventMainThread(ApiErrorEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
+        hideProgressBar();
         showToast(getString(R.string.something_went_wrong));
     }
 

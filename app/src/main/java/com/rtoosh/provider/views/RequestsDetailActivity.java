@@ -98,7 +98,7 @@ public class RequestsDetailActivity extends AppBaseActivity {
         for (RequestDetailsResponse.OrderItem orderItem : listOrders) {
             int persons = Integer.parseInt(orderItem.noOfPerson);
             totalPersons += persons;
-            Timber.e("duration-- "+orderItem.duration);
+            Timber.e("duration-- %s", orderItem.duration);
             if (orderItem.duration != null && orderItem.duration.contains(":")) {
                 String[] time = orderItem.duration.split(":");
                 hour += persons * Integer.parseInt(time[0]);
@@ -199,7 +199,7 @@ public class RequestsDetailActivity extends AppBaseActivity {
                 countDownTimer.cancel();
 
             tvTimeLeft.setText(R.string.message_completed);
-            tvTimeText.setText(String.format("%s:", getString(R.string.status)));
+            tvTimeText.setText(String.format("%s", getString(R.string.status)));
         }
 
         recyclerOrders.setLayoutManager(new LinearLayoutManager(mContext));

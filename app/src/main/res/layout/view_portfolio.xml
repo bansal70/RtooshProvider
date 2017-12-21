@@ -9,13 +9,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_90sdp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/imgPortfolio"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_90sdp"
             android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
             android:background="@drawable/custom_stroke_pink"
             android:contentDescription="@string/portfolio" />
 

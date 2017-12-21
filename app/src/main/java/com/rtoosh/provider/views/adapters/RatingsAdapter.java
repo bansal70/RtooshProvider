@@ -40,9 +40,14 @@ public class RatingsAdapter extends RecyclerView.Adapter<RatingsAdapter.ViewHold
     public void onBindViewHolder(RatingsAdapter.ViewHolder holder, int position) {
         RatingsResponse.Data data = ratingsList.get(position);
         RatingsResponse.Review review = data.review;
-        float cleanliness = Float.parseFloat(review.ratingClean);
-        float quality = Float.parseFloat(review.ratingQuality);
-        float arrival = Float.parseFloat(review.ratingArrival);
+        float cleanliness = 0.0f, quality = 0.0f, arrival = 0.0f;
+
+        if (!review.ratingClean.isEmpty())
+            cleanliness = Float.parseFloat(review.ratingClean);
+        if (!review.ratingQuality.isEmpty())
+            quality = Float.parseFloat(review.ratingQuality);
+        if (!review.ratingArrival.isEmpty())
+            arrival = Float.parseFloat(review.ratingArrival);
 
         holder.rbCleanliness.setRating(cleanliness);
         holder.rbQuality.setRating(quality);

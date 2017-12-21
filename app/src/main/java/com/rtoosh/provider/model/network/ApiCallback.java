@@ -65,7 +65,7 @@ public class ApiCallback<T extends AbstractApiResponse> implements Callback<T> {
         } else {
             // TODO: Move hardcode string
             EventBus.getDefault().postSticky(
-                    new ApiErrorWithMessageEvent(requestTag, "Server not available."));
+                    new ApiErrorWithMessageEvent(requestTag, "Server error"));
         }
         finishRequest();
     }

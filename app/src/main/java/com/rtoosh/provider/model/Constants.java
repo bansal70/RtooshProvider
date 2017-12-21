@@ -68,7 +68,7 @@ public class Constants {
 
     public static final String TIMEOUT_MINUTES = "09";
 
-    public static final long COUNTDOWN_TIME = 5*60*1000;
+    public static final long COUNTDOWN_TIME = 10*60*1000;
 
     public static final int NO_RESPONSE = 1000;
 

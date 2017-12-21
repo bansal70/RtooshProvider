@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -54,6 +55,8 @@ public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnC
     @BindView(R.id.tvActualPrice) TextView tvActualPrice;
     @BindView(R.id.rlDiscount) RelativeLayout rlDiscount;
     @BindView(R.id.tvDiscount) TextView tvDiscount;
+    @BindView(R.id.scrollPurchase) NestedScrollView scrollPurchase;
+    @BindView(R.id.tvDone) TextView tvDone;
 
     OrdersAdapter ordersAdapter;
     private Dialog dialogService, dialogFeedback;
@@ -66,6 +69,7 @@ public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnC
     float ratings = 0;
     EditText editTotalServices, editPaid, editNote, editFeedback;
     RatingBar rbCustomer;
+    boolean isSelected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +86,7 @@ public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnC
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
         lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
-        user_id = RPPreferences.readString(mContext, Constants.USER_ID_KEY);
+        provider_id = RPPreferences.readString(mContext, Constants.USER_ID_KEY);
         request_id = getIntent().getStringExtra("request_id");
 
         cardPurchase.setBackgroundResource(R.mipmap.ic_purchase_bg);
@@ -90,7 +94,8 @@ public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnC
         initServiceDialog();
         initFeedbackDialog();
 
-        showDialog();
+        //showDialog();
+        showProgressBar();
         ModelManager.getInstance().getOrderDetailsManager().requestDetailsTask(mContext, PURCHASE_ORDER_TAG,
                 Operations.requestDetailsParams(request_id, lang));
     }
@@ -100,7 +105,7 @@ public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnC
         RequestDetailsResponse.Client client = data.client;
         RequestDetailsResponse.OrderDetails order = data.order;
 
-        provider_id = client.id;
+        user_id = client.id;
 
         if (order.discount.equals("0") || order.discount.isEmpty()) {
             rlDiscount.setVisibility(View.GONE);
@@ -143,6 +148,8 @@ public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnC
         setTextColor(R.color.white, R.color.colorAccent);
         setDrawable(R.mipmap.ic_check_white, R.mipmap.ic_check_pink);
         isService = true;
+        isSelected = true;
+        tvDone.setBackgroundResource(R.drawable.custom_basic_gradient);
     }
 
     @OnClick(R.id.tvNo)
@@ -151,10 +158,15 @@ public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnC
         setTextColor(R.color.colorAccent, R.color.white);
         setDrawable(R.mipmap.ic_check_pink, R.mipmap.ic_check_white);
         isService = false;
+        isSelected = true;
+        tvDone.setBackgroundResource(R.drawable.custom_basic_gradient);
     }
 
     @OnClick(R.id.tvDone)
     public void doneClick() {
+        if (!isSelected)
+            return;
+
         if (isService)
             dialogService.show();
         else
@@ -220,9 +232,12 @@ public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnC
     public void onEvent(RequestDetailsResponse detailsResponse) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
+        hideProgressBar();
         switch (detailsResponse.getRequestTag()) {
             case PURCHASE_ORDER_TAG:
                 setData(detailsResponse);
+                scrollPurchase.setVisibility(View.VISIBLE);
+                tvDone.setVisibility(View.VISIBLE);
                 break;
         }
     }
@@ -241,7 +256,7 @@ public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnC
                 dialogFeedback.dismiss();
                 Toast.makeText(mContext, R.string.feedback_submitted, Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this, MainActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 break;
         }
     }
@@ -250,6 +265,7 @@ public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnC
     public void onEventMainThread(ApiErrorWithMessageEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
+        hideProgressBar();
         showToast(event.getResultMsgUser());
     }
 
@@ -257,6 +273,7 @@ public class PurchaseDetailsActivity extends AppBaseActivity implements View.OnC
     public void onEventMainThread(ApiErrorEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
+        hideProgressBar();
         showToast(getString(R.string.something_went_wrong));
     }
 

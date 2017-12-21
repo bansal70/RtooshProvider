@@ -10,8 +10,10 @@
         android:id="@+id/toolbar"/>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollPurchase"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_above="@+id/tvDone"
         android:layout_below="@+id/toolbar">
 
@@ -275,7 +277,8 @@
         android:gravity="center"
         android:textSize="@dimen/_15sdp"
         android:textColor="@color/white"
-        android:background="@drawable/custom_basic_gradient"
+        android:visibility="gone"
+        android:background="@color/grey_600"
         android:foreground="?selectableItemBackground"
         android:textAppearance="@style/TextAppearance.FontBold"
         android:layout_alignParentBottom="true"

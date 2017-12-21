@@ -78,7 +78,7 @@ public class ApprovedRequestAdapter extends RecyclerView.Adapter<ApprovedRequest
             }
         } else {
             timeOut = DateUtils.printDifference(order.scheduleDate, serverTime);
-            Timber.e("timeout- " + timeOut);
+            Timber.e("timeout- %s", timeOut);
             String[] split = timeOut.split(":");
             days = Integer.parseInt(split[0]);
             hours = Integer.parseInt(split[1]);

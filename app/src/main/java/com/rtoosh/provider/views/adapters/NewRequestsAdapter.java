@@ -183,6 +183,10 @@ public class NewRequestsAdapter extends RecyclerView.Adapter<NewRequestsAdapter.
 
         editReason = dialogDecline.findViewById(R.id.editReason);
         dialogDecline.findViewById(R.id.tvDeclineRequest).setOnClickListener(v -> {
+            if (editReason.getText().toString().isEmpty()) {
+                Utils.showToast(context, context.getString(R.string.toast_fill_data));
+                return;
+            }
             dialog.show();
             ModelManager.getInstance().getRequestManager().declineRequestTask(context, DECLINED_REQUEST_TAG,
                     Operations.declineRequestParams(pendingRequestsList.get(position).order.id,
@@ -221,7 +225,7 @@ public class NewRequestsAdapter extends RecyclerView.Adapter<NewRequestsAdapter.
                 HistoryResponse.Data data = pendingRequestsList.get(pos);
                 RequestDetailsResponse.Order order = data.order;
 
-                Timber.e("Order type-- " + order.orderType);
+                Timber.e("Order type-- %s", order.orderType);
                 if (order.orderType.equals(Constants.ORDER_ONLINE)) {
                     context.startActivity(new Intent(context, OrderDetailsActivity.class)
                             //.putExtra("requestDetails", detailsResponse)

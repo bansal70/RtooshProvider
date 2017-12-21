@@ -39,7 +39,6 @@ import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -130,9 +129,10 @@ public class EditDocActivity extends AppBaseActivity implements AdapterView.OnIt
                 (Uri imageUri) -> {
                     String path = Utils.getPathFromUri(mContext, imageUri);
                     if (path != null) {
-                        File finalFile = new File(path);
+                        path = Utils.decodeFile(path, 400, 800);
+                        //File finalFile = new File(path);
                         imgID.setImageURI(imageUri);
-                        filePath = finalFile.getAbsolutePath();
+                        filePath = path;
                     }
                 });
         imagePicker.choosePicture(true);
@@ -204,6 +204,7 @@ public class EditDocActivity extends AppBaseActivity implements AdapterView.OnIt
         if (idNumber.isEmpty() || issueDate.isEmpty() || idType.isEmpty()) {
             showToast(getString(R.string.toast_fill_data));
         } else {
+            showDialog();
             ModelManager.getInstance().getUploadIDManager().updateDocTask(mContext, UPDATE_DOC_INFO,
                     Operations.updateDocParams(user_id, issueDate, idType, idNumber, lang), filePath);
         }
@@ -213,7 +214,6 @@ public class EditDocActivity extends AppBaseActivity implements AdapterView.OnIt
     public boolean onOptionsItemSelected(MenuItem mItem) {
         switch (mItem.getItemId()) {
             case R.id.menuDone:
-                showDialog();
                 updateDoc();
                 break;
         }

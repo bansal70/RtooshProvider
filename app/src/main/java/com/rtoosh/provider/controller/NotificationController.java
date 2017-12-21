@@ -14,29 +14,34 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
+import android.support.v4.content.ContextCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.rtoosh.provider.R;
 import com.rtoosh.provider.model.Constants;
 import com.rtoosh.provider.model.RPPreferences;
+import com.rtoosh.provider.model.custom.Utils;
 import com.rtoosh.provider.views.MainActivity;
 import com.rtoosh.provider.views.OrderDetailsActivity;
 import com.rtoosh.provider.views.PhoneVerificationActivity;
 import com.rtoosh.provider.views.RequestsActivity;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import timber.log.Timber;
 
 public class NotificationController extends FirebaseMessagingService {
 
     private static final String TAG = NotificationController.class.getSimpleName();
     NotificationManager mNotificationManager;
+    final AtomicInteger c = new AtomicInteger(0);
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        Log.e(TAG, "Notification -->>>>> "+remoteMessage.getData().toString());
+        Timber.e("Notification -->>>>> %s", remoteMessage.getData().toString());
         String notify_type = remoteMessage.getData().get("notify_type");
         String accountStatus = remoteMessage.getData().get("account_status");
         String message = remoteMessage.getData().get("message");
@@ -44,6 +49,7 @@ public class NotificationController extends FirebaseMessagingService {
         String payment_mode = remoteMessage.getData().get("payment_mode");
         String orderType = remoteMessage.getData().get("orderType");
         String userID = remoteMessage.getData().get("user_id");
+        String orderTime = remoteMessage.getData().get("order_time");
 
         if (message == null)
             return;
@@ -72,7 +78,7 @@ public class NotificationController extends FirebaseMessagingService {
                     startService(message, orderId, orderType);
                     return;
                 }
-                sendNotification(message, orderId, orderType);
+                sendNotification(message, orderId, orderType, orderTime);
             }
         }
     }
@@ -102,8 +108,8 @@ public class NotificationController extends FirebaseMessagingService {
         String description = getString(R.string.notification_account_status);
            /* final Uri alarmSound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
                     + "://" + getApplicationContext().getPackageName() + "/raw/notification");*/
-        showSmallNotification(mBuilder, R.mipmap.ic_launcher, getString(R.string.app_name),
-                messageBody, resultPendingIntent, name, description);
+        showSmallNotification(mBuilder, R.drawable.ic_notification_logo, getString(R.string.app_name),
+                messageBody, resultPendingIntent, name, description, code);
     }
 
     private void startService(String messageBody, String requestId, String orderType) {
@@ -113,37 +119,49 @@ public class NotificationController extends FirebaseMessagingService {
         startActivity(intent);
     }
 
-    private void sendNotification(String messageBody, String requestId, String orderType) {
+    private void sendNotification(String messageBody, String requestId, String orderType, String orderTime) {
+        int code = (int) System.currentTimeMillis();
+        // The user-visible name of the channel.
+        CharSequence name = getString(R.string.service_requests);
+        // The user-visible description of the channel.
+        String description = getString(R.string.customer_service_request);
+         /* final Uri alarmSound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
+                    + "://" + getApplicationContext().getPackageName() + "/raw/notification");*/
+
+        int id = c.incrementAndGet();
+
+        final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext());
+
         if (orderType != null && orderType.equals(Constants.ORDER_ONLINE)) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("service_request", true);
             intent.putExtra("order_id", requestId);
-            startActivity(intent);
-        } else {
-            int code = (int) System.currentTimeMillis();
-            Intent intent = new Intent(getApplicationContext(), RequestsActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            final PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(),
+            intent.putExtra("notifyId", id);
+
+            // startActivity(intent);
+            // Intent notiIntent = new Intent();
+
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(),
                     code, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+            showSmallNotification(mBuilder, R.drawable.ic_notification_logo, getString(R.string.notify_online_order),
+                    messageBody, resultPendingIntent, name, description, id);
 
-            final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext());
+            Utils.clearNotification(getApplicationContext(), id);
 
-
-            // The user-visible name of the channel.
-            CharSequence name = getString(R.string.service_requests);
-            // The user-visible description of the channel.
-            String description = getString(R.string.customer_service_request);
-           /* final Uri alarmSound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
-                    + "://" + getApplicationContext().getPackageName() + "/raw/notification");*/
-            showSmallNotification(mBuilder, R.mipmap.ic_launcher, getString(R.string.app_name),
-                    messageBody, resultPendingIntent, name, description);
+        } else {
+            Intent intent = new Intent(getApplicationContext(), RequestsActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(),
+                    code, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            showSmallNotification(mBuilder, R.drawable.ic_notification_logo, getString(R.string.notify_schedule_order),
+                    messageBody, resultPendingIntent, name, description, id);
         }
     }
 
     private void showSmallNotification(NotificationCompat.Builder mBuilder, int icon, String title, String message,
-                                       PendingIntent resultPendingIntent, CharSequence name, String description) {
+                                       PendingIntent resultPendingIntent, CharSequence name, String description, int notId) {
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         // The id of the channel.
         String id = "rtoosh_provider";
@@ -175,14 +193,15 @@ public class NotificationController extends FirebaseMessagingService {
                 .setContentIntent(resultPendingIntent)
                // .setSound(alarmSound)
                 .setStyle(inboxStyle)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.ic_notification_logo)
+                .setColor(ContextCompat.getColor(getApplicationContext(), R.color.deep_purple_700))
                 .setContentText(message)
                 .setChannelId(id)
-                //.setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400})
+               // .setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400})
                 .build();
 
         if (mNotificationManager != null)
-            mNotificationManager.notify(0, notification);
+            mNotificationManager.notify(notId, notification);
     }
 
     private Intent getPreviousIntent() {
@@ -206,7 +225,8 @@ public class NotificationController extends FirebaseMessagingService {
                 }
             }
         }
-        if (newIntent == null) newIntent = new Intent();
+     //   if (newIntent == null)
+     //       newIntent = new Intent(getApplicationContext(), MainActivity.class);
         return newIntent;
     }
 }

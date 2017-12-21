@@ -16,7 +16,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.MenuItem;
 import android.view.View;
@@ -73,6 +72,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
     private final String DECLINE_REQUEST_TAG = "DeclineRequest";
     final String UPDATE_LOCATION_TAG = "UpdateLocation";
     private final String HISTORY_TAG = "TOTAL_REQUESTS";
+    private final String CHECK_ORDER_TAG = "PENDING_ORDER";
     final String PROFILE_TAG = "PROVIDER_PROFILE";
 
     @BindView(R.id.toolbar) Toolbar toolbar;
@@ -86,6 +86,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
     @BindView(R.id.tvApprovedRequests) TextView tvApprovedRequests;
     @BindView(R.id.tvRecentDate) TextView tvRecentDate;
     @BindView(R.id.tvRecentTime) TextView tvRecentTime;
+    @BindView(R.id.llTime) LinearLayout llTime;
 
     TextView tvMinutes, tvSeconds;
 
@@ -101,6 +102,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
     boolean online = false;
 
     MyCountDownTimer myCountDownTimer;
+    int notifyID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +116,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
 
       //  initServiceDialog();
         initTermsDialog();
-        initRequestDialog();
+        //initRequestDialog();
         initDeclineDialog();
         initViews();
 
@@ -125,9 +127,6 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
             public void onLocationResult(LocationResult locationResult) {
                 for (Location location : locationResult.getLocations()) {
                     mLastLocation = location;
-                    Timber.e("Updated location:: "
-                            + "latitude-- "+mLastLocation.getLatitude()
-                            + "\nlongitude-- "+mLastLocation.getLongitude());
                     LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
                     if (mGoogleMap != null)
                         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
@@ -173,11 +172,22 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         switchOnline.setClickable(false);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if (Utility.isOnline(mContext)){
+        request_id = getIntent().getStringExtra("order_id");
+        notifyID = getIntent().getIntExtra("notifyId", 0);
+
+        if (request_id != null && !request_id.isEmpty()) {
+            if (!isFinishing())
+                showDialog();
+            ModelManager.getInstance().getRequestsHistoryManager().historyTask(mContext, CHECK_ORDER_TAG,
+                    Operations.historyParams(user_id, lang));
+        }
+
+        if (Utility.isOnline(mContext)) {
             setOnline();
         } else {
             setOffline();
         }
+
     }
 
     @OnTouch(R.id.switchOnline)
@@ -247,8 +257,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         dialogTerms.findViewById(R.id.tvAgree).setOnClickListener(view -> {
          //   RPPreferences.putBoolean(mContext, Constants.TERMS_ACCEPTED_KEY, true);
             showDialog();
-            ModelManager.getInstance().getStatusManager().statusTask(mContext, TAG, user_id,
-                    true, lang);
+            ModelManager.getInstance().getStatusManager().statusTask(mContext, TAG, user_id, true, lang);
         });
 
         dialogTerms.findViewById(R.id.tvCancel).setOnClickListener(view -> dialogTerms.dismiss());
@@ -257,16 +266,19 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
     @SuppressWarnings("ConstantConditions")
     private void initRequestDialog() {
         dialogRequest = Utils.createDialog(mContext, R.layout.dialog_request);
+        dialogRequest.setCancelable(false);
         dialogRequest.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         dialogRequest.findViewById(R.id.tvAccept).setOnClickListener(this);
         dialogRequest.findViewById(R.id.tvDecline).setOnClickListener(this);
 
         tvMinutes = dialogRequest.findViewById(R.id.tvMinutes);
         tvSeconds = dialogRequest.findViewById(R.id.tvSeconds);
+        dialogRequest.show();
     }
 
     private void initDeclineDialog() {
         dialogDecline = Utils.createDialog(mContext, R.layout.dialog_decline_request);
+        dialogDecline.setCancelable(false);
 
         editReason = dialogDecline.findViewById(R.id.editReason);
         dialogDecline.findViewById(R.id.tvDeclineRequest).setOnClickListener(this);
@@ -281,7 +293,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
                 break;
 
             case R.id.tvDecline:
-                dialogRequest.dismiss();
+                //dialogRequest.dismiss();
                 dialogDecline.show();
                 break;
 
@@ -290,7 +302,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
                 break;
 
             case R.id.tvDeclineCancel:
-                dialogRequest.show();
+                //dialogRequest.show();
                 dialogDecline.dismiss();
                 break;
         }
@@ -319,6 +331,10 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
     }
 
     private void declineRequest() {
+        if (editReason.getText().toString().isEmpty()) {
+            showToast(getString(R.string.toast_fill_data));
+            return;
+        }
         showDialog();
         ModelManager.getInstance().getRequestManager().declineRequestTask(mContext, DECLINE_REQUEST_TAG,
                 Operations.declineRequestParams(request_id, editReason.getText().toString(), lang));
@@ -342,6 +358,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
             case DECLINE_REQUEST_TAG:
                 showToast(apiResponse.getMessage());
                 dialogDecline.dismiss();
+                dialogRequest.dismiss();
                 RPPreferences.removeKey(mContext, Constants.REQUEST_ID_KEY);
                 myCountDownTimer.cancel();
                 setOffline();
@@ -370,7 +387,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         }
     }
 
-    private void setHistory(HistoryResponse historyResponse) {
+    private void setHistory(HistoryResponse historyResponse, String tag) {
         List<HistoryResponse.Data> pendingRequestsList = new ArrayList<>();
         List<HistoryResponse.Data> approvedRequestsList = new ArrayList<>();
 
@@ -381,8 +398,8 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         for (int i=0; i<dataList.size(); i++) {
             RequestDetailsResponse.Order order = dataList.get(i).order;
             if (order.orderType.equals(Constants.ORDER_ONLINE)) {
-                 String time = DateUtils.twoDatesBetweenTime(order.created, serverTime);
-                 timeOut = DateUtils.getTimeout(time);
+                String time = DateUtils.twoDatesBetweenTime(order.created, serverTime);
+                timeOut = DateUtils.getTimeout(time);
                 String[] dateTime = timeOut.split(":");
                 min = Integer.parseInt(dateTime[0]);
                 sec = Integer.parseInt(dateTime[1]);
@@ -412,6 +429,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         if (approvedRequestsList.size() != 0) {
             tvRecentDate.setText(DateUtils.getDateFormat(approvedRequestsList.get(0).order.created));
             tvRecentTime.setText(DateUtils.getTimeFormat(approvedRequestsList.get(0).order.created));
+            llTime.setVisibility(View.VISIBLE);
         } else {
             tvRecentDate.setVisibility(View.GONE);
             tvRecentTime.setVisibility(View.GONE);
@@ -419,6 +437,25 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
 
         tvNewRequests.setText(String.valueOf(pendingRequestsList.size()));
         tvApprovedRequests.setText(String.valueOf(approvedRequestsList.size()));
+        tvNewRequests.setBackgroundResource(R.drawable.custom_circular_pink_bg);
+        tvApprovedRequests.setBackgroundResource(R.drawable.custom_circular_green_bg);
+
+        if (tag.equals(CHECK_ORDER_TAG)) {
+            for (HistoryResponse.Data data : pendingRequestsList) {
+                RequestDetailsResponse.Order order = data.order;
+                if (order.orderType.equals(Constants.ORDER_ONLINE)) {
+                    request_id = order.id;
+                    String time = DateUtils.twoDatesBetweenTime(order.created, serverTime);
+                    String timeOut1 = DateUtils.getTimeout(time);
+                    String[] dateTime = timeOut1.split(":");
+                    int minutes = Integer.parseInt(dateTime[0]);
+                    int seconds = Integer.parseInt(dateTime[1]);
+                    setTimer(minutes, seconds);
+                    return;
+                }
+            }
+        }
+
     }
 
     @Subscribe(sticky = true)
@@ -427,7 +464,11 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         dismissDialog();
         switch (historyResponse.getRequestTag()) {
             case HISTORY_TAG:
-                setHistory(historyResponse);
+                setHistory(historyResponse, HISTORY_TAG);
+                break;
+
+            case CHECK_ORDER_TAG:
+                setHistory(historyResponse, CHECK_ORDER_TAG);
                 break;
 
             default:
@@ -493,6 +534,9 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
     protected void onResume() {
         super.onResume();
 
+        ModelManager.getInstance().getRequestsHistoryManager().historyTask(mContext, HISTORY_TAG,
+                Operations.historyParams(user_id, lang));
+
         if (Utility.onVacationMode(mContext) || !Utility.workOnline(mContext)) {
             switchOnline.setChecked(false);
             setOffline();
@@ -501,9 +545,6 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         if (!isAccountActive()) {
             setOffline();
         }
-
-        ModelManager.getInstance().getRequestsHistoryManager().historyTask(mContext, HISTORY_TAG,
-                Operations.historyParams(user_id, lang));
 
         String profilePic = RPPreferences.readString(mContext, Constants.PROFILE_PIC_KEY);
 
@@ -516,16 +557,31 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         request_id = intent.getStringExtra("order_id");
+        notifyID = intent.getIntExtra("notifyId", 0);
 
         if (request_id != null && !request_id.isEmpty()) {
-            linearRequest.setVisibility(View.GONE);
-            dialogRequest.show();
-            tvMinutes.setText(Constants.TIMEOUT_MINUTES);
+            if (!isFinishing())
+            showDialog();
+            ModelManager.getInstance().getRequestsHistoryManager().historyTask(mContext, CHECK_ORDER_TAG,
+                    Operations.historyParams(user_id, lang));
+        }
+    }
 
-            if (myCountDownTimer != null)
+    private void setTimer(int min, int sec) {
+            //dialogRequest.show();
+        if (min > 1 || sec > 1) {
+            setOffline();
+            initRequestDialog();
+
+            long totalTimeInMillis = (min * 60 + sec) * 1000;
+
+            tvMinutes.setText(String.format("0%s", String.valueOf(min)));
+
+            if (myCountDownTimer != null) {
                 myCountDownTimer.cancel();
+            }
 
-            myCountDownTimer = new MyCountDownTimer(Constants.COUNTDOWN_TIME, 1000);
+            myCountDownTimer = new MyCountDownTimer(totalTimeInMillis, 1000, min, sec);
             myCountDownTimer.start();
         }
     }
@@ -539,7 +595,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
                     MapStyleOptions.loadRawResourceStyle(
                             this, R.raw.style_json));
             if (!success) {
-                Log.e("sorry try again", "Style parsing failed.");
+                Timber.tag("sorry try again").e("Style parsing failed.");
             }
         }catch (Resources.NotFoundException e){
             e.printStackTrace();
@@ -606,20 +662,17 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
 
     public class MyCountDownTimer extends CountDownTimer {
 
-        int countSec = 60, countMin = 9;
+        int countSec, countMin;
         String sec, min;
 
-        private MyCountDownTimer(long millisInFuture, long countDownInterval) {
+        private MyCountDownTimer(long millisInFuture, long countDownInterval, int minutes, int seconds) {
             super(millisInFuture, countDownInterval);
+            countMin = minutes;
+            countSec = seconds;
         }
 
         @Override
         public void onTick(long millisUntilFinished) {
-            sec = String.valueOf(--countSec);
-
-            if (countSec < 10)
-                sec = "0" + sec;
-            tvSeconds.setText(sec);
 
             if (countSec < 1) {
                 countSec = 60;
@@ -629,6 +682,12 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
                     tvMinutes.setText(min);
                 }
             }
+
+            sec = String.valueOf(--countSec);
+
+            if (countSec < 10)
+                sec = "0" + sec;
+            tvSeconds.setText(sec);
         }
 
         @Override
@@ -644,4 +703,5 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         super.onDestroy();
         mFusedLocationClient.removeLocationUpdates(mLocationCallback);
     }
+
 }

@@ -2,6 +2,7 @@ package com.rtoosh.provider.views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -49,6 +50,7 @@ public class ServiceActivity extends AppBaseActivity {
     @BindView(R.id.tvMinRemains) TextView tvMinRemains;
     @BindView(R.id.rlDiscount) RelativeLayout rlDiscount;
     @BindView(R.id.tvDiscount) TextView tvDiscount;
+    @BindView(R.id.scrollService) NestedScrollView scrollService;
 
     OrdersAdapter ordersAdapter;
 
@@ -75,7 +77,8 @@ public class ServiceActivity extends AppBaseActivity {
         user_id = RPPreferences.readString(mContext, Constants.USER_ID_KEY);
         request_id = getIntent().getStringExtra("request_id");
 
-        showDialog();
+        //showDialog();
+        showProgressBar();
         ModelManager.getInstance().getOrderDetailsManager().requestDetailsTask(mContext, SERVICE_DETAILS_TAG,
                 Operations.requestDetailsParams(request_id, lang));
     }
@@ -153,9 +156,11 @@ public class ServiceActivity extends AppBaseActivity {
     public void onEvent(RequestDetailsResponse detailsResponse) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
+        hideProgressBar();
         switch (detailsResponse.getRequestTag()) {
             case SERVICE_DETAILS_TAG:
                 setData(detailsResponse);
+                scrollService.setVisibility(View.VISIBLE);
                 requestDetailsResponse = detailsResponse;
                 break;
         }
@@ -179,6 +184,7 @@ public class ServiceActivity extends AppBaseActivity {
     public void onEventMainThread(ApiErrorWithMessageEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
+        hideProgressBar();
         showToast(event.getResultMsgUser());
     }
 
@@ -186,6 +192,7 @@ public class ServiceActivity extends AppBaseActivity {
     public void onEventMainThread(ApiErrorEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         dismissDialog();
+        hideProgressBar();
         showToast(getString(R.string.something_went_wrong));
     }
 

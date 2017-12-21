@@ -11,8 +11,10 @@
         android:id="@id/toolbar"/>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollHistory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_below="@+id/toolbar">
 
     <LinearLayout

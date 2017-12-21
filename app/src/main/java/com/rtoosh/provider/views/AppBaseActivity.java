@@ -20,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.ApiException;
@@ -41,6 +42,7 @@ import com.rtoosh.provider.model.LocaleHelper;
 import com.rtoosh.provider.model.LocaleManager;
 import com.rtoosh.provider.model.RPPreferences;
 import com.rtoosh.provider.model.custom.ImagePicker;
+import com.rtoosh.provider.model.custom.ProgressBarHandler;
 import com.rtoosh.provider.model.custom.Utils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -57,6 +59,8 @@ public abstract class AppBaseActivity extends AppCompatActivity {
     public Context mContext;
     private EventBus mEventBus;
     private Dialog dialog;
+    private ProgressBar progressBar;
+    private ProgressBarHandler mProgressBarHandler;
     public final int PERMISSION_REQUEST_CODE = 1001;
     public final int REQUEST_IMAGE_CAPTURE = 1;
     public final int PERMISSION_LOCATION_CODE = 1021;
@@ -80,6 +84,8 @@ public abstract class AppBaseActivity extends AppCompatActivity {
             mEventBus.register(this);
         }
 
+        progressBar = Utils.progressBar(mContext);
+        mProgressBarHandler = new ProgressBarHandler(this);
         dialog = Utils.showDialog(mContext);
         //dialog.setCancelable(false);
 
@@ -114,6 +120,14 @@ public abstract class AppBaseActivity extends AppCompatActivity {
 
     public void dismissDialog() {
         dialog.dismiss();
+    }
+
+    public void showProgressBar() {
+        mProgressBarHandler.show();
+    }
+
+    public void hideProgressBar() {
+        mProgressBarHandler.hide();
     }
 
     public void showToast(String msg) {

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileResponse extends AbstractApiResponse implements Serializable {
+
     @SerializedName("data")
     public Data data;
 
@@ -27,7 +28,6 @@ public class ProfileResponse extends AbstractApiResponse implements Serializable
         public ArrayList<ProviderImage> providerImages = null;
         @SerializedName("Hour")
         public List<Hour> hour = null;
-
     }
 
     public static class ProviderImage implements Parcelable {

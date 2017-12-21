@@ -11,8 +11,10 @@
         android:id="@+id/toolbar"/>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_below="@+id/toolbar"
         android:layout_above="@+id/tvDone">
 
@@ -90,6 +92,7 @@
         android:gravity="center"
         android:text="@string/done"
         android:textAllCaps="true"
+        android:visibility="gone"
         android:textColor="@color/colorWhite"
         style="?borderlessButtonStyle"
         android:paddingRight="@dimen/_20sdp"

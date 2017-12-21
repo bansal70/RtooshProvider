@@ -13,6 +13,7 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_below="@+id/toolbar"
         android:layout_above="@+id/tvStartService">
 

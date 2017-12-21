@@ -83,11 +83,14 @@ public class RegisterServiceDetailsAdapter extends RecyclerView.Adapter<Register
 
     private void initSelectionDialog(AddService update_selection, int pos) {
         dialogSelection = Utils.createDialog(context, R.layout.dialog_add_services);
+        final TextView tvServiceTitle = dialogSelection.findViewById(R.id.tvServiceTitle);
         final EditText editServiceName = dialogSelection.findViewById(R.id.editServiceName);
         final EditText editServiceContent = dialogSelection.findViewById(R.id.editServiceContent);
         final EditText editServicePrice = dialogSelection.findViewById(R.id.editServicePrice);
         tvServiceDuration = dialogSelection.findViewById(R.id.editServiceDuration);
 
+        tvServiceTitle.setVisibility(View.GONE);
+        //tvServiceTitle.setText(String.format("%s %s", listServices.get(pos).getName(), context.getString(R.string.selection_new_service)));
         editServiceName.setText(update_selection.getName());
         editServiceContent.setText(update_selection.getDescription());
         editServicePrice.setText(update_selection.getPrice());

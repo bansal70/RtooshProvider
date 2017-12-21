@@ -77,7 +77,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_5sdp"
                             android:layout_marginStart="@dimen/_5sdp"
-                            android:text="5:30 PM Friday 27 Oct"
                             android:maxLines="1"
                             android:ellipsize="end"
                             android:textSize="@dimen/_12sdp"
