@@ -1,12 +1,14 @@
 package com.rtoosh.provider.views;
 
 import android.content.Intent;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rtoosh.provider.R;
@@ -31,6 +33,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class RequestsActivity extends AppBaseActivity {
 
@@ -44,8 +47,13 @@ public class RequestsActivity extends AppBaseActivity {
     @BindView(R.id.tvApprovedRequests) TextView tvApprovedRequests;
     @BindView(R.id.tvCompletedRequests) TextView tvCompletedRequests;
     @BindView(R.id.scrollHistory) NestedScrollView scrollHistory;
+    @BindView(R.id.imgDropDown) ImageView img1;
+    @BindView(R.id.imgDropDown2) ImageView img2;
+    @BindView(R.id.imgDropDown3) ImageView img3;
 
     String lang, user_id, serverTime;
+    boolean isNewOpen = true, isApprovedOpen = true, isCompletedOpen = true;
+    Matrix matrix1, matrix2, matrix3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +71,14 @@ public class RequestsActivity extends AppBaseActivity {
 
         lang = RPPreferences.readString(mContext, Constants.LANGUAGE_KEY);
         user_id = RPPreferences.readString(mContext, Constants.USER_ID_KEY);
+
+        matrix1 = new Matrix();
+        matrix2 = new Matrix();
+        matrix3 = new Matrix();
+
+        img1.setScaleType(ImageView.ScaleType.MATRIX);
+        img2.setScaleType(ImageView.ScaleType.MATRIX);
+        img3.setScaleType(ImageView.ScaleType.MATRIX);
 
         recyclerNewRequests.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerApprovedRequests.setLayoutManager(new LinearLayoutManager(mContext));
@@ -138,12 +154,6 @@ public class RequestsActivity extends AppBaseActivity {
         tvNewRequests.setText(String.valueOf(pendingRequestsList.size()));
         tvApprovedRequests.setText(String.valueOf(approvedRequestsList.size()));
         tvCompletedRequests.setText(String.valueOf(completedRequestsList.size()));
-        newRequestsAdapter.setOnDataChangeListener(new NewRequestsAdapter.OnDataChangeListener() {
-            @Override
-            public void onDataChanged(int size) {
-
-            }
-        });
 
         newRequestsAdapter.setOnDataChangeListener(size -> {
             if (!isFinishing()) {
@@ -160,6 +170,48 @@ public class RequestsActivity extends AppBaseActivity {
                         Operations.historyParams(user_id, lang));
             }
         });
+    }
+
+    @OnClick(R.id.imgDropDown)
+    public void newRequests() {
+        if (isNewOpen) {
+            recyclerNewRequests.setVisibility(View.GONE);
+            isNewOpen = false;
+        } else {
+            recyclerNewRequests.setVisibility(View.VISIBLE);
+            isNewOpen = true;
+        }
+
+        matrix1.postRotate((float) 180, img1.getDrawable().getBounds().width()/2, img1.getDrawable().getBounds().height()/2);
+        img1.setImageMatrix(matrix1);
+    }
+
+    @OnClick(R.id.imgDropDown2)
+    public void approvedRequests() {
+        if (isApprovedOpen) {
+            recyclerApprovedRequests.setVisibility(View.GONE);
+            isApprovedOpen = false;
+        } else {
+            recyclerApprovedRequests.setVisibility(View.VISIBLE);
+            isApprovedOpen = true;
+        }
+
+        matrix2.postRotate((float) 180, img2.getDrawable().getBounds().width()/2, img2.getDrawable().getBounds().height()/2);
+        img2.setImageMatrix(matrix2);
+    }
+
+    @OnClick(R.id.imgDropDown3)
+    public void completedRequests() {
+        if (isCompletedOpen) {
+            recyclerCompletedRequests.setVisibility(View.GONE);
+            isCompletedOpen = false;
+        } else {
+            recyclerCompletedRequests.setVisibility(View.VISIBLE);
+            isCompletedOpen = true;
+        }
+
+        matrix3.postRotate((float) 180, img3.getDrawable().getBounds().width()/2, img3.getDrawable().getBounds().height()/2);
+        img3.setImageMatrix(matrix3);
     }
 
     @Override

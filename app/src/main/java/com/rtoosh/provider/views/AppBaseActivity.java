@@ -38,7 +38,6 @@ import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.Task;
 import com.rtoosh.provider.model.Constants;
 import com.rtoosh.provider.model.Event;
-import com.rtoosh.provider.model.LocaleHelper;
 import com.rtoosh.provider.model.LocaleManager;
 import com.rtoosh.provider.model.RPPreferences;
 import com.rtoosh.provider.model.custom.ImagePicker;
@@ -187,7 +186,7 @@ public abstract class AppBaseActivity extends AppCompatActivity {
     }
 
     public void setLanguage(String langCode) {
-        LocaleHelper.setLocale(this, langCode);
+        LocaleManager.setLocale(this);
     }
 
     public void updateLanguage(String langCode) {
@@ -208,7 +207,6 @@ public abstract class AppBaseActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
 
     /*@Override
     public void onStart() {

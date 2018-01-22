@@ -27,6 +27,7 @@ public class RegisterServiceDetailsAdapter extends RecyclerView.Adapter<Register
     private List<AddService> listServices;
     private Dialog dialogSelection;
     private TextView tvServiceDuration;
+    public static boolean isEdited = false;
 
     RegisterServiceDetailsAdapter(Context context, List<AddService> listServices) {
         this.context = context;
@@ -77,6 +78,7 @@ public class RegisterServiceDetailsAdapter extends RecyclerView.Adapter<Register
             listServices.remove(getAdapterPosition());
             notifyItemRemoved(getAdapterPosition());
             notifyItemRangeChanged(getAdapterPosition(), listServices.size());
+            isEdited = true;
         }
 
     }
@@ -112,6 +114,7 @@ public class RegisterServiceDetailsAdapter extends RecyclerView.Adapter<Register
 
                 notifyItemChanged(pos);
                 notifyDataSetChanged();
+                isEdited = true;
             }
 
         });

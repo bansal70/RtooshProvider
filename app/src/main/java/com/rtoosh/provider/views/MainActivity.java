@@ -175,12 +175,12 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         request_id = getIntent().getStringExtra("order_id");
         notifyID = getIntent().getIntExtra("notifyId", 0);
 
-        if (request_id != null && !request_id.isEmpty()) {
+        //if (request_id != null && !request_id.isEmpty()) {
             if (!isFinishing())
                 showDialog();
             ModelManager.getInstance().getRequestsHistoryManager().historyTask(mContext, CHECK_ORDER_TAG,
                     Operations.historyParams(user_id, lang));
-        }
+        //}
 
         if (Utility.isOnline(mContext)) {
             setOnline();
@@ -193,7 +193,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
     @OnTouch(R.id.switchOnline)
     boolean changeStatus() {
         if (!isAccountActive()) {
-            showToast("Please wait for your account activation to provide any services.");
+            showToast(getString(R.string.warning_account_inactive));
             return false;
         }
 
@@ -648,16 +648,24 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         Utils.gotoNextActivityAnimation(mContext);
     }
 
+    int count = 0;
+
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
         }
 
-        if (myCountDownTimer != null)
-            myCountDownTimer.cancel();
+        new Handler().postDelayed(() -> count = 0, 2000);
+
+        if (count == 0) {
+            showToast(getString(R.string.prompt_back_again_exit));
+            count++;
+        } else if (count == 1) {
+            super.onBackPressed();
+            if (myCountDownTimer != null)
+                myCountDownTimer.cancel();
+        }
     }
 
     public class MyCountDownTimer extends CountDownTimer {
@@ -694,6 +702,8 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         public void onFinish() {
             if (!isFinishing()) {
                 dialogRequest.dismiss();
+                ModelManager.getInstance().getRequestsHistoryManager().historyTask(mContext, HISTORY_TAG,
+                        Operations.historyParams(user_id, lang));
             }
         }
     }
@@ -703,5 +713,7 @@ public class MainActivity extends AppBaseActivity implements OnMapReadyCallback,
         super.onDestroy();
         mFusedLocationClient.removeLocationUpdates(mLocationCallback);
     }
+
+
 
 }

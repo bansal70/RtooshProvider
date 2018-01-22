@@ -42,6 +42,7 @@ import android.text.TextWatcher;
 import android.text.style.StyleSpan;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -569,11 +570,57 @@ public class Utils {
 
     }
 
+    // To animate view slide out from left to right
+    public static void slideToRight(View view){
+        TranslateAnimation animate = new TranslateAnimation(0,view.getWidth(),0,0);
+        animate.setDuration(500);
+        animate.setFillAfter(true);
+        view.startAnimation(animate);
+        view.setVisibility(View.GONE);
+    }
+    // To animate view slide out from right to left
+    public static void slideToLeft(View view){
+        TranslateAnimation animate = new TranslateAnimation(0,-view.getWidth(),0,0);
+        animate.setDuration(500);
+        animate.setFillAfter(true);
+        view.startAnimation(animate);
+        view.setVisibility(View.GONE);
+    }
+
+    // To animate view slide out from top to bottom
+    public static void slideToBottom(View view){
+        TranslateAnimation animate = new TranslateAnimation(0,0,0,view.getHeight());
+        animate.setDuration(500);
+        animate.setFillAfter(true);
+        view.startAnimation(animate);
+        view.setVisibility(View.VISIBLE);
+    }
+
+    // To animate view slide out from bottom to top
+    public static void slideToTop(View view){
+        TranslateAnimation animate = new TranslateAnimation(0,0,0,-view.getHeight());
+        animate.setDuration(500);
+        animate.setFillAfter(true);
+        view.startAnimation(animate);
+        view.setVisibility(View.GONE);
+    }
+
     public static void getTotalTime(int hours, int minutes) {
         int mHours = minutes / 60; //since both are ints, you get an int
         int mMinutes = minutes % 60;
         hours += mHours;
         Timber.e("total time-- "+hours+":"+mMinutes);
+    }
+
+    public static AlertDialog createAlert(Activity mActivity, String title, String message) {
+        AlertDialog alert = new AlertDialog.Builder(mActivity).create();
+
+        if (!title.isEmpty())
+            alert.setTitle(title);
+        alert.setMessage(message);
+        alert.setCancelable(false);
+
+        return alert;
     }
 
     /**

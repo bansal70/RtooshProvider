@@ -1,7 +1,6 @@
 package com.rtoosh.provider.views;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -19,8 +18,6 @@ import com.rtoosh.provider.model.event.ApiErrorWithMessageEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.Locale;
 
 import timber.log.Timber;
 
@@ -44,14 +41,12 @@ public class SplashActivity extends AppBaseActivity {
 
     private void initViews() {
         handler = new Handler();
-        String langCode = Locale.getDefault().getLanguage();
+        /*String langCode = Locale.getDefault().getLanguage();
         if (langCode.isEmpty())
-            langCode = Resources.getSystem().getConfiguration().locale.getLanguage();
+            langCode = Resources.getSystem().getConfiguration().locale.getLanguage();*/
 
         if (RPPreferences.readString(mContext, Constants.LANGUAGE_KEY).isEmpty()) {
-            Timber.e("Language code-- %s", langCode);
-            if (langCode.isEmpty())
-                langCode = "en";
+            String langCode = "ar";
             RPPreferences.putString(mContext, Constants.LANGUAGE_KEY, langCode);
         }
 
@@ -126,7 +121,7 @@ public class SplashActivity extends AppBaseActivity {
     public void onEventMainThread(ApiErrorWithMessageEvent event) {
         EventBus.getDefault().removeAllStickyEvents();
         startMain();
-        Timber.e("response-- " + event.getResultMsgUser());
+        Timber.e("response-- %s", event.getResultMsgUser());
     }
 
     @Subscribe(sticky = true)

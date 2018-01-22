@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RtooshProvider</string>
+    <string name="app_name">Rtoosh Provider</string>
     <string name="skip">Skip</string>
     <string name="events_collection">EVENTS COLLECTION</string>
     <string name="slider_one_des">Discover the best things to do this week in your city</string>
@@ -138,7 +138,7 @@
     <string name="description">Description</string>
     <string name="price">Price in SAR</string>
     <string name="service_duration">Service Duration(hh:mm)</string>
-    <string name="duration">Duration &#160;</string>
+    <string name="duration">Duration</string>
     <string name="verify">Verify</string>
     <string name="background_photo">Background photo</string>
 
@@ -325,6 +325,12 @@
     <string name="slider_work_schedule">Arrange your requests to fits your life schedule, set your work schedule now.</string>
     <string name="slider_go_online">Go Online and earn money faster</string>
     <string name="server_error">Server error</string>
+    <string name="prompt_back_again_exit">Press back again to exit</string>
+    <string name="error_opening_hours">Opening hours should be less than closing hours</string>
+    <string name="error_closing_hours">Closing hours should be more than opening hours</string>
+    <string name="discard">Discard</string>
+    <string name="prompt_leave_without_saving">Leave without saving?</string>
+    <string name="warning_account_inactive">Please wait for your account activation to provide any services.</string>
 
     <string-array name="language_titles">
         <item>English</item>

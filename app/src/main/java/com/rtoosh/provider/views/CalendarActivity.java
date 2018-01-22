@@ -1,7 +1,9 @@
 package com.rtoosh.provider.views;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
@@ -22,6 +24,7 @@ import com.rtoosh.provider.model.POJO.register.OpeningTime;
 import com.rtoosh.provider.model.RPPreferences;
 import com.rtoosh.provider.model.Utility;
 import com.rtoosh.provider.model.custom.DateUtils;
+import com.rtoosh.provider.model.custom.Utils;
 import com.rtoosh.provider.model.event.ApiErrorEvent;
 import com.rtoosh.provider.model.event.ApiErrorWithMessageEvent;
 import com.rtoosh.provider.model.network.AbstractApiResponse;
@@ -319,6 +322,29 @@ public class CalendarActivity extends AppBaseActivity {
         dismissDialog();
         hideProgressBar();
         showToast(getString(R.string.something_went_wrong));
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isEdit) {
+            showAlert();
+        } else {
+            super.onBackPressed();
+            Utils.gotoPreviousActivityAnimation(mContext);
+        }
+    }
+
+    private void showAlert() {
+        AlertDialog alertDialog = Utils.createAlert(this, "", getString(R.string.prompt_leave_without_saving));
+
+        alertDialog.setButton(Dialog.BUTTON_POSITIVE, getString(R.string.save), (dialog, which) -> addHours());
+
+        alertDialog.setButton(Dialog.BUTTON_NEGATIVE, getString(android.R.string.cancel), (dialog, which) -> {
+            Utils.gotoPreviousActivityAnimation(mContext);
+            finish();
+        });
+
+        alertDialog.show();
     }
 
 }

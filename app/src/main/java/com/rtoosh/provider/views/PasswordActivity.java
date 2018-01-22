@@ -3,7 +3,9 @@ package com.rtoosh.provider.views;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.rtoosh.provider.R;
@@ -36,6 +38,9 @@ public class PasswordActivity extends AppBaseActivity {
     @BindView(R.id.editPassword)
     EditText editPassword;
 
+    @BindView(R.id.passwordLL)
+    LinearLayout passwordLL;
+
     String lang, phone, countryCode;
 
     Dialog dialogPassword;
@@ -45,6 +50,8 @@ public class PasswordActivity extends AppBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
         ButterKnife.bind(this);
+
+        ViewCompat.setLayoutDirection(passwordLL, ViewCompat.LAYOUT_DIRECTION_LTR);
 
         tvProviderName.setText(RPPreferences.readString(mContext, Constants.FULL_NAME_KEY));
         forgotPasswordDialog();

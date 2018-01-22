@@ -1,7 +1,6 @@
 package com.rtoosh.provider.views;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.view.View;
@@ -23,11 +22,8 @@ import com.rtoosh.provider.model.event.ApiErrorWithMessageEvent;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.Locale;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class PhoneVerificationActivity extends AppBaseActivity {
 
@@ -44,14 +40,12 @@ public class PhoneVerificationActivity extends AppBaseActivity {
         setContentView(R.layout.activity_phone_verification);
         ButterKnife.bind(this);
 
-        String langCode = Locale.getDefault().getLanguage();
+        /*String langCode = Locale.getDefault().getLanguage();
         if (langCode.isEmpty())
-            langCode = Resources.getSystem().getConfiguration().locale.getLanguage();
+            langCode = Resources.getSystem().getConfiguration().locale.getLanguage();*/
 
         if (RPPreferences.readString(mContext, Constants.LANGUAGE_KEY).isEmpty()) {
-            if (langCode.isEmpty())
-                langCode = "en";
-            Timber.e("Language code-- %s", langCode);
+            String langCode = "ar";
             RPPreferences.putString(mContext, Constants.LANGUAGE_KEY, langCode);
         }
 

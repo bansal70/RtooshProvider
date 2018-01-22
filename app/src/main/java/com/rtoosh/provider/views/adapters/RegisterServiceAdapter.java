@@ -33,6 +33,8 @@ public class RegisterServiceAdapter extends RecyclerView.Adapter<RegisterService
     private int position;
     private String id, name, image;
     private TextView tvServiceDuration;
+    private RegisterServiceDetailsAdapter registerServiceDetailsAdapter;
+    private boolean isEdited = false;
 
     public RegisterServiceAdapter(Context context, List<RegisterServiceData> listData, List<AddService> listAddServices) {
         this.context = context;
@@ -56,7 +58,7 @@ public class RegisterServiceAdapter extends RecyclerView.Adapter<RegisterService
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         listAddServices = data.getListAddServices();
-        RegisterServiceDetailsAdapter registerServiceDetailsAdapter = new RegisterServiceDetailsAdapter(context,
+        registerServiceDetailsAdapter = new RegisterServiceDetailsAdapter(context,
                 data.getListAddServices());
         holder.recyclerView.setAdapter(registerServiceDetailsAdapter);
     }
@@ -133,7 +135,7 @@ public class RegisterServiceAdapter extends RecyclerView.Adapter<RegisterService
                 RegisterServiceData data = new RegisterServiceData(id, name, image, listAddServices);
                 listData.set(position, data);
                 notifyItemChanged(position);
-
+                isEdited = true;
             }
 
         });
@@ -172,4 +174,11 @@ public class RegisterServiceAdapter extends RecyclerView.Adapter<RegisterService
         timeDialog.show();
     }
 
+    public boolean isDataChanged() {
+        return isEdited;
+    }
+
+    public void setEdited(boolean status) {
+        isEdited = status;
+    }
 }

@@ -65,7 +65,7 @@ public class ScheduleWorkActivity extends AppBaseActivity {
     public void addHours() {
         Gson gson = new Gson();
         String jsonHours = gson.toJson(scheduleHoursAdapter.hoursList());
-        Timber.e("hours-- "+jsonHours);
+        Timber.e("hours-- %s", jsonHours);
         RPPreferences.putString(mContext, Constants.SCHEDULE_HOURS_KEY, jsonHours);
 
         finish();

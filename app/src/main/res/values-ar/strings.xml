@@ -12,7 +12,13 @@
     <string name="approved_services">طلبات معتمدة</string>
     <string name="new_service_request">طلبات جديدة</string>
     <string name="go_online">الخدمة المباشرة</string>
-    <string name="you_are_offline">غير متاح للطلب الآن</string>
+    <string name="you_are_offline">غير متاح للطلب الآن
+لكي تتمكني من استلام
+طلبات مباشرة فضلا قومي
+بتفعیل الخدمة المباشرة من
+الأسفل، مع تأكدك من
+استعدادك لاستلام الطلب
+تجنبا لإیقاف حسابك</string>
     <string name="home">الرئيسية</string>
     <string name="next">التالي</string>
     <string name="check_services_you_will_provide">تأكدي من قائمة الخدمات التي ستقدمينها</string>
@@ -139,7 +145,7 @@
     <string name="description">وصف الخدمة</string>
     <string name="price">السعر بالريال</string>
     <string name="service_duration">مدة الخدمة (ساعه:دقيقة)</string>
-    <string name="duration">المدة &#160;</string>
+    <string name="duration">المدة </string>
     <string name="verify">تأكيد</string>
     <string name="background_photo">خلفية الملف الشخصي</string>
 

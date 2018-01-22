@@ -193,6 +193,7 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
             public void onLocationResult(LocationResult locationResult) {
                 for (Location location : locationResult.getLocations()) {
                     mLastLocation = location;
+
                     start = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
                     Routing routing = new Routing.Builder()
                             .key(Constants.API_KEY)
@@ -206,7 +207,6 @@ public class OrderDetailsActivity extends AppBaseActivity implements OnMapReadyC
             }
 
         };
-
     }
 
     @Override

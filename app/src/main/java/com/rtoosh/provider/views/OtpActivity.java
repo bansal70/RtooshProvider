@@ -133,7 +133,7 @@ public class OtpActivity extends AppBaseActivity {
                             return;
                         }
 
-                        showToast(otpResponse.getMessage());
+                        //showToast(otpResponse.getMessage());
                         RPPreferences.putString(mContext, Constants.FULL_NAME_KEY, data.fullName);
 
                         startActivity(new Intent(mContext, PasswordActivity.class));

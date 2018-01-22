@@ -1,8 +1,10 @@
 package com.rtoosh.provider.views;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -26,6 +28,7 @@ import com.rtoosh.provider.model.event.ApiErrorEvent;
 import com.rtoosh.provider.model.event.ApiErrorWithMessageEvent;
 import com.rtoosh.provider.model.network.AbstractApiResponse;
 import com.rtoosh.provider.views.adapters.RegisterServiceAdapter;
+import com.rtoosh.provider.views.adapters.RegisterServiceDetailsAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -66,6 +69,8 @@ public class SettingsActivity extends AppBaseActivity {
     JSONArray jsonServices;
 
     RegisterServiceResponse registerServiceResponse;
+
+    boolean isEdited = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,12 +113,14 @@ public class SettingsActivity extends AppBaseActivity {
 
     @OnClick(R.id.ivAddPerson)
     public void addPersons() {
+        isEdited = true;
         persons++;
         tvPersons.setText(String.valueOf(persons));
     }
 
     @OnClick(R.id.ivRemovePerson)
     public void deletePersons() {
+        isEdited = true;
         if (persons > 1)
             persons--;
         tvPersons.setText(String.valueOf(persons));
@@ -121,12 +128,14 @@ public class SettingsActivity extends AppBaseActivity {
 
     @OnClick(R.id.ivAddService)
     public void addServices() {
+        isEdited = true;
         services++;
         tvServices.setText(String.valueOf(services));
     }
 
     @OnClick(R.id.ivRemoveService)
     public void deleteServices() {
+        isEdited = true;
         if (services > 1)
             services--;
         tvServices.setText(String.valueOf(services));
@@ -264,6 +273,9 @@ public class SettingsActivity extends AppBaseActivity {
         dismissDialog();
         switch (apiResponse.getRequestTag()) {
             case UPDATE_SERVICES_TAG:
+                isEdited = false;
+                RegisterServiceDetailsAdapter.isEdited = false;
+                registerServiceAdapter.setEdited(false);
                 showToast(apiResponse.getMessage());
                 break;
         }
@@ -283,5 +295,28 @@ public class SettingsActivity extends AppBaseActivity {
         dismissDialog();
         hideProgressBar();
         showToast(getString(R.string.something_went_wrong));
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isEdited || registerServiceAdapter.isDataChanged() || RegisterServiceDetailsAdapter.isEdited) {
+            showAlert();
+        } else {
+            super.onBackPressed();
+            Utils.gotoPreviousActivityAnimation(mContext);
+        }
+    }
+
+    private void showAlert() {
+        AlertDialog alertDialog = Utils.createAlert(this, "", getString(R.string.prompt_leave_without_saving));
+
+        alertDialog.setButton(Dialog.BUTTON_POSITIVE, getString(android.R.string.ok), (dialog, which) -> {
+            Utils.gotoPreviousActivityAnimation(mContext);
+            finish();
+        });
+
+        alertDialog.setButton(Dialog.BUTTON_NEGATIVE, getString(android.R.string.cancel), (dialog, which) -> dialog.cancel());
+
+        alertDialog.show();
     }
 }

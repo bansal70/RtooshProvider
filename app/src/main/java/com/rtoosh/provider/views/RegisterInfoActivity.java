@@ -187,7 +187,7 @@ public class RegisterInfoActivity extends AppBaseActivity {
         }
         Gson gson = new Gson();
         info = gson.toJson(getInfo());
-        Timber.e("json info-- "+info);
+        Timber.e("json info-- %s", info);
 
         showDialog();
         ModelManager.getInstance().getProviderInfoManager().providerInfoTask(mContext, REGISTRATION_TAG,

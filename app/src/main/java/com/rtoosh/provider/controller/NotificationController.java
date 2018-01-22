@@ -12,6 +12,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
@@ -37,6 +39,7 @@ public class NotificationController extends FirebaseMessagingService {
     private static final String TAG = NotificationController.class.getSimpleName();
     NotificationManager mNotificationManager;
     final AtomicInteger c = new AtomicInteger(0);
+    String title = "", app_name = "";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -50,6 +53,12 @@ public class NotificationController extends FirebaseMessagingService {
         String orderType = remoteMessage.getData().get("orderType");
         String userID = remoteMessage.getData().get("user_id");
         String orderTime = remoteMessage.getData().get("order_time");
+
+        if (RPPreferences.readString(getApplicationContext(), Constants.LANGUAGE_KEY).equals(Constants.LANGUAGE_AR)) {
+            app_name = "رتوش مقدمي الخدمة";
+        } else {
+            app_name = "Rtoosh Provider";
+        }
 
         if (message == null)
             return;
@@ -102,13 +111,14 @@ public class NotificationController extends FirebaseMessagingService {
         }
 
         final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext());
+
         // The user-visible name of the channel.
-        CharSequence name = getString(R.string.account_status);
+        CharSequence name = getApplicationContext().getString(R.string.account_status);
         // The user-visible description of the channel.
-        String description = getString(R.string.notification_account_status);
+        String description = getApplicationContext().getString(R.string.notification_account_status);
            /* final Uri alarmSound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
                     + "://" + getApplicationContext().getPackageName() + "/raw/notification");*/
-        showSmallNotification(mBuilder, R.drawable.ic_notification_logo, getString(R.string.app_name),
+        showSmallNotification(mBuilder, R.drawable.ic_notification_logo, app_name,
                 messageBody, resultPendingIntent, name, description, code);
     }
 
@@ -122,11 +132,12 @@ public class NotificationController extends FirebaseMessagingService {
     private void sendNotification(String messageBody, String requestId, String orderType, String orderTime) {
         int code = (int) System.currentTimeMillis();
         // The user-visible name of the channel.
-        CharSequence name = getString(R.string.service_requests);
+        CharSequence name = getApplicationContext().getString(R.string.service_requests);
         // The user-visible description of the channel.
-        String description = getString(R.string.customer_service_request);
+        String description = getApplicationContext().getString(R.string.customer_service_request);
          /* final Uri alarmSound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
                     + "://" + getApplicationContext().getPackageName() + "/raw/notification");*/
+
 
         int id = c.incrementAndGet();
 
@@ -139,23 +150,36 @@ public class NotificationController extends FirebaseMessagingService {
             intent.putExtra("order_id", requestId);
             intent.putExtra("notifyId", id);
 
-            // startActivity(intent);
+            startActivity(intent);
             // Intent notiIntent = new Intent();
 
             PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(),
                     code, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            showSmallNotification(mBuilder, R.drawable.ic_notification_logo, getString(R.string.notify_online_order),
+            String title = "";
+            if (RPPreferences.readString(getApplicationContext(), Constants.LANGUAGE_KEY).equals(Constants.LANGUAGE_EN)) {
+                title = "Online Order";
+            } else {
+                title = "الطلب المباشر";
+            }
+
+            showSmallNotification(mBuilder, R.drawable.ic_notification_logo, title,
                     messageBody, resultPendingIntent, name, description, id);
 
             Utils.clearNotification(getApplicationContext(), id);
 
         } else {
+            String title = "";
+            if (RPPreferences.readString(getApplicationContext(), Constants.LANGUAGE_KEY).equals(Constants.LANGUAGE_EN)) {
+                title = "Schedule Order";
+            } else {
+                title = "الطلب المجدول";
+            }
             Intent intent = new Intent(getApplicationContext(), RequestsActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(),
                     code, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            showSmallNotification(mBuilder, R.drawable.ic_notification_logo, getString(R.string.notify_schedule_order),
+            showSmallNotification(mBuilder, R.drawable.ic_notification_logo, title,
                     messageBody, resultPendingIntent, name, description, id);
         }
     }
@@ -166,6 +190,7 @@ public class NotificationController extends FirebaseMessagingService {
         // The id of the channel.
         String id = "rtoosh_provider";
         NotificationChannel mChannel;
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_HIGH;
             mChannel = new NotificationChannel(id, name, importance);
@@ -193,6 +218,7 @@ public class NotificationController extends FirebaseMessagingService {
                 .setContentIntent(resultPendingIntent)
                // .setSound(alarmSound)
                 .setStyle(inboxStyle)
+                .setSound(defaultSoundUri)
                 .setSmallIcon(R.drawable.ic_notification_logo)
                 .setColor(ContextCompat.getColor(getApplicationContext(), R.color.deep_purple_700))
                 .setContentText(message)

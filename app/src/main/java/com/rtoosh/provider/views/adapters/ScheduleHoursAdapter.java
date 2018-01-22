@@ -189,6 +189,38 @@ public class ScheduleHoursAdapter extends RecyclerView.Adapter<ScheduleHoursAdap
                 return;
             }
 
+           /* if (openClose.equals("open")) {
+                if (!tvCloseTime.getText().toString().isEmpty()) {
+                    String[] close = tvCloseTime.getText().toString().split(":");
+                    int hh = Integer.parseInt(close[0]);
+                    int mm = Integer.parseInt(close[1]);
+
+                    if (hours > hh || (hours == hh && minutes == mm)) {
+                        Utils.showToast(context, context.getString(R.string.error_opening_hours));
+                        return;
+                    }
+                    if (hours == hh && minutes > mm) {
+                        Utils.showToast(context, context.getString(R.string.error_opening_hours));
+                        return;
+                    }
+                }
+            } else {
+                if (!tvOpenTime.getText().toString().isEmpty()) {
+                    String[] open = tvOpenTime.getText().toString().split(":");
+                    int hh = Integer.parseInt(open[0]);
+                    int mm = Integer.parseInt(open[1]);
+
+                    if (hours < hh || (hours == hh && minutes == mm)) {
+                        Utils.showToast(context, context.getString(R.string.error_closing_hours));
+                        return;
+                    }
+                    if (hours == hh && minutes < mm) {
+                        Utils.showToast(context, context.getString(R.string.error_closing_hours));
+                        return;
+                    }
+                }
+            }*/
+
             timeDialog.dismiss();
             if (openClose.equals("open")) {
                 tvOpenTime.setText(String.format("%s:%s", editHours.getText().toString(), editMinutes.getText().toString()));
@@ -204,7 +236,7 @@ public class ScheduleHoursAdapter extends RecyclerView.Adapter<ScheduleHoursAdap
                 tvAddTime.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
             }
 
-           // tvServiceDuration.setText(String.format("%s:%s", editHours.getText().toString(), editMinutes.getText().toString()));
+            // tvServiceDuration.setText(String.format("%s:%s", editHours.getText().toString(), editMinutes.getText().toString()));
         });
 
         btCancel.setOnClickListener(view -> timeDialog.cancel());
